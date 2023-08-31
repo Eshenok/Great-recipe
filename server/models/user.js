@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
   password: {
     required: true,
     type: String,
+    /*отключение автовыбора*/
     select: false,
   },
   name: {
@@ -21,6 +22,10 @@ const userSchema = new mongoose.Schema({
     minLength: 2,
     maxLength: 30,
   },
+  favourite: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'recipe'
+  }]
 });
 
 /* Кастомные методы */

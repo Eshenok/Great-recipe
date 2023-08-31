@@ -12,4 +12,6 @@ app.use(express.urlencoded({ extended: true }));
 
 mongoose.connect(NODE_ENV === 'production' ? CONNECT_DB : 'mongodb://localhost:27017/recipedb');
 
+app.use('/', require('./routes/index'));
+
 app.listen(PORT);
