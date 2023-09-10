@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 /*env*/
 require('dotenv').config();
-const { PORT = 2020, CONNECT_DB, NODE_ENV } = process.env; // Забираем из .env
+const { PORT = 2020, CONNECT_DB, NODE_ENV, SESSION_SECRET } = process.env; // Забираем из .env
 
 const app = express();
 

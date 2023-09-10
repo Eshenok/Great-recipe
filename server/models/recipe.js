@@ -25,14 +25,12 @@ const recipeSchema = new mongoose.Schema({
   strMealThumb: {
     required: true,
     type: String,
-    match: patternUrl
   },
   strTags: {
     type: String
   },
   strYoutube: {
     type: String,
-    match: patternUrl
   },
   strIngridient1: {
     type: String
@@ -167,7 +165,11 @@ const recipeSchema = new mongoose.Schema({
   },
   dateModified: {
     type: Date
-  }
+  },
+  quantityLiked: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+  }],
 });
 
 module.exports = mongoose.model('recipe', recipeSchema);

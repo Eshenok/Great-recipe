@@ -9,20 +9,26 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 const { devSecurityKey } = require('./constants');
 
 module.exports = (req, res, next) => {
-  const token = req.headers.authorization.replace('Bearer ', ''); // Достаем токен (с помощью cookieParser он доступен)
-  if (!token) {
-    next(new Unauthorized('Необходимо авторизоваться')); // Если не нашли токен в куках передаем ошибку
-    return;
-  }
+  // if (req.session.userData) {
+  //  req.user = req.session["userData"]["userObj"];
+  //  next();
+  // } else
+    if (req.headers.authorization) {
+    const token = req.headers.authorization.replace('Bearer ', '');
 
-  let payload;
-  try {
-    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : devSecurityKey); // верифицируем токен
-  } catch (err) {
+    let payload;
+    try {
+      payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : devSecurityKey); // верифицируем токен
+    } catch (err) {
+      next(new Unauthorized('Необходимо авторизоваться')); // не получилось -> ошибка
+      return;
+    }
+
+    req.user = payload; // записываем пейлод в юзера
+    next(); // пропускаем дальше
+  } else {
     next(new Unauthorized('Необходимо авторизоваться')); // не получилось -> ошибка
     return;
   }
 
-  req.user = payload; // записываем пейлод в юзера
-  next(); // пропускаем дальше
 };

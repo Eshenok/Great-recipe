@@ -1,7 +1,7 @@
 /* Импорты */
 const router = require('express').Router();
 const auth = require('../middlewares/auth');
-const { signin, createUser } = require('../controllers/users');
+const { signin, createUser, signout } = require('../controllers/users');
 const usersRouter = require('./users');
 const recipesRouter = require('./recipes');
 

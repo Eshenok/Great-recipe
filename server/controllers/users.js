@@ -17,7 +17,9 @@ module.exports.getCurrentUser = (req, res, next) => {
     .orFail(() => {
       throw new NotFound('User not found');
     })
-    .then((user) => res.send(user))
+    .then((user) => {
+      res.send(user)
+    })
     .catch(next);
 };
 
@@ -83,7 +85,7 @@ module.exports.signin = (req, res, next) => {
 
 module.exports.getFavouriteRecipes = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user._id).populate('favourite');;
+    const user = await User.findById(req.user._id).populate('favourite');
     if (!user) {
       throw new NotFound('Пользователь не найден');
     }
