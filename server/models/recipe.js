@@ -18,7 +18,7 @@ const recipeSchema = new mongoose.Schema({
     required: true,
     type: String
   },
-  strInstruction: {
+  strInstructions: {
     required: true,
     type: String
   },
@@ -170,6 +170,13 @@ const recipeSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
   }],
+  rating: [{
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'user' // Ссылка на модель User
+    },
+    rate: Number
+  }]
 });
 
 module.exports = mongoose.model('recipe', recipeSchema);

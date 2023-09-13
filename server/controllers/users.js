@@ -13,7 +13,7 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 const { devSecurityKey } = require("../middlewares/constants");
 
 module.exports.getCurrentUser = (req, res, next) => {
-  User.findById(req.user._id)
+  User.findById(req.session.userId)
     .orFail(() => {
       throw new NotFound('User not found');
     })
@@ -26,7 +26,7 @@ module.exports.getCurrentUser = (req, res, next) => {
 module.exports.updateCurrentUser = (req, res, next) => {
   const { name, email } = req.body;
 
-  User.findByIdAndUpdate(req.user._id, { name, email }, { new: true, runValidators: true })
+  User.findByIdAndUpdate(req.session.userId, { name, email }, { new: true, runValidators: true })
     .orFail(() => {
       throw new NotFound('User not found');
     })
@@ -74,18 +74,19 @@ module.exports.signin = (req, res, next) => {
 
   User.findUserByCredentials(email, password) // custom method
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : devSecurityKey, { expiresIn: '3d' }); // create token
+      // const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : devSecurityKey, { expiresIn: '3d' }); // create token
       // change JSON => JS Obj, remove password and send res
       const userObj = user.toObject();
       delete userObj.password;
-      res.send({ userObj, 'jwt': token });
+      req.session = {userId: user._id, fetchedRecipes: []};
+      res.send({ userObj });
     })
     .catch(next);
 };
 
 module.exports.getFavouriteRecipes = async (req, res, next) => {
   try {
-    const user = await User.findById(req.user._id).populate('favourite');
+    const user = await User.findById(req.session.userId).populate('favourite');
     if (!user) {
       throw new NotFound('Пользователь не найден');
     }
