@@ -19,13 +19,13 @@ mongoose.connect(NODE_ENV === 'production' ? CONNECT_DB : 'mongodb://localhost:2
 
 app.use(
   session({
-    secret: SESSION_SECRET,
+    secret: SESSION_SECRET, // secret key
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: 'mongodb://localhost:27017/recipedb' }),
+    store: MongoStore.create({ mongoUrl: 'mongodb://localhost:27017/recipedb' }), //session storage in MongoDB
     cookie: {
-      maxAge: 5 * 60 * 60 * 1000, // Время жизни сессии в миллисекундах (5 часов)
-      secure: false, // Устанавливайте в true, если используете HTTPS
+      maxAge: 5 * 60 * 60 * 1000, // (5 hours)
+      secure: false, // http
     },
   })
 );

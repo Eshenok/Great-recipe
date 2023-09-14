@@ -4,6 +4,31 @@ const User = require('../models/user');
 /*errors*/
 const NotFound = require('../errors/NotFound');
 const BadRequest = require('../errors/BadRequest');
+const { log } = require("winston");
+
+module.exports.getRandomRecipes = async (req, res, next) => {
+  try {
+    const batchSize = 50; // Размер каждой порции рецептов
+
+    // Проверяем, есть ли еще рецепты, которые не были включены в предыдущие запросы
+    const remainingRecipes = await Recipe.find({ _id: { $nin: req.session.fetchedRecipes } });
+
+    if (remainingRecipes.length === 0) {
+      return res.status(200).json({message: 'Already all recipes fetched'});
+    }
+
+    // Если осталось меньше, чем batchSize рецептов, возвращаем все остатки
+    const selectedRecipes = remainingRecipes.slice(0, Math.min(batchSize, remainingRecipes.length));
+
+    // Добавляем выбранные рецепты в массив уже полученных
+    selectedRecipes.forEach(recipe => req.session.fetchedRecipes.push(recipe._id));
+
+    return res.status(200).json({ recipes: selectedRecipes });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'An error occurred' });
+  }
+}
 
 module.exports.removeRecipeFromFavourite = async (req, res, next) => {
   try {

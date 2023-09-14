@@ -1,16 +1,10 @@
 /*imports*/
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken'); // Пакет для создания jwt
-const Recipe = require('../models/recipe');
 const User = require('../models/user');
 /*errors*/
 const NotFound = require('../errors/NotFound');
 const BadRequest = require('../errors/BadRequest');
 const Conflict = require('../errors/Conflict');
-/*env*/
-require('dotenv').config();
-const { NODE_ENV, JWT_SECRET } = process.env;
-const { devSecurityKey } = require("../middlewares/constants");
 
 module.exports.getCurrentUser = (req, res, next) => {
   User.findById(req.session.userId)
@@ -74,11 +68,10 @@ module.exports.signin = (req, res, next) => {
 
   User.findUserByCredentials(email, password) // custom method
     .then((user) => {
-      // const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : devSecurityKey, { expiresIn: '3d' }); // create token
-      // change JSON => JS Obj, remove password and send res
       const userObj = user.toObject();
       delete userObj.password;
-      req.session = {userId: user._id, fetchedRecipes: []};
+      req.session.userId = user._id;
+      req.session.fetchedRecipes = [];
       res.send({ userObj });
     })
     .catch(next);
