@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
+const uuid = require('uuid');
 /*env*/
 require('dotenv').config();
 const { PORT = 2020, CONNECT_DB, NODE_ENV, SESSION_SECRET } = process.env; // Забираем из .env

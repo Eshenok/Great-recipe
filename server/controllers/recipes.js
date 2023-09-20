@@ -4,7 +4,17 @@ const User = require('../models/user');
 /*errors*/
 const NotFound = require('../errors/NotFound');
 const BadRequest = require('../errors/BadRequest');
-const { log } = require("winston");
+
+module.exports.findRecipesByIngredients = async (req, res, next) => {
+  try {
+    const ingredientsToFind = ['chicken thighs', "challots", "ginger", "garlic clove", "cayenne pepper", "turmeric", "cumin", "coriander", "fennel", "tamarind paste", "coconut milk", "sugar", "water"]; // Ингредиенты для поиска
+    const recipes = await Recipe.find({ arrIngredients: { $in: ingredientsToFind } });
+
+    res.json(recipes);
+  } catch (err) {
+    res.status(500).json({ error: 'Ошибка при поиске рецептов' });
+  }
+}
 
 module.exports.getRandomRecipes = async (req, res, next) => {
   try {
@@ -24,9 +34,8 @@ module.exports.getRandomRecipes = async (req, res, next) => {
     selectedRecipes.forEach(recipe => req.session.fetchedRecipes.push(recipe._id));
 
     return res.status(200).json({ recipes: selectedRecipes });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'An error occurred' });
+  } catch (err) {
+    next(err)
   }
 }
 

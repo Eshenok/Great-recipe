@@ -25,7 +25,11 @@ const userSchema = new mongoose.Schema({
   favourite: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'recipe'
-  }]
+  }],
+  fridge: {
+    type: [String],
+    default: [],
+  }
 });
 
 /* Кастомные методы */

@@ -72,6 +72,7 @@ module.exports.signin = (req, res, next) => {
       delete userObj.password;
       req.session.userId = user._id;
       req.session.fetchedRecipes = [];
+      req.session.ingridientsRecipes = [];
       res.send({ userObj });
     })
     .catch(next);
