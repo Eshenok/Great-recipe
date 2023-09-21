@@ -1,39 +1,46 @@
 /*imports*/
 const Recipe = require('../models/recipe');
 const User = require('../models/user');
+const mongoose = require('mongoose');
 /*errors*/
 const NotFound = require('../errors/NotFound');
 const BadRequest = require('../errors/BadRequest');
 
 module.exports.findRecipesByIngredients = async (req, res, next) => {
   try {
-    const ingredientsToFind = ['chicken thighs', "challots", "ginger", "garlic clove", "cayenne pepper", "turmeric", "cumin", "coriander", "fennel", "tamarind paste", "coconut milk", "sugar", "water"]; // Ингредиенты для поиска
-    const recipes = await Recipe.find({ arrIngredients: { $in: ingredientsToFind } });
+    const ingredientsToFind = req.body.ingridients;
+    if (!ingredientsToFind) throw new BadRequest('Ingridients required');
 
-    res.json(recipes);
+    const recipes = await Recipe.find({ arrIngredients: { $in: ingredientsToFind } });
+    if (!recipes) throw new NotFound('Recipes not found');
+
+    res.status(200).json({recipes: recipes});
   } catch (err) {
-    res.status(500).json({ error: 'Ошибка при поиске рецептов' });
+    next(err)
   }
 }
 
 module.exports.getRandomRecipes = async (req, res, next) => {
   try {
+    const ObjectId = mongoose.Types.ObjectId;
     const batchSize = 50; // Размер каждой порции рецептов
+    const fetchedRecipeIds = req.session.fetchedRecipes.map(id => new ObjectId(id));
 
     // Проверяем, есть ли еще рецепты, которые не были включены в предыдущие запросы
-    const remainingRecipes = await Recipe.find({ _id: { $nin: req.session.fetchedRecipes } });
+    // const remainingRecipes = await Recipe.find({ _id: { $nin: req.session.fetchedRecipes } });
+    const remainingRecipes = await Recipe.aggregate([
+      {$match: {_id: { $nin: fetchedRecipeIds }}},
+      {$sample: {size: batchSize}}
+    ])
 
     if (remainingRecipes.length === 0) {
       return res.status(200).json({message: 'Already all recipes fetched'});
     }
 
-    // Если осталось меньше, чем batchSize рецептов, возвращаем все остатки
-    const selectedRecipes = remainingRecipes.slice(0, Math.min(batchSize, remainingRecipes.length));
-
     // Добавляем выбранные рецепты в массив уже полученных
-    selectedRecipes.forEach(recipe => req.session.fetchedRecipes.push(recipe._id));
-
-    return res.status(200).json({ recipes: selectedRecipes });
+    remainingRecipes.forEach(recipe => req.session.fetchedRecipes.push(recipe._id));
+    console.log(remainingRecipes.length);
+    return res.status(200).json({ recipes: remainingRecipes });
   } catch (err) {
     next(err)
   }

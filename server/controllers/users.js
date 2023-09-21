@@ -6,6 +6,20 @@ const NotFound = require('../errors/NotFound');
 const BadRequest = require('../errors/BadRequest');
 const Conflict = require('../errors/Conflict');
 
+module.exports.updateFridge = (req, res, next) => {
+  const fridgeFromClient = req.body.fridge;
+  if (!req.body.fridge) throw new BadRequest('Not data to update');
+
+  const user = User.findByIdAndUpdate(req.session.userId, {fridge: fridgeFromClient}, { new: true, runValidators: true })
+    .orFail(() => {
+      throw new NotFound('User not found');
+    })
+    .then((user) => {
+      res.send(user);
+    })
+    .catch(next);
+}
+
 module.exports.getCurrentUser = (req, res, next) => {
   User.findById(req.session.userId)
     .orFail(() => {
@@ -77,21 +91,3 @@ module.exports.signin = (req, res, next) => {
     })
     .catch(next);
 };
-
-module.exports.getFavouriteRecipes = async (req, res, next) => {
-  try {
-    const user = await User.findById(req.session.userId).populate('favourite');
-    if (!user) {
-      throw new NotFound('Пользователь не найден');
-    }
-
-    if(user.favourite.length === 0 || !user.favourite) {
-      throw new BadRequest('Нет сохраненных рецептов');
-    }
-
-    return res.status(200).json({ favouriteRecipes: user.favourite });
-  } catch (err) {
-    next(err);
-  }
-
-}
