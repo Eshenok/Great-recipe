@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
-const uuid = require('uuid');
+const centralErrorHandling = require('./errors/centralErrorHandling');
 /*env*/
 require('dotenv').config();
 const { PORT = 2020, CONNECT_DB, NODE_ENV, SESSION_SECRET } = process.env; // Забираем из .env
@@ -20,7 +20,7 @@ mongoose.connect(NODE_ENV === 'production' ? CONNECT_DB : 'mongodb://localhost:2
 
 app.use(
   session({
-    secret: SESSION_SECRET, // secret key
+    secret: NODE_ENV==='production' ? SESSION_SECRET : 'secret key', // secret key
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: 'mongodb://localhost:27017/recipedb' }), //session storage in MongoDB
@@ -32,5 +32,7 @@ app.use(
 );
 
 app.use('/', require('./routes/index'));
+
+app.use(centralErrorHandling);
 
 app.listen(PORT);

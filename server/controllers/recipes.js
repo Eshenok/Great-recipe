@@ -6,6 +6,35 @@ const mongoose = require('mongoose');
 const NotFound = require('../errors/NotFound');
 const BadRequest = require('../errors/BadRequest');
 
+module.exports.putRating = async (req, res, next) => {
+  try {
+    const rating = req.body.rating;
+    if(!rating) throw new BadRequest('Rating required');
+
+    const user = await User.findById(req.session.userId);
+    if(!user) throw new NotFound('User not found');
+
+    /*Uniqueness cannot be prescribed for an array at schema(*/
+    const existingRating = await Recipe.findOne({
+      _id: req.body.recipe,
+      "rating.user": user._id,
+    });
+
+    if (existingRating) {
+      return res.json({message: 'User already put rating for this recipe'});
+    }
+
+    const updatedRecipe = await Recipe.findByIdAndUpdate(req.body.recipe, {$push: {"rating": {"user": user._id, "rate": rating}}}, {new: true});
+    if (!updatedRecipe) throw new NotFound('Recipe not found');
+
+    return res.send(updatedRecipe);
+  } catch (err) {
+    next(err)
+  }
+}
+
+// ПОИСК РЕЦЕПТОВ ПО ИНГРИДИЕНТАМ
+// В body передаем массив
 module.exports.findRecipesByIngredients = async (req, res, next) => {
   try {
     const ingredientsToFind = req.body.ingridients;
@@ -14,12 +43,17 @@ module.exports.findRecipesByIngredients = async (req, res, next) => {
     const recipes = await Recipe.find({ arrIngredients: { $in: ingredientsToFind } });
     if (!recipes) throw new NotFound('Recipes not found');
 
-    res.status(200).json({recipes: recipes});
+    return res.status(200).json({recipes: recipes});
   } catch (err) {
     next(err)
   }
 }
 
+/*
+* ПОЛУЧЕНИЕ СЛУЧАЙНЫХ РЕЦЕПТОВ
+* Для каждого user в сессии хранится массив уже найденных рецептов, чтобы исключить дубликаты
+* При повторном signin массив обнуляется
+*/
 module.exports.getRandomRecipes = async (req, res, next) => {
   try {
     const ObjectId = mongoose.Types.ObjectId;
@@ -27,7 +61,6 @@ module.exports.getRandomRecipes = async (req, res, next) => {
     const fetchedRecipeIds = req.session.fetchedRecipes.map(id => new ObjectId(id));
 
     // Проверяем, есть ли еще рецепты, которые не были включены в предыдущие запросы
-    // const remainingRecipes = await Recipe.find({ _id: { $nin: req.session.fetchedRecipes } });
     const remainingRecipes = await Recipe.aggregate([
       {$match: {_id: { $nin: fetchedRecipeIds }}},
       {$sample: {size: batchSize}}
@@ -39,79 +72,86 @@ module.exports.getRandomRecipes = async (req, res, next) => {
 
     // Добавляем выбранные рецепты в массив уже полученных
     remainingRecipes.forEach(recipe => req.session.fetchedRecipes.push(recipe._id));
-    console.log(remainingRecipes.length);
     return res.status(200).json({ recipes: remainingRecipes });
   } catch (err) {
     next(err)
   }
 }
 
-module.exports.removeRecipeFromFavourite = async (req, res, next) => {
+// УДАЛЕНИЕ РЕЦЕПТОВ ИЗ ИЗБРАННОГО
+// В params передаем ObjectId
+module.exports.removeRecipeFromFavorite = async (req, res, next) => {
   try {
+    /*get recipe id*/
     const recipeId = req.params.recipeId;
     if (!recipeId) {
-      throw new BadRequest('ID рецепта обязательный параметр');
+      throw new BadRequest('ID required');
     }
 
+    /*find recipe by id*/
     const recipe = await Recipe.findById(recipeId);
-    if (!recipe) throw new NotFound('Рецепт не найден');
+    if (!recipe) throw new NotFound('Recipe not found');
 
-    const resultForUser = await User.updateOne({ _id: req.session.userId }, { $pull: { favourite: recipe._id } });
+    /*update recipe and user*/
+    const resultForUser = await User.updateOne({ _id: req.session.userId }, { $pull: { favorite: recipe._id } });
     const resultForRecipe = await Recipe.updateOne({ _id: recipeId }, { $pull: { quantityLiked: req.session.userId } });
 
+    /*check modified*/
     if (resultForUser.modifiedCount === 0 || resultForRecipe.modifiedCount === 0) {
-      return res.status(200).json({ message: 'Рецепта нет в избранном' });
+      return res.status(200).json({ message: 'Recipe already removed from favorite' });
     }
 
-    return res.status(200).json({message: 'Рецепт успешно удален'});
+    return res.status(200).json({message: 'Recipe successfully removed from favorites'});
   } catch (err) {
     next(err);
   }
 }
 
-module.exports.addRecipeToFavourite = async (req, res, next) => {
+// ДОБАВЛЕНИЕ РЕЦЕПТОВ В ИЗБРАННОЕ
+// В params передаем ObjectId
+module.exports.addRecipeToFavorite = async (req, res, next) => {
   try {
     /*Get recipeId*/
     const recipeId = req.params.recipeId;
     if (!recipeId) {
-      throw new BadRequest('ID рецепта обязательный параметр');
+      throw new BadRequest('ID required');
     }
 
     /*find recipe*/
     const recipe = await Recipe.findById(recipeId);
-    if (!recipe) throw new NotFound('Рецепт не найден');
+    if (!recipe) throw new NotFound('Recipe not found');
 
     /*find user after auth*/
     const updatedUser = await User.findById(req.session.userId);
-    if (!updatedUser) throw new NotFound('Пользователь не найден');
+    if (!updatedUser) throw new NotFound('User not found');
 
     /*check includes*/
-    if (!updatedUser.favourite.includes(recipe._id)) {
+    if (!updatedUser.favorite.includes(recipe._id)) {
       recipe.quantityLiked.push(updatedUser._id);
-      updatedUser.favourite.push(recipe._id);
-      console.log(recipe);
+      updatedUser.favorite.push(recipe._id);
       await updatedUser.save();
       await recipe.save();
     } else {
-      return res.status(200).json({message: 'Рецепт уже в избранном'});
+      return res.status(200).json({message: 'Recipe already added to favorite'});
     }
 
-    return res.status(200).json({message: 'Рецепт успешно добавлен'})
+    return res.status(200).json({message: 'Recipe successfully added to favorites'})
   } catch (err) {
     next(err);
   }
 }
 
-
+// ПОИСК РЕЦЕПТОВ ПО ID
+// В params передаем ObjectId
 module.exports.getRecipeForId = async (req, res, next) => {
   try {
     const recipeId = req.params.recipeId;
     if (!recipeId) {
-      throw new BadRequest('ID рецепта обязательный параметр');
+      throw new BadRequest('ID Required');
     }
     const recipe = await Recipe.findById(recipeId);
     if (!recipe) {
-      throw new NotFound('Рецепт не найден');
+      throw new NotFound('Recipe not found');
     }
     return res.send(recipe);
   } catch (err) {

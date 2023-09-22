@@ -53,7 +53,7 @@ const recipeSchema = new mongoose.Schema({
   rating: [{
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'user' // Ссылка на модель User
+      ref: 'user', // Ссылка на модель User
     },
     rate: Number
   }],
