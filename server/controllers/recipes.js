@@ -14,17 +14,35 @@ module.exports.putRating = async (req, res, next) => {
     const user = await User.findById(req.session.userId);
     if(!user) throw new NotFound('User not found');
 
+    const recipeId = req.body.recipe;
+
     /*Uniqueness cannot be prescribed for an array at schema(*/
     const existingRating = await Recipe.findOne({
-      _id: req.body.recipe,
+      _id: recipeId,
       "rating.user": user._id,
     });
 
+
+
+
     if (existingRating) {
-      return res.json({message: 'User already put rating for this recipe'});
+      await Recipe.updateOne(
+        {
+          _id: recipeId,
+          "rating.user": user._id,
+        },
+        {
+          $set: {
+            "rating.$.rate": rating,
+          },
+        }, {new: true}
+      );
+    } else {
+      await Recipe.findByIdAndUpdate(recipeId, {$push: {"rating": {"user": user._id, "rate": rating}}}, {new: true});
     }
 
-    const updatedRecipe = await Recipe.findByIdAndUpdate(req.body.recipe, {$push: {"rating": {"user": user._id, "rate": rating}}}, {new: true});
+    const updatedRecipe = await Recipe.findById(recipeId);
+
     if (!updatedRecipe) throw new NotFound('Recipe not found');
 
     return res.send(updatedRecipe);

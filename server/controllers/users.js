@@ -68,7 +68,8 @@ module.exports.createUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.code === 11000) {
-        next(new Conflict());
+        console.log(err);
+        next(new Conflict('User already created'));
       } else if (err.name === 'CastError' || err.name === 'ValidationError') {
         next(new BadRequest());
       } else {
