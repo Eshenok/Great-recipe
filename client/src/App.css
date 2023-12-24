@@ -3,3 +3,11 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+html {
+  background-color: lightgray;
+}
+
+#root {
+  height: 50vh;
+}

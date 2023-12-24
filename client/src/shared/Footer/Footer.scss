@@ -1,0 +1,43 @@
+@import "../../variables.scss";
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  /*font*/
+  color: $dark-grey;
+  font-family: $montserrat-font;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-align: right;
+
+  &__links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__link {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: $white;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    &:hover {
+      filter: drop-shadow(0 0 2px $dark-grey);
+    }
+
+    &_gh {
+      background-image: url("../../assets/git-icon.svg");
+    }
+
+    &_mail {
+      background-image: url("../../assets/mail-icon.svg");
+    }
+  }
+}

@@ -9,6 +9,7 @@
   position: relative;
 
   &__head {
+    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -82,6 +83,7 @@
   }
 
   &__text_lng {
+    cursor: pointer;
     overflow: hidden;
     width: 2ch;
   }
