@@ -1,0 +1,33 @@
+@import "../../variables.scss";
+
+.input {
+  &__outlined {
+    width: 100%;
+    padding: 6.5px 50px 6.5px 8px;
+    background-color: white;
+    height: 28px;
+    border-radius: 25px;
+    border: 2px solid $orange-dark;
+
+    color: $dark-grey;
+    font-family: $montserrat-font;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%; /* 15px */
+
+    &::placeholder {
+      opacity: .6;
+    }
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .input {
+    &__outlined {
+      height: 50px;
+      padding: 14.5px 50px 14.5px 8px;
+      font-size: 14px;
+    }
+  }
+}

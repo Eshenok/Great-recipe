@@ -4,10 +4,12 @@
   box-sizing: border-box;
 }
 
-html {
-  background-color: lightgray;
+input {
+  outline: none;
+  border: none;
+  background-color: transparent;
 }
 
-#root {
-  height: 50vh;
+body {
+  background-color: lightgray;
 }

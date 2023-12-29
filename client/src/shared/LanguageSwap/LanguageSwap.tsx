@@ -4,9 +4,10 @@ import {LanguageContext} from "../../context/LanguageContext";
 
 interface ILanguageSwapProps {
   onSwap: (type: 'en'|'ru') => void;
+  extraClasses?: string;
 }
 
-const LanguageSwap: FC<ILanguageSwapProps> = ({onSwap}) => {
+const LanguageSwap: FC<ILanguageSwapProps> = ({onSwap, extraClasses}) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const language = useContext(LanguageContext);
@@ -14,7 +15,7 @@ const LanguageSwap: FC<ILanguageSwapProps> = ({onSwap}) => {
   const openDD = () => setIsOpen(!isOpen)
 
   return (
-    <div onClick={openDD} className={"lng-swap"}>
+    <div onClick={openDD} className={`lng-swap ${extraClasses ? extraClasses : ''}`}>
       <div className={"lng-swap__head"}>
         <span className={"lng-swap__planet"}/>
         <p className={"lng-swap__text lng-swap__dd-text"}>{language === 'en' ? 'English' : 'Русский'}</p>
