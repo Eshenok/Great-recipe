@@ -1,5 +1,5 @@
 import './App.css'
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {LanguageContext} from "./context/LanguageContext";
 import InputOutlined from "./shared/InputOutlined/InputOutlined";
 import useForm from "./hooks/useForm";
@@ -24,7 +24,7 @@ function App() {
       {/*</div>*/}
       {/*<Menu />*/}
       {/*<Header onSwapLanguage={changeLanguage} />*/}
-      <InputOutlined placeholder={"placeHolder 123"} name={"input-1"} value={inputValues} onChange={onChange} />
+      <InputOutlined isAnim={false} placeholders={["наименованию", 'ингридиентам']} name={"input-1"} value={inputValues} onChange={onChange} />
     </LanguageContext.Provider>
 
   )
