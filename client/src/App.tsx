@@ -1,14 +1,17 @@
 import './App.css'
+import './commonStyles/Animations.scss';
 import {useEffect, useState} from "react";
 import {LanguageContext} from "./context/LanguageContext";
 import InputOutlined from "./shared/InputOutlined/InputOutlined";
 import useForm from "./hooks/useForm";
+import InputBtn from "./shared/InputBtn/InputBtn";
+import lupa from './assets/lupa.svg';
+import Search from "./entities/Search/Search";
 
 
 function App() {
 
   const [language, setLanguage] = useState<'en'|'ru'>('en');
-  const {inputValues, onChange} = useForm();
 
   const changeLanguage = (lng) => {
     if (lng === 'en' || lng === 'ru') {
@@ -24,7 +27,8 @@ function App() {
       {/*</div>*/}
       {/*<Menu />*/}
       {/*<Header onSwapLanguage={changeLanguage} />*/}
-      <InputOutlined isAnim={false} placeholders={["наименованию", 'ингридиентам']} name={"input-1"} value={inputValues} onChange={onChange} />
+      {/*<InputOutlined isAnim={true} placeholders={["Поиск по ингридиентам", 'Яблоко']} name={"input-1"} value={inputValues} onChange={onChange} />*/}
+      <Search />
     </LanguageContext.Provider>
 
   )

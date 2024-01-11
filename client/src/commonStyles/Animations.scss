@@ -1,0 +1,22 @@
+@import "./variables.scss";
+
+.animated-btn {
+  opacity: 1;
+  transition: filter .3s ease-in, opacity .3s ease-in;
+
+  &:hover {
+    filter: drop-shadow(0 0 2px #33333340);
+  }
+
+  &:active {
+    opacity: .8;
+  }
+}
+
+//.revert {
+//  transition: transform .3s ease-in;
+//
+//  &_active {
+//    transform: rotate(-180deg);
+//  }
+//}

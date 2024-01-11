@@ -1,7 +1,16 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {FC, useEffect, useRef, useState} from 'react';
 import './InputOutlined.scss';
 
-const InputOutlined = ({name, values, onChange, placeholders, isAnim}) => {
+interface IInputOutlinedProps {
+  name: string;
+  values: undefined;
+  onChange: (e) => void;
+  placeholders: string[];
+  isAnim: boolean;
+
+}
+
+const InputOutlined: FC<IInputOutlinedProps> = ({name, values, onChange, placeholders, isAnim}) => {
 
   // const [currPh, setCurrPh] = useState<string>(placeholders[0]);
   const [placeHolder, setPlaceHolder] = useState(isAnim ? '' : placeholders[0]);
@@ -44,10 +53,10 @@ const InputOutlined = ({name, values, onChange, placeholders, isAnim}) => {
       clearInterval(inputPhEmit);
     }
 
-  }, [placeholders])
+  }, [isAnim, placeholders])
 
   return (
-    <input placeholder={`Введите запрос по: ${placeHolder}`} type={'text'} className={"input input__outlined"} name={name} onChange={onChange} value={values?.[name]} />
+    <input placeholder={`${placeHolder}`} type={'text'} className={"input input__outlined"} name={name} onChange={onChange} value={values?.[name]} />
   );
 };
 
