@@ -11,9 +11,10 @@ input {
 }
 
 body {
-  max-width: 1280px;
-  width: 100%;
-  margin: 0 auto;
+  /*overflow-y: hidden;*/
+  /*max-width: 1280px;*/
+  /*width: 100%;*/
+  /*margin: 0 auto;*/
   background-color: lightgray;
 }
 

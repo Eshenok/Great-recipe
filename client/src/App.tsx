@@ -1,5 +1,6 @@
 import './App.css'
 import './commonStyles/Animations.scss';
+import './vendor/fonts/fonts.css';
 import {useEffect, useState} from "react";
 import {LanguageContext} from "./context/LanguageContext";
 import InputOutlined from "./shared/InputOutlined/InputOutlined";
@@ -7,6 +8,10 @@ import useForm from "./hooks/useForm";
 import InputBtn from "./shared/InputBtn/InputBtn";
 import lupa from './assets/lupa.svg';
 import Search from "./entities/Search/Search";
+import CheckSwitch from "./shared/CheckSwitch/CheckSwitch";
+import {TEXTS} from "./constants";
+import Category from "./entities/Category/Category";
+import Header from "./widgets/Header/Header";
 
 
 function App() {
@@ -26,9 +31,10 @@ function App() {
       {/*  <LanguageSwap onSwap={changeLanguage}/>*/}
       {/*</div>*/}
       {/*<Menu />*/}
-      {/*<Header onSwapLanguage={changeLanguage} />*/}
-      {/*<InputOutlined isAnim={true} placeholders={["Поиск по ингридиентам", 'Яблоко']} name={"input-1"} value={inputValues} onChange={onChange} />*/}
+      <Header onSwapLanguage={changeLanguage} />
+      {/*<InputOutlined isAnim={true} placeholders={TEXTS[language].inputph.search} name={"input-1"} value={inputValues} onChange={onChange} />*/}
       <Search />
+      <Category />
     </LanguageContext.Provider>
 
   )
