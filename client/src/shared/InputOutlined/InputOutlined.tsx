@@ -10,9 +10,19 @@ interface IInputOutlinedProps {
 
 }
 
+interface Timers {
+  inputPhEmit: number | undefined;
+  remover: number | undefined;
+  timeout: number | undefined;
+}
+
 const InputOutlined: FC<IInputOutlinedProps> = ({name, values, onChange, placeholders, isAnim}) => {
 
-  // const [currPh, setCurrPh] = useState<string>(placeholders[0]);
+  const timersRef = useRef<Timers>({
+    inputPhEmit: undefined,
+    remover: undefined,
+    timeout: undefined,
+  }); // ref хранения интервалов, чтобы при смене языка они не дублировались
   const [placeHolder, setPlaceHolder] = useState(isAnim ? '' : placeholders[0]);
 
   useEffect(() => {
@@ -23,7 +33,7 @@ const InputOutlined: FC<IInputOutlinedProps> = ({name, values, onChange, placeho
     let ph = '';
     let isWaited = false;
 
-    const inputPhEmit = setInterval(() => {
+    timersRef.current.inputPhEmit = setInterval(() => {
       if (j + 1 > placeholders.length) j = 0;
       if (isWaited) return; // Отключаем Interval на время Timeout
 
@@ -31,15 +41,15 @@ const InputOutlined: FC<IInputOutlinedProps> = ({name, values, onChange, placeho
         ph += placeholders[j][i++];
       } else {
         isWaited = true;
-        setTimeout(() => { // Запускаем Timeout на 5сек. чтобы прочесть что написано в PH
-          const remover = setInterval(() => {
+        timersRef.current.timeout = setTimeout(() => { // Запускаем Timeout на 5сек. чтобы прочесть что написано в PH
+          timersRef.current.remover = setInterval(() => {
             if (!!i) {
               ph = ph.slice(0, i--);
             } else {
               isWaited = false;
               ph = '';
               j++;
-              clearInterval(remover) // Дропаем удаление символов
+              clearInterval(timersRef.current.remover!); // Дропаем удаление символов
             }
             setPlaceHolder(ph);
           }, 100)
@@ -50,7 +60,9 @@ const InputOutlined: FC<IInputOutlinedProps> = ({name, values, onChange, placeho
     }, 350)
 
     return () => {
-      clearInterval(inputPhEmit);
+      clearInterval(timersRef.current.inputPhEmit!);
+      clearTimeout(timersRef.current.timeout!);
+      clearInterval(timersRef.current.remover!);
     }
 
   }, [isAnim, placeholders])

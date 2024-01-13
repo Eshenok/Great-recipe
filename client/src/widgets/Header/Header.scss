@@ -1,6 +1,7 @@
 @import "../../commonStyles/variables";
 
 .header {
+  min-height: min-content;
   background: white center center no-repeat;
   background-size: cover;
   border-radius: 25px;

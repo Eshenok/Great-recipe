@@ -33,6 +33,12 @@
     font-weight: 400;
     line-height: 150%; /* 24px */
   }
+
+  &__item_checked {
+    .category__text {
+      color: $orange-dark;
+    }
+  }
 }
 
 @media screen and (min-width: 720px) {

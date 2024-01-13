@@ -12,17 +12,24 @@ import CheckSwitch from "./shared/CheckSwitch/CheckSwitch";
 import {TEXTS} from "./constants";
 import Category from "./entities/Category/Category";
 import Header from "./widgets/Header/Header";
+import {useDispatch} from "react-redux";
+import {initCategories} from "./store/categorySlice";
 
 
 function App() {
 
   const [language, setLanguage] = useState<'en'|'ru'>('en');
+  const dispatch = useDispatch();
 
   const changeLanguage = (lng) => {
     if (lng === 'en' || lng === 'ru') {
       setLanguage(lng);
     }
   }
+
+  useEffect(() => {
+    dispatch(initCategories({language: language}));
+  }, [])
 
   return (
     <LanguageContext.Provider value={language}>

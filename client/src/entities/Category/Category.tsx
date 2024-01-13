@@ -4,29 +4,16 @@ import {LanguageContext} from "../../context/LanguageContext";
 import CategoryItem from "./components/CategoryItem/CategoryItem";
 import CheckSwitch from "../../shared/CheckSwitch/CheckSwitch";
 import Title from "../../shared/Title/Title";
+import {useDispatch, useSelector} from "react-redux";
+import {changeCurrCategories} from "../../store/categorySlice";
 
 const Category = () => {
 
   const context = useContext(LanguageContext);
+  const {categories} = useSelector(state => state.categories);
+  const dispatch = useDispatch();
   const containerRef = useRef(null);
   const [startX, setStartX] = useState(0);
-
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     if (window.innerWidth < 725) {
-  //       containerRef.current.style.overflowX = 'hidden'
-  //     } else {
-  //       containerRef.current.style.overflowX = 'auto'
-  //     }
-  //   }
-  //
-  //   handleResize();
-  //   window.addEventListener('resize', handleResize);
-  //
-  //   return () => {
-  //     window.removeEventListener('resize', handleResize);
-  //   };
-  // }, [])
 
   const handleTouchStart = (e) => {
     setStartX(e.touches[0].clientX)
@@ -36,8 +23,11 @@ const Category = () => {
     const deltaX = e.touches[0].clientX - startX;
     containerRef.current.scrollLeft -= deltaX;
     setStartX(e.touches[0].clientX);
-    e.preventDefault();
   };
+
+  const handleChooseCategory = (name: string) => {
+    dispatch(changeCurrCategories({name: name}));
+  }
 
   return (
     <div
@@ -50,9 +40,9 @@ const Category = () => {
       <CheckSwitch name={'infridge'} color={'blue'} />
       <Title text={TEXTS[context].titles.category} />
       {
-        Object.entries(TEXTS[context].categories).map(([key, category]) => (
-          <CategoryItem key={key} text={category.name} icon={category.image} />
-        ))
+        categories.map(elem =>
+          <CategoryItem checked={elem.checked} onChoose={() => {handleChooseCategory(elem.name)}} text={elem.name} icon={elem.image} key={elem.key} />
+        )
       }
     </div>
   );
