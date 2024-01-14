@@ -1,0 +1,16 @@
+@import "../../commonStyles/variables.scss";
+
+.like {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: $light-grey url("../../assets/like.svg") center center no-repeat;
+  background-size: 62.5%;
+
+  /*anim*/
+  transition: background-image .3s ease-in-out;
+
+  &_active {
+    background-image: url("../../assets/like_active.svg");
+  }
+}
