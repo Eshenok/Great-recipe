@@ -17,12 +17,14 @@ import {initCategories} from "./store/categorySlice";
 import LikeBtn from "./shared/LikeBtn/LikeBtn";
 import RecipeCard from "./entities/RecipeCard/RecipeCard";
 import CardGrid from "./widgets/CardGrid/CardGrid";
+import Tab from "./shared/Tab/Tab";
 
 
 function App() {
 
   const [language, setLanguage] = useState<'en'|'ru'>('en');
   const dispatch = useDispatch();
+  const {inputValues} = useForm();
 
   const changeLanguage = (lng) => {
     if (lng === 'en' || lng === 'ru') {
@@ -45,6 +47,7 @@ function App() {
       {/*<InputOutlined isAnim={true} placeholders={TEXTS[language].inputph.search} name={"input-1"} value={inputValues} onChange={onChange} />*/}
       <Search />
       <Category />
+      <Tab text={'Quantity'} editable={true} type={"number"} />
       {/*<RecipeCard recipeInfo={TEST_RECIPE}/>*/}
       <CardGrid />
     </LanguageContext.Provider>

@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {FC, useContext, useState} from 'react';
 import './Search.scss';
 import InputOutlined from "../../shared/InputOutlined/InputOutlined";
 import useForm from "../../hooks/useForm";
@@ -7,7 +7,7 @@ import {TEXTS} from "../../constants";
 import {LanguageContext} from "../../context/LanguageContext";
 
 
-const Search = () => {
+const Search: FC = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const {inputValues, onChange} = useForm();
@@ -16,8 +16,6 @@ const Search = () => {
   const open = () => {
     setIsOpen(!isOpen)
   }
-
-  console.log(isOpen);
 
   return (
     <form className={"search"}>

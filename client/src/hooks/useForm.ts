@@ -13,10 +13,15 @@ const useForm = () => {
     setInputValues({...inputValues, [target.name]: target.checked})
   }
 
+  const dropValue = (name) => {
+    setInputValues({...inputValues, [name]: ''});
+  }
+
   return {
     inputValues,
     onChange,
     onSwitch,
+    dropValue,
   };
 };
 

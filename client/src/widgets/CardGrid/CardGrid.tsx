@@ -25,7 +25,7 @@ const CardGrid: FC = () => {
       <div className={"cards__grid"}>
         {
           xdd().map((item) =>
-            <RecipeCard recipeInfo={item} />
+            <RecipeCard key={item._id} recipeInfo={item} />
           )
         }
       </div>
