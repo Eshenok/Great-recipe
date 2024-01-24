@@ -1,18 +1,19 @@
-import React, {useContext} from 'react';
+import React, {FC, useContext} from 'react';
 import './RecipeCard.scss';
 import bread from '../../assets/bread_icon.svg';
 import star from '../../assets/star_icon.svg';
 import LikeBtn from "../../shared/LikeBtn/LikeBtn";
 import {TEXTS} from "../../constants";
 import {LanguageContext} from "../../context/LanguageContext";
+import {ratingType} from "../../Types/ServerRecipeType";
 
-const RecipeCard = ({recipeInfo}) => {
+const RecipeCard: FC = ({recipeInfo}) => {
 
   const context = useContext(LanguageContext);
 
   const category = TEXTS[context].categories[recipeInfo.strCategory.toLowerCase()];
 
-  const covertRating = (rating): number => rating.reduce((accum, cur) => accum + cur.rate, 0);
+  const covertRating = (rating: ratingType[]): number => rating.reduce((accum, cur) => accum + cur.rate, 0);
   const checkQuantityIngs = (ing): number => {
     return ing.filter(item => !!item).length;
   }

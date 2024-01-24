@@ -1,4 +1,4 @@
-type ratingType = {
+export type ratingType = {
   rate: number;
   _id: string;
   user: string;
