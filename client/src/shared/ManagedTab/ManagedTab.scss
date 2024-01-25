@@ -1,0 +1,11 @@
+@import "../../commonStyles/variables.scss";
+
+.tab {
+  &__input {
+    width: 20px;
+  }
+    &__input::-webkit-outer-spin-button,
+    &__input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+}

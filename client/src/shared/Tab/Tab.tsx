@@ -1,14 +1,16 @@
 import {FC, useState} from 'react';
-import './Tab.scss';
+import '../Tab_new/Tab.scss';
 import useForm from "../../hooks/useForm";
 
 interface ITabProps {
   text: string;
   editable: boolean;
   type: string;
+  smile?:string;
+  active?: boolean;
 }
 
-const Tab: FC<ITabProps> = ({text, children, editable, type}) => {
+const Tab: FC<ITabProps> = ({text, children, editable, type, smile, isActive}) => {
 
   const {inputValues, onChange, dropValue} = useForm();
   const [defaultValue, setDefaultValue] = useState(text);
@@ -16,10 +18,8 @@ const Tab: FC<ITabProps> = ({text, children, editable, type}) => {
   const handleSwapValue = () => setDefaultValue(defaultValue === text ? '' : defaultValue);
   const handleReturnDefault = (isDrop) => setDefaultValue(isDrop || inputValues[text] === '' || !inputValues[text] ? text : '');
 
-  console.log(inputValues[text])
-
   return (
-    <div className={"tab"}>
+    <div className={`tab ${isActive ? 'tab_active' : ''}`}>
       <p className={"tab__text"}>
         {
           editable &&
@@ -38,6 +38,7 @@ const Tab: FC<ITabProps> = ({text, children, editable, type}) => {
           </>
         }
         {!editable && text}
+        {smile}
       </p>
       {children}
     </div>

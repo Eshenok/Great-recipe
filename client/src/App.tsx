@@ -18,6 +18,7 @@ import LikeBtn from "./shared/LikeBtn/LikeBtn";
 import RecipeCard from "./entities/RecipeCard/RecipeCard";
 import CardGrid from "./widgets/CardGrid/CardGrid";
 import Tab from "./shared/Tab/Tab";
+import Filter from "./widgets/Filter/Filter";
 
 
 function App() {
@@ -45,9 +46,11 @@ function App() {
       {/*<Menu />*/}
       {/*<Header onSwapLanguage={changeLanguage} />*/}
       {/*<InputOutlined isAnim={true} placeholders={TEXTS[language].inputph.search} name={"input-1"} value={inputValues} onChange={onChange} />*/}
-      <Search />
-      <Category />
-      <Tab text={'Quantity'} editable={true} type={"number"} />
+      {/*<Search />*/}
+      {/*<Category />*/}
+      <Filter />
+
+      {/*<Tab text={'1'} editable={false} type={"text"} >&#128528;</Tab>*/}
       {/*<RecipeCard recipeInfo={TEST_RECIPE}/>*/}
       <CardGrid />
     </LanguageContext.Provider>
