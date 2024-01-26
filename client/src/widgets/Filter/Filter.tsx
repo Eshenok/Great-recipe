@@ -39,7 +39,7 @@ const Filter = () => {
         </div>
         <div className={"filter__quantity"}>
           <p className={"filter__title"}></p>
-          <ManagedTab placeholder={'Quantity'} type={"number"} isActive={true} name={"quantity-filter"} />
+          <ManagedTab max={20} placeholder={'Quantity'} type={"number"} isActive={true} name={"quantity-filter"} />
         </div>
         <div className={"filter__isLiked"}>
           <p className={"filter__title"}></p>

@@ -1,0 +1,59 @@
+@import '../../commonStyles/variables.scss';
+
+.tab {
+  user-select: none;
+  height: 15px;
+  border: 1px solid $dark-grey;
+  padding: 0 4px;
+  border-radius: 15px;
+  min-width: 36px;
+  width: min-content;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
+
+  /*font*/
+  color: $dark-grey;
+  text-align: center;
+  font-family: $montserrat-font;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 15px */
+
+    &_active {
+      border: 1px solid $orange-dark;
+      .tab__text,.tab__input {
+        color: $orange-dark;
+      }
+    }
+
+  &__text {
+    user-select: text;
+  }
+
+  &__close-btn {
+    outline: none;
+    border: none;
+    width: 6px;
+    height: 6px;
+        background: transparent url("../../assets/close-s.svg") no-repeat center center;
+        background-size: cover;
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .tab {
+    gap: 8px;
+    height: 20px;
+    font-size: 14px;
+    min-width: 47px;
+
+    &__close-btn {
+      width: 8px;
+      height: 8px;
+    }
+  }
+}
