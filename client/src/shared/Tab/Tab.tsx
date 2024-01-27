@@ -1,7 +1,13 @@
-import React from 'react';
+import React, {FC} from 'react';
 import './Tab.scss';
 
-const Tab = ({text, children, isActive}) => {
+interface ITabProps {
+  text: string;
+  children: React.ReactNode;
+  isActive: boolean;
+}
+
+const Tab: FC<ITabProps> = ({text, children, isActive}) => {
   return (
     <div className={`tab ${isActive ? 'tab_active' : ''}`}>
       <p className={"tab__text"}>{text}</p>

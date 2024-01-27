@@ -1,0 +1,86 @@
+@import "../../commonStyles/variables.scss";
+
+.filter {
+
+  &__header {
+    padding: 8px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+  }
+
+  &__prev {
+    padding-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  &__bottom {
+    padding: 7.5px 8px;
+    height: 88px;
+    background-color: white;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__title {
+    text-align: center;
+    width: 100%;
+    white-space: nowrap;
+  }
+
+  &__section {
+    height: 100%;
+    width: min-content;
+    position: relative;
+    min-width: 60px;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: center;
+    //align-content: start;
+
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 1px;
+      height: 100%;
+      background-color: $dark-grey;
+      top: 0;
+      right: -4px;
+    }
+
+    &:last-of-type {
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  &__rating {
+    align-content: start;
+    width: 120px;
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .filter {
+
+    &__bottom {
+      gap: 16px;
+    }
+
+    &__section {
+      &::after {
+        right: -8px;
+      }
+    }
+
+    &__rating {
+      width: calc(47px * 3 + 15px);
+    }
+  }
+}

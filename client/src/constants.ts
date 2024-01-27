@@ -18,6 +18,7 @@ export const TEXTS = {
     inputph: {
       search: ['Search name & ing.', 'Apple', 'Bread', 'Garlic', 'Venetian Duck Ragu', 'Apple Frangipan Tart'],
       fridge: ['Add product'],
+      ings: 'Quantity',
       account: {
         pass: 'Password',
         name: 'Name',
@@ -42,6 +43,11 @@ export const TEXTS = {
       profile: 'My Profile',
       login: 'Login',
       reg: 'Registration'
+    },
+    filter: {
+      rating: 'User rating',
+      ingr: 'Ingredients up to',
+      favourite: 'Favourite',
     }
   },
   ru: {
@@ -53,6 +59,7 @@ export const TEXTS = {
     inputph: {
       search: ['Поиск по наименованию или инг.', 'Яблоко', 'Хлеб', 'Чеснок', 'Венецианское утиное рагу', 'Шарлотка'],
       fridge: ['Добавить продукт'],
+      ings: 'Кол-во',
       account: {
         pass: 'Пароль',
         name: 'Имя',
@@ -77,6 +84,11 @@ export const TEXTS = {
       profile: 'Мой профиль',
       login: 'Вход',
       reg: 'Регистрация'
+    },
+    filter: {
+      rating: 'Оценка',
+      ingr: 'По количеству инг.',
+      favourite: 'Избранное',
     }
   }
 }

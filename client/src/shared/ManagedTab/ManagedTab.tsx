@@ -1,23 +1,37 @@
-import React, {useCallback, useState} from 'react';
+import React, {FC, useCallback, useState} from 'react';
 import './ManagedTab.scss';
 import useForm from "../../hooks/useForm";
 
-const ManagedTab = ({isActive, placeholder, type, name, max}) => {
+interface IManagedTabProps {
+  text: string;
+  placeholder: string;
+  isActive: boolean;
+  type: string;
+  name: string;
+  max: number;
+}
 
-  const {inputValues, onChange, dropValue} = useForm();
+
+const ManagedTab:FC<IManagedTabProps> = ({isActive, placeholder, type, name, max}) => {
+
+  const {inputValues, onChange, dropValue, onPut} = useForm();
 
   const validateChangeValue = (e) => {
-    if (e.target.value > max) {
+    if (e.target.value.length > String(max).length) {
       return;
+    } else if (e.target.value > max) {
+      onPut(name, max);
     } else {
       onChange(e)
     }
   }
 
+  console.log(inputValues[name]);
+
   return (
-    <div className={`tab ${isActive ? 'tab_active' : ''}`}>
+    <div className={`tab tab_managed ${isActive ? 'tab_active' : ''}`}>
       <input
-        style={{width: `${inputValues[name] ? inputValues[name].length : placeholder.length - 1}ch`}}
+        style={{width: `${inputValues[name] ? inputValues[name].length : placeholder.length}ch`}}
         className={"tab__input"}
         name={name}
         type={type}
