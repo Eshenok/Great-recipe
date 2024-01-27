@@ -7,22 +7,17 @@ import {TEXTS} from "../../constants";
 import {LanguageContext} from "../../context/LanguageContext";
 
 
-const Search: FC = () => {
+const Search: FC = ({isOpen, onOpen}) => {
 
-  const [isOpen, setIsOpen] = useState(false);
   const {inputValues, onChange} = useForm();
   const context = useContext(LanguageContext);
 
-  const open = () => {
-    setIsOpen(!isOpen)
-  }
-
   return (
-    <form className={"search"}>
+    <form className={"search"} onSubmit={(e) => {e.preventDefault()}}>
       <InputOutlined isAnim={true} placeholders={TEXTS[context].inputph.search} name={"input-1"} value={inputValues} onChange={onChange} />
       <div className={"search__btns"}>
         <InputBtn extraClasses={"search__lupa"} />
-        <InputBtn onClick={open} extraClasses={`search__filter ${isOpen ? 'search__filter_active' : ''}`} />
+        <InputBtn onClick={onOpen} extraClasses={`search__filter ${isOpen ? 'search__filter_active' : ''}`} />
       </div>
     </form>
   );

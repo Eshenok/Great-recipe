@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import './Filter.scss';
 import Search from "../../entities/Search/Search";
 import Tab from "../../shared/Tab/Tab";
@@ -10,7 +10,8 @@ import {TEXTS} from "../../constants";
 const Filter = () => {
 
   const context = useContext(LanguageContext);
-  // const context = 'ru';
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const tabsPrevFinded = () => {
     const maxQuantity = 7;
@@ -29,16 +30,16 @@ const Filter = () => {
   return (
     <section className={"filter"}>
       <div className={"filter__header"}>
-        <Search />
+        <Search isOpen={isOpen} onOpen={() => {setIsOpen(!isOpen)}} />
         <div className={"filter__prev"}>
           {
             tabsPrevFinded()
           }
         </div>
       </div>
-      <div className={"filter__bottom"}>
+      <div className={`filter__bottom ${isOpen ? 'filter__bottom_open' : ''}`}>
         <div className={"filter__rating filter__section"}>
-          <p className={"filter__title"}>{TEXTS[context].filter.rating}</p>
+          <h3 className={"filter__title"}>{TEXTS[context].filter.rating}</h3>
           <Tab text={'1'} editable={false} type={'number'}>&#128528;</Tab>
           <Tab text={'2'} editable={false} type={'number'}>&#128528;</Tab>
           <Tab text={'3'} editable={false} type={'number'}>&#129320;</Tab>
@@ -46,11 +47,11 @@ const Filter = () => {
           <Tab text={'5'} editable={false} type={'number'}>&#129321;</Tab>
         </div>
         <div className={"filter__quantity filter__section"}>
-          <p className={"filter__title"}>{TEXTS[context].filter.ingr}</p>
+          <h3 className={"filter__title"}>{TEXTS[context].filter.ingr}</h3>
           <ManagedTab max={20} placeholder={TEXTS[context].inputph.ings} type={"number"} isActive={true} name={"quantity-filter"} />
         </div>
         <div className={"filter__isLiked filter__section"}>
-          <p className={"filter__title"}>{TEXTS[context].filter.favourite}</p>
+          <h3 className={"filter__title"}>{TEXTS[context].filter.favourite}</h3>
           <CheckSwitch name={'isLiked'} color={'red'} />
         </div>
       </div>
