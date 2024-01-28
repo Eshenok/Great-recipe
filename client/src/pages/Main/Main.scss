@@ -1,0 +1,45 @@
+@import "../../commonStyles/variables.scss";
+
+.main {
+  position: relative;
+  overflow-x: hidden;
+
+  &__sidebar {
+    z-index: 5;
+    position: fixed;
+    left: -270px;
+    transition: left .3s ease-in;
+  }
+
+  &_open-head {
+    .main__sidebar {
+      left: 0;
+    }
+  }
+
+  &__burger {
+    position: fixed;
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .main {
+
+    display: grid;
+    grid-template-columns: 256px 1fr;
+
+    &__recipes{
+      position: relative;
+      display: grid;
+      grid-template-columns: 115px 1fr;
+    }
+
+    &__sidebar {
+      position: initial;
+    }
+
+    &__burger {
+      display: none;
+    }
+  }
+}

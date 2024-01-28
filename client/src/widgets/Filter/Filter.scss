@@ -3,6 +3,7 @@
 .filter {
 
   &__header {
+    margin-right: 40px;
     padding: 8px;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
@@ -128,8 +129,37 @@
   }
 }
 
+@media screen and (max-width: 400px) {
+  .filter {
+    &__section {
+      align-content: start;
+      width: 120px;
+
+      & h3::before {
+        display: none;
+      }
+    }
+  }
+}
+
 @media screen and (min-width: 720px) {
   .filter {
+
+    &__header {
+      margin: 0 0 0 24px;
+      display: grid;
+      grid-template-columns: 88fr 100fr;
+      align-items: center;
+      gap: 8px;
+    }
+
+    &__prev {
+      padding: 0;
+    }
+
+    &__title {
+      font-size: 16px;
+    }
 
     &__bottom {
       gap: 16px;
@@ -143,25 +173,6 @@
 
     &__rating {
       width: calc(47px * 3 + 15px);
-    }
-  }
-}
-
-@media screen and (min-width: 720px) {
-  .filter {
-    &__header {
-      display: grid;
-      grid-template-columns: 88fr 100fr;
-      align-items: center;
-      gap: 8px;
-    }
-
-    &__prev {
-      padding: 0;
-    }
-
-    &__title {
-      font-size: 16px;
     }
   }
 }

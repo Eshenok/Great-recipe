@@ -19,6 +19,9 @@ import RecipeCard from "./entities/RecipeCard/RecipeCard";
 import CardGrid from "./widgets/CardGrid/CardGrid";
 import Tab from "./shared/Tab/Tab";
 import Filter from "./widgets/Filter/Filter";
+import Burger from "./shared/Burger/Burger";
+import Menu from "./entities/Menu/Menu";
+import Main from "./pages/Main/Main";
 
 
 function App() {
@@ -39,20 +42,7 @@ function App() {
 
   return (
     <LanguageContext.Provider value={language}>
-      {/*<Tab text={'apple'} onClose={() => {console.log('clicked')}} />*/}
-      {/*<div style={{heigth: '100%', padding: '20px 20px', backgroundColor: '#333'}}>*/}
-      {/*  <LanguageSwap onSwap={changeLanguage}/>*/}
-      {/*</div>*/}
-      {/*<Menu />*/}
-      {/*<Header onSwapLanguage={changeLanguage} />*/}
-      {/*<InputOutlined isAnim={true} placeholders={TEXTS[language].inputph.search} name={"input-1"} value={inputValues} onChange={onChange} />*/}
-      {/*<Search />*/}
-      {/*<Category />*/}
-      <Filter />
-
-      {/*<Tab text={'1'} editable={false} type={"text"} >&#128528;</Tab>*/}
-      {/*<RecipeCard recipeInfo={TEST_RECIPE}/>*/}
-      <CardGrid />
+      <Main onSwapLanguage={changeLanguage} />
     </LanguageContext.Provider>
 
   )

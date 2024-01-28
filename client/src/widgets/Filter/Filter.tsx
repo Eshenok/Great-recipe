@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {FC, useContext, useState} from 'react';
 import './Filter.scss';
 import Search from "../../entities/Search/Search";
 import Tab from "../../shared/Tab/Tab";
@@ -7,11 +7,15 @@ import ManagedTab from "../../shared/ManagedTab/ManagedTab";
 import {LanguageContext} from "../../context/LanguageContext";
 import {TEXTS} from "../../constants";
 
-const Filter = () => {
+interface IFilterProps {
+  extraClasses?: string;
+}
+
+const Filter: FC<IFilterProps> = ({extraClasses}) => {
 
   const context = useContext(LanguageContext);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const tabsPrevFinded = () => {
     const maxQuantity = 7;
@@ -28,7 +32,7 @@ const Filter = () => {
   }
 
   return (
-    <section className={"filter"}>
+    <section className={`filter`}>
       <div className={"filter__header"}>
         <Search isOpen={isOpen} onOpen={() => {setIsOpen(!isOpen)}} />
         <div className={"filter__prev"}>

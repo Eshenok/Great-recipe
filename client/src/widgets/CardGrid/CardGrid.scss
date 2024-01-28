@@ -20,6 +20,8 @@
 
 @media screen and (min-width: 720px) {
   .cards {
+    height: calc(100vh - 66px - 88px);
+    overflow-y: scroll;
     &__grid {
       row-gap: 8px;
     }

@@ -36,9 +36,9 @@ const Category = () => {
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
     >
-      <Title text={TEXTS[context].titles.infridge} />
+      <h3 className={"category__title"}>{TEXTS[context].titles.infridge}</h3>
       <CheckSwitch name={'infridge'} color={'blue'} />
-      <Title text={TEXTS[context].titles.category} />
+      <h3 className={"category__title"}>{TEXTS[context].titles.category}</h3>
       {
         categories.map(elem =>
           <CategoryItem checked={elem.checked} onChoose={() => {handleChooseCategory(elem.name)}} text={elem.name} icon={elem.image} key={elem.key} />

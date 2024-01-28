@@ -2,3 +2,7 @@
 	font-family: 'Merienda One';
 	src: url("MeriendaOne-Regular.ttf") format('truetype');
 }
+@font-face {
+	font-family: 'Mavka';
+	src: url("ofont.ru_Sweet Mavka Script.ttf") format('truetype');
+}
