@@ -17,7 +17,7 @@ const useForm = () => {
     setInputValues({...inputValues, [name]: value})
   }
 
-  const dropValue = (name) => {
+  const dropValue = (name: string) => {
     setInputValues({...inputValues, [name]: ''});
   }
 

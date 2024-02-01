@@ -1,0 +1,37 @@
+@import '../../commonStyles/variables.scss';
+
+.registration {
+    background-color: $white;
+
+    & h2 {
+        width: 100%;
+    }
+
+    &__form {
+        margin-top: 32px;
+        padding: 16px 8px;
+        border-radius: 25px;
+        background-color: $light-grey;
+    }
+
+    &__btns {
+        margin-top: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__back {
+        & div {
+					order: -1;
+            background: transparent url('../../assets/arrow_circle_l.svg') center center no-repeat;
+        }
+    }
+
+		&__submit {
+			color: $green-dark;
+			& div {
+				background: transparent url('../../assets/enter.svg') center center no-repeat;
+			}
+		}
+}

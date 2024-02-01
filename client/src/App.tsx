@@ -8,6 +8,8 @@ import {useDispatch} from "react-redux";
 import {initCategories} from "./store/categorySlice";
 import Main from "./pages/Main/Main";
 import InputSign from "./shared/InputSign/InputSign";
+import CtrlBtn from './shared/CtrlBtn/CtrlBtn';
+import Registration from './pages/Registration/Registration';
 
 
 function App() {
@@ -15,7 +17,7 @@ function App() {
   const [language, setLanguage] = useState<'en'|'ru'>('en');
   const dispatch = useDispatch();
 
-  const changeLanguage = (lng) => {
+  const changeLanguage = (lng: 'en' | 'ru') => {
     if (lng === 'en' || lng === 'ru') {
       setLanguage(lng);
     }
@@ -28,7 +30,7 @@ function App() {
   return (
     <LanguageContext.Provider value={language}>
       {/*<Main onSwapLanguage={changeLanguage} />*/}
-      <InputSign
+      {/* <InputSign
           isBig={true}
           type={'text'}
           errorText={''}
@@ -52,6 +54,8 @@ function App() {
           placeholder={'Password'}
           labelText={'Password'}
       />
+      <CtrlBtn text='Submit' extraClasses='control-button__submit'/> */}
+      <Registration />
     </LanguageContext.Provider>
 
   )

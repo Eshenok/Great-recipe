@@ -1,8 +1,17 @@
-import React, {useRef} from 'react';
+import {FC} from 'react';
 import './InputSign.scss';
 import useForm from "../../hooks/useForm";
 
-const InputSign = ({type, placeholder, errorText, labelText, name, isBig}) => {
+interface IInputSignProps {
+    type: string;
+    placeholder: string;
+    errorText: string;
+    labelText?: string;
+    name: string;
+    isBig: boolean;
+}
+
+const InputSign: FC<IInputSignProps> = ({type, placeholder, errorText, labelText, name, isBig}) => {
 
     const {inputValues, onChange} = useForm();
 

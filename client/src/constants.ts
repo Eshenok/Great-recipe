@@ -15,6 +15,12 @@ export const TEXTS = {
       profile: 'Profile',
       fridge: 'My fridge'
     },
+    inputlabel: {
+      pass: 'Password',
+      passcheck: 'Confirm password',
+      name: 'Name',
+      email: 'Email'
+    },
     inputph: {
       search: ['Search name & ing.', 'Apple', 'Bread', 'Garlic', 'Venetian Duck Ragu', 'Apple Frangipan Tart'],
       fridge: ['Add product'],
@@ -23,6 +29,7 @@ export const TEXTS = {
         pass: 'Password',
         name: 'Name',
         email: 'example@example.com',
+        passcheck: '********'
       }
     },
     categories: {
@@ -48,6 +55,14 @@ export const TEXTS = {
       rating: 'User rating',
       ingr: 'Ingredients up to',
       favourite: 'Favourite',
+    },
+    btns: {
+      log: 'Login',
+      submit: 'Submit',
+      reg: 'Registration',
+      edit: 'Edit profile',
+      exit: 'Exit',
+      change: 'Change Password',
     }
   },
   ru: {
@@ -55,6 +70,12 @@ export const TEXTS = {
       menu: 'Меню',
       profile: 'Профиль',
       fridge: 'Кухня'
+    },
+    inputlabel: {
+      pass: 'Пароль',
+      passcheck: 'Подтвердите пароль',
+      name: 'Имя',
+      email: 'Почта'
     },
     inputph: {
       search: ['Поиск по наименованию или инг.', 'Яблоко', 'Хлеб', 'Чеснок', 'Венецианское утиное рагу', 'Шарлотка'],
@@ -64,6 +85,7 @@ export const TEXTS = {
         pass: 'Пароль',
         name: 'Имя',
         email: 'example@example.ru',
+        passcheck: '********'
       }
     },
     categories: {
@@ -89,6 +111,14 @@ export const TEXTS = {
       rating: 'Оценка',
       ingr: 'По количеству инг.',
       favourite: 'Избранное',
+    },
+    btns: {
+      log: 'Вход',
+      submit: 'Подтердить',
+      reg: 'Регистрация',
+      edit: 'Изменить профиль',
+      exit: 'Выход',
+      change: 'Сменить пароль',
     }
   }
 }
