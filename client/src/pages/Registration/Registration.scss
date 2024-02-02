@@ -2,12 +2,13 @@
 
 .registration {
     background-color: $white;
-
-    & h2 {
-        width: 100%;
-    }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     &__form {
+        max-width: 400px;
         margin-top: 32px;
         padding: 16px 8px;
         border-radius: 25px;
