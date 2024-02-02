@@ -1,0 +1,55 @@
+@import "../../commonStyles/variables.scss";
+
+.input-sign {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__input {
+    width: 100%;
+    border-bottom: 1px solid $dark-grey;
+
+    /*font*/
+    text-align: center;
+    color: $dark-grey;
+    font-family: $montserrat-font;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%; /* 24px */
+  }
+
+  &_big {
+    .input-sign__input {
+      font-family: $meirienda-font;
+      font-size: 32px;
+      font-style: normal;
+      font-weight: 400;
+    }
+  }
+
+  &__label {
+    /*font*/
+    color: $dark-grey;
+    text-align: center;
+    font-variant-numeric: lining-nums proportional-nums;
+    font-family: $montserrat-font;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%; /* 21px */
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .input-sign {
+    &__input {
+      font-family: $montserrat-font;
+      font-size: 24px;
+      line-height: 36px;
+      letter-spacing: 0em;
+      text-align: center;
+
+    }
+  }
+}

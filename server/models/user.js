@@ -21,16 +21,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     minLength: 2,
     maxLength: 30,
+    required: true,
   },
   favorite: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'recipe',
-    unique: true,
   }],
   fridge: {
     type: [String],
     default: [],
-    unique: true,
   }
 });
 

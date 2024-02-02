@@ -1,0 +1,29 @@
+@import '../../commonStyles/variables.scss';;
+
+.cards {
+
+  & h2 {
+    width: 100%;
+    text-align: center;
+  }
+
+  &__grid {
+    padding: 8px 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 190px);
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    row-gap: 16px;
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .cards {
+    height: calc(100vh - 66px - 88px);
+    overflow-y: scroll;
+    &__grid {
+      row-gap: 8px;
+    }
+  }
+}

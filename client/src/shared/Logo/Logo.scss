@@ -1,0 +1,15 @@
+@import '../../commonStyles/variables';
+
+.logo {
+  &_orange .logo_colored {
+    fill: $orange-dark;
+  }
+
+  &_blue .logo_colored {
+    fill: $blue-dark;
+  }
+
+  &_green .logo_colored {
+    fill: $green-dark;
+  }
+}
