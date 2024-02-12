@@ -46,8 +46,8 @@ const Registration = () => {
         />
 
         <div className="form-s__btns">
-          <CtrlBtn extraClasses="form-s__login" text="Login"/>
-          <CtrlBtn extraClasses="form-s__submit" text="Submit"/>
+          <CtrlBtn extraClasses="form-s__login" text={TEXTS[context].btns.log}/>
+          <CtrlBtn extraClasses="form-s__submit" text={TEXTS[context].btns.submit}/>
         </div>
       </form>
     );

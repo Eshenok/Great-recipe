@@ -4,15 +4,10 @@ import './vendor/fonts/fonts.css';
 import './widgets/Form/Form.scss';
 import {useEffect, useState} from "react";
 import {LanguageContext} from "./context/LanguageContext";
-import useForm from "./hooks/useForm";
 import {useDispatch} from "react-redux";
 import {initCategories} from "./store/categorySlice";
-import Main from "./pages/Main/Main";
-import InputSign from "./shared/InputSign/InputSign";
-import CtrlBtn from './shared/CtrlBtn/CtrlBtn';
-import Registration from './widgets/Form/Registration/Registration';
-import Login from "./widgets/Form/Login/Login";
 import Sign from "./pages/Sign/Sign";
+import Header from './widgets/Header/Header';
 
 
 function App() {
@@ -32,9 +27,8 @@ function App() {
 
   return (
     <LanguageContext.Provider value={language}>
-      {/*<Registration />*/}
-      {/*<Login />*/}
-      <Sign route={'sign-up'} />
+      <Header onSwapLanguage={changeLanguage} />
+      <Sign route={'sign-in'} />
     </LanguageContext.Provider>
 
   )

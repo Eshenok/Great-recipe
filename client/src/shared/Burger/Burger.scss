@@ -2,6 +2,7 @@
 
 .burger {
   filter: drop-shadow(0 0 1px $dark-grey);
+  position: fixed;
   right: 0;
   top: 0;
   cursor: pointer;
