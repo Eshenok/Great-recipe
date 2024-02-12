@@ -2,11 +2,10 @@
 
 .header {
   z-index: 5;
-    position: fixed;
-    left: -270px;
-    top: 0;
-    transition: left .3s ease-in;
-
+  position: fixed;
+  left: -270px;
+  top: 0;
+  transition: left .3s ease-in;
 
   min-height: min-content;
   background: white center center no-repeat;
