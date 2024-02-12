@@ -11,7 +11,7 @@ input {
 }
 
 body {
-  /*overflow-y: hidden;*/
+  overflow-y: hidden;
   /*max-width: 1280px;*/
   /*width: 100%;*/
   /*margin: 0 auto;*/
