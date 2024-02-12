@@ -6,10 +6,10 @@ import CardGrid from "../../widgets/CardGrid/CardGrid";
 import Category from "../../entities/Category/Category";
 import Burger from "../../shared/Burger/Burger";
 
-const Main = ({onSwapLanguage}) => {
+const Main = () => {
 
   return (
-    <main className={`main ${isOpenHeader ? 'main_open-head' : ''}`}>
+    <main className={`main`}>
       <section className={"main__main-section"}>
         <Filter extraClasses={'main__filter'} />
         <div className={"main__recipes"}>

@@ -23,7 +23,7 @@ const Header: FC<IHeaderProps> = ({onSwapLanguage}) => {
     <header
         className={`header ${isOpenHeader ? 'header_open' : ''} ${location.pathname.includes('/fridge') ? 'header_blue' : location.pathname.includes('/profile') ? 'header_green' : 'header_orange'}`}
       >
-        <Burger onClick={openHeader}/>
+        <Burger onClick={openHeader} extraClasses='header__burger'/>
         <LanguageSwap extraClasses={"header__lng"} onSwap={onSwapLanguage} />
         <div className={"header__menu"}>
           <Logo />

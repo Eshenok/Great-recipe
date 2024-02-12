@@ -59,8 +59,14 @@
 
 @media screen and (min-width: 720px) {
   .header {
+    left: 0;
+
     &__menu {
       margin-top: 32px;
+    }
+
+    &__burger {
+      display: none;
     }
   }
 }

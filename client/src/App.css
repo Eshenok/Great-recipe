@@ -23,3 +23,10 @@ body {
   outline: none;
   border: none;
 }
+
+@media screen and (min-width: 720px) {
+  .content {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+  }
+}

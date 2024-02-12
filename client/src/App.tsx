@@ -8,6 +8,7 @@ import {useDispatch} from "react-redux";
 import {initCategories} from "./store/categorySlice";
 import Sign from "./pages/Sign/Sign";
 import Header from './widgets/Header/Header';
+import Main from './pages/Main/Main';
 
 
 function App() {
@@ -28,7 +29,11 @@ function App() {
   return (
     <LanguageContext.Provider value={language}>
       <Header onSwapLanguage={changeLanguage} />
-      <Sign route={'sign-in'} />
+      <div className='content'>
+        <div className='content__bg'/>
+        <Sign route={'sign-in'} />
+        {/* <Main  /> */}
+      </div>
     </LanguageContext.Provider>
 
   )
