@@ -1,16 +1,13 @@
 import './App.css'
 import './commonStyles/Animations.scss';
 import './vendor/fonts/fonts.css';
+import './widgets/Form/Form.scss';
 import {useEffect, useState} from "react";
 import {LanguageContext} from "./context/LanguageContext";
-import useForm from "./hooks/useForm";
 import {useDispatch} from "react-redux";
 import {initCategories} from "./store/categorySlice";
-import Main from "./pages/Main/Main";
-import InputSign from "./shared/InputSign/InputSign";
-import CtrlBtn from './shared/CtrlBtn/CtrlBtn';
-import Registration from './pages/Registration/Registration';
-
+import Sign from "./pages/Sign/Sign";
+import Header from './widgets/Header/Header';
 
 function App() {
 
@@ -29,33 +26,12 @@ function App() {
 
   return (
     <LanguageContext.Provider value={language}>
-      {/*<Main onSwapLanguage={changeLanguage} />*/}
-      {/* <InputSign
-          isBig={true}
-          type={'text'}
-          errorText={''}
-          name={'user-name'}
-          placeholder={'UserName'}
-          labelText={'Name'}
-      />
-      <InputSign
-          isBig={false}
-          type={'email'}
-          errorText={''}
-          name={'user-email'}
-          placeholder={'Email'}
-          labelText={'Email'}
-      />
-      <InputSign
-          isBig={false}
-          type={'password'}
-          errorText={''}
-          name={'user-pass'}
-          placeholder={'Password'}
-          labelText={'Password'}
-      />
-      <CtrlBtn text='Submit' extraClasses='control-button__submit'/> */}
-      <Registration />
+      <Header onSwapLanguage={changeLanguage} />
+      <div className='content'>
+        <div className='content__bg'/>
+        <Sign route={'sign-in'} />
+        {/* <Main  /> */}
+      </div>
     </LanguageContext.Provider>
 
   )

@@ -40,16 +40,3 @@
     line-height: 150%; /* 21px */
   }
 }
-
-@media screen and (min-width: 720px) {
-  .input-sign {
-    &__input {
-      font-family: $montserrat-font;
-      font-size: 24px;
-      line-height: 36px;
-      letter-spacing: 0em;
-      text-align: center;
-
-    }
-  }
-}

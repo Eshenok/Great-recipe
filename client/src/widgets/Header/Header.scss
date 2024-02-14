@@ -1,6 +1,12 @@
 @import "../../commonStyles/variables";
 
 .header {
+  z-index: 5;
+  position: fixed;
+  left: -270px;
+  top: 0;
+  transition: left .3s ease-in;
+
   min-height: min-content;
   background: white center center no-repeat;
   background-size: cover;
@@ -12,6 +18,22 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
+
+  &__overlay {
+    display: none;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 4;
+
+    &_open {
+      display: block;
+    }
+  }
+
+  &_open {
+    left: 0;
+  }
 
   &_orange {
     background-image:  url("../../assets/header_bg_orange.svg");
@@ -37,8 +59,14 @@
 
 @media screen and (min-width: 720px) {
   .header {
+    left: 0;
+
     &__menu {
       margin-top: 32px;
+    }
+
+    &__burger {
+      display: none;
     }
   }
 }
