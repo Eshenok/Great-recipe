@@ -25,7 +25,7 @@ const Menu: FC<IMenuProps> = ({extraClasses}) => {
           {TEXTS[context].menu.menu}
         </NavLink>
         <NavLink
-          to={'/profile'}
+          to={'/sign-in'}
           className={({ isActive, isPending }) =>
             isPending ? "pending" : isActive ? "menu__link menu__link_colored_green" : "menu__link"
           }

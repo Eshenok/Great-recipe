@@ -8,6 +8,7 @@ import {useDispatch} from "react-redux";
 import {initCategories} from "./store/categorySlice";
 import Sign from "./pages/Sign/Sign";
 import Header from './widgets/Header/Header';
+import { Outlet } from 'react-router-dom';
 
 function App() {
 
@@ -29,7 +30,8 @@ function App() {
       <Header onSwapLanguage={changeLanguage} />
       <div className='content'>
         <div className='content__bg'/>
-        <Sign route={'sign-in'} />
+          <Outlet />
+        {/* <Sign route={'sign-in'} /> */}
         {/* <Main  /> */}
       </div>
     </LanguageContext.Provider>

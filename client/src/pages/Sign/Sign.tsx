@@ -5,25 +5,23 @@ import Registration from "../../widgets/Form/Registration/Registration";
 import Title from "../../shared/Title/Title";
 import {LanguageContext} from "../../context/LanguageContext";
 import {TEXTS} from "../../constants";
+import { redirect, useLocation } from 'react-router-dom';
 
-interface ISignProps {
-  route: 'sign-in' | 'sign-up';
-}
-
-const Sign: FC<ISignProps> = ({route}) => {
+const Sign: FC<ISignProps> = () => {
 
   const context = useContext(LanguageContext);
+  const location = useLocation();
 
   return (
     <section className={"auth"}>
       <div className={"auth__white"}>
-        <Title text={`${route === 'sign-up' ? TEXTS[context].titles.reg : TEXTS[context].titles.login}`} />
+        <Title text={TEXTS[context].titles[location.pathname === '/sign-in' ? 'login' : location.pathname === '/sign-up' ? 'reg' : 'profile']} />
         <div className={"auth__form"}>
           {
-            route === 'sign-up' && <Registration />
+            location.pathname === '/sign-up' && <Registration />
           }
           {
-            route === 'sign-in' && <Login />
+            location.pathname === '/sign-in' && <Login />
           }
         </div>
       </div>
