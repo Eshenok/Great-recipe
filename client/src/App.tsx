@@ -8,7 +8,8 @@ import {useDispatch} from "react-redux";
 import {initCategories} from "./store/categorySlice";
 import Sign from "./pages/Sign/Sign";
 import Header from './widgets/Header/Header';
-import { Outlet } from 'react-router-dom';
+import { Route, Switch, useHistory, useRouteMatch } from "react-router-dom";
+import Main from './pages/Main/Main';
 
 function App() {
 
@@ -30,9 +31,15 @@ function App() {
       <Header onSwapLanguage={changeLanguage} />
       <div className='content'>
         <div className='content__bg'/>
-          <Outlet />
-        {/* <Sign route={'sign-in'} /> */}
-        {/* <Main  /> */}
+        <Switch>
+          <Route exact path="/">
+            <Main />
+          </Route>
+
+          <Route path="/sign-*">
+            <Sign />
+          </Route>
+        </Switch>
       </div>
     </LanguageContext.Provider>
 
