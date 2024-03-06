@@ -21,7 +21,7 @@ const Header: FC<IHeaderProps> = ({onSwapLanguage}) => {
   return (
     <>
     <header
-        className={`header ${isOpenHeader ? 'header_open' : ''} ${location.pathname.includes('/fridge') ? 'header_blue' : location.pathname.includes('/profile') ? 'header_green' : 'header_orange'}`}
+        className={`header ${isOpenHeader ? 'header_open' : ''} ${location.pathname.includes('/fridge') ? 'header_blue' : location.pathname.includes('/profile') || location.pathname.includes('sign')  ? 'header_green' : 'header_orange'}`}
       >
         <Burger onClick={openHeader} extraClasses='header__burger'/>
         <LanguageSwap extraClasses={"header__lng"} onSwap={onSwapLanguage} />

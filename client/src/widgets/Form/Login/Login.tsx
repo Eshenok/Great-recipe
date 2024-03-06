@@ -3,6 +3,7 @@ import CtrlBtn from "../../../shared/CtrlBtn/CtrlBtn";
 import InputSign from "../../../shared/InputSign/InputSign";
 import {TEXTS} from "../../../constants";
 import {LanguageContext} from "../../../context/LanguageContext";
+import { Link } from 'react-router-dom';
 
 const Login = () => {
 
@@ -29,7 +30,9 @@ const Login = () => {
         />
 
         <div className={"form-s__btns"}>
-          <CtrlBtn extraClasses="form-s__auth" text={TEXTS[context].btns.reg}/>
+          <CtrlBtn extraClasses="form-s__auth">
+            <Link to={'/sign-up'}>{TEXTS[context].btns.reg}</Link>
+          </CtrlBtn>
           <CtrlBtn extraClasses="form-s__submit" text={TEXTS[context].btns.submit}/>
         </div>
       </form>
