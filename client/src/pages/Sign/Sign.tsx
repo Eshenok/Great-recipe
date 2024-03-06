@@ -19,9 +19,6 @@ const Sign: FC = () => {
         <Title text={TEXTS[context].titles[location.pathname === '/sign-in' ? 'login' : location.pathname === '/sign-up' ? 'reg' : 'profile']} />
         <div className={"auth__form"}>
           {
-            login && <Redirect to='/profile' />
-          }
-          {
             location.pathname === '/sign-up' && <Registration />
           }
           {

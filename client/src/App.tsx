@@ -3,11 +3,13 @@ import './commonStyles/Animations.scss';
 import './vendor/fonts/fonts.css';
 import './widgets/Form/Form.scss';
 import {useEffect, useState} from "react";
+import {Outlet} from 'react-router-dom';
 import {LanguageContext} from "./context/LanguageContext";
 import {useDispatch} from "react-redux";
 import {initCategories} from "./store/categorySlice";
 import Sign from "./pages/Sign/Sign";
 import Header from './widgets/Header/Header';
+import Main from "./pages/Main/Main";
 
 function App() {
 
@@ -29,8 +31,9 @@ function App() {
       <Header onSwapLanguage={changeLanguage} />
       <div className='content'>
         <div className='content__bg'/>
-        <Sign route={'sign-in'} />а
-        {/* <Main  /> */}
+        {/*<Sign route={'sign-in'} />*/}
+        {/* <Main  />*/}
+        <Outlet />
       </div>
     </LanguageContext.Provider>
 
