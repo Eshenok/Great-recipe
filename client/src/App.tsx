@@ -29,7 +29,7 @@ function App() {
       <Header onSwapLanguage={changeLanguage} />
       <div className='content'>
         <div className='content__bg'/>
-        <Sign route={'sign-in'} />
+        <Sign route={'sign-in'} />а
         {/* <Main  /> */}
       </div>
     </LanguageContext.Provider>
