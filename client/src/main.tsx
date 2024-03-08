@@ -17,7 +17,6 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       {
-        errorElement: <NotFound />,
         children: [
           {index: true, element: <Main />},
           {

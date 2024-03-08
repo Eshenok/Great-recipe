@@ -20,7 +20,7 @@ const Header: FC<IHeaderProps> = ({onSwapLanguage}) => {
 
   return (
     <>
-    <header
+      <header
         className={`header ${isOpenHeader ? 'header_open' : ''} ${location.pathname.includes('/fridge') ? 'header_blue' : location.pathname.includes('/profile') || location.pathname.includes('sign')  ? 'header_green' : 'header_orange'}`}
       >
         <Burger onClick={openHeader} extraClasses='header__burger'/>
@@ -34,8 +34,8 @@ const Header: FC<IHeaderProps> = ({onSwapLanguage}) => {
 
       <div className={`header__overlay ${isOpenHeader ? 'header__overlay_open' : ''}`} onClick={openHeader} />
     </>
-      
-    
+
+
   );
 };
 

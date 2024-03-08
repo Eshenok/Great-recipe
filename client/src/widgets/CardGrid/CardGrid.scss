@@ -1,6 +1,8 @@
 @import '../../commonStyles/variables.scss';;
 
 .cards {
+  height: calc(100% - 48px);
+  overflow-y: scroll;
 
   & h2 {
     width: 100%;
@@ -8,6 +10,7 @@
   }
 
   &__grid {
+
     padding: 8px 0;
     display: grid;
     grid-template-columns: repeat(auto-fit, 190px);
@@ -20,9 +23,12 @@
 
 @media screen and (min-width: 720px) {
   .cards {
-    height: calc(100vh - 66px - 88px);
-    overflow-y: scroll;
+    height: 100%;
+    overflow-y: hidden;
+    //height: calc(100vh - 66px - 88px);
     &__grid {
+      overflow-y: scroll;
+      height: calc(100% - 48px);
       row-gap: 8px;
     }
   }

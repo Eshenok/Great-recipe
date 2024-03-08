@@ -1,14 +1,17 @@
 @import '../../commonStyles/variables.scss';
 
 .tab {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   user-select: none;
-  height: 15px;
+  min-height: 15px;
   border: 1px solid $dark-grey;
   padding: 0 4px;
   border-radius: 15px;
   min-width: 35px;
-  max-width: 100px;
-  width: min-content;
+  max-width: 160px;
+  width: max-content;
   background-color: white;
   display: flex;
   justify-content: space-between;
@@ -35,6 +38,15 @@
     user-select: text;
   }
 
+  &__remove-prd-btn {
+    outline: none;
+    border: none;
+    width: 15px;
+    height: 15px;
+    background: transparent url("../../assets/shoping_cart_min.svg") no-repeat center center;
+    background-size: cover;
+  }
+
   &__close-btn {
     outline: none;
     border: none;
@@ -48,13 +60,19 @@
 @media screen and (min-width: 720px) {
   .tab {
     gap: 8px;
-    height: 20px;
+    min-height: 20px;
     font-size: 14px;
     min-width: 47px;
 
     &__close-btn {
       width: 8px;
       height: 8px;
+    }
+
+    &__remove-prd-btn {
+      width: 18px;
+      height: 18px;
+
     }
   }
 }
