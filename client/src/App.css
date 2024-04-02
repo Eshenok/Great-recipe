@@ -10,6 +10,10 @@ input {
   background-color: transparent;
 }
 
+label, img {
+  user-select: none;
+}
+
 body {
   overflow-y: hidden;
   /*max-width: 1280px;*/
