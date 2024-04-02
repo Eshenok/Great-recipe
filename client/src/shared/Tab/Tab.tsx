@@ -10,7 +10,7 @@ interface ITabProps {
 const Tab: FC<ITabProps> = ({text, children, isActive}) => {
   return (
     <div className={`tab ${isActive ? 'tab_active' : ''}`}>
-      <p className={"tab__text"}>{text}</p>
+      <p className={`tab__text ${children ? 'tab__text_icon' : ''}`}>{text}</p>
       {children}
     </div>
   );

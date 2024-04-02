@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const useForm = () => {
-  const [inputValues, setInputValues] = useState({});
+  const [inputValues, setInputValues] = useState<Record <string, any>>({});
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
@@ -10,7 +10,7 @@ const useForm = () => {
 
   const onSwitch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
-    setInputValues({...inputValues, [target.name]: target.checked})
+    setInputValues({...inputValues, [target.name]: target.checked});
   }
 
   const onPut = (name: string, value: any) => {

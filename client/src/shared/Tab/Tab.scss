@@ -36,6 +36,13 @@
 
   &__text {
     user-select: text;
+
+    &_icon {
+      width: calc(100% - 15px);
+      overflow: hidden; /* Скрываем избытык контента */
+  white-space: nowrap; /* Запрещаем перенос слов */
+  text-overflow: ellipsis;
+    }
   }
 
   &__remove-prd-btn {

@@ -1,4 +1,4 @@
-import React, {FC, useContext} from 'react';
+import {FC, useContext} from 'react';
 import './Fridge.scss';
 import Main from "../Main/Main";
 import Title from "../../shared/Title/Title";
@@ -14,7 +14,7 @@ const Fridge: FC = () => {
   const {onChange, inputValues} = useForm();
 
   const products = () => {
-    const xdd = [];
+    const xdd: JSX.Element[] = [];
     const products = ['Apple', 'Apple', 'Лютый Черный перец Чили', 'Картошка', 'Cucumber', 'Кукумбер'];
     products.forEach((item, i) => {
       xdd.push(<Tab text={item} key={i} isActive={false}>
