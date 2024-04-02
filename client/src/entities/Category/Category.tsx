@@ -1,9 +1,8 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import { TouchEvent, useContext, useRef, useState} from 'react';
 import {TEXTS} from "../../constants";
 import {LanguageContext} from "../../context/LanguageContext";
 import CategoryItem from "./components/CategoryItem/CategoryItem";
 import CheckSwitch from "../../shared/CheckSwitch/CheckSwitch";
-import Title from "../../shared/Title/Title";
 import {useDispatch, useSelector} from "react-redux";
 import {changeCurrCategories} from "../../store/categorySlice";
 
@@ -12,17 +11,19 @@ const Category = () => {
   const context = useContext(LanguageContext);
   const {categories} = useSelector(state => state.categories);
   const dispatch = useDispatch();
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [startX, setStartX] = useState(0);
 
-  const handleTouchStart = (e) => {
+  const handleTouchStart = (e: TouchEvent<HTMLDivElement>) => {
     setStartX(e.touches[0].clientX)
   }
 
-  const handleTouchMove = (e) => {
+  const handleTouchMove = (e: TouchEvent<HTMLDivElement>) => {
     const deltaX = e.touches[0].clientX - startX;
-    containerRef.current.scrollLeft -= deltaX;
-    setStartX(e.touches[0].clientX);
+    if (containerRef.current) {
+      containerRef.current.scrollLeft -= deltaX;
+      setStartX(e.touches[0].clientX);
+    }
   };
 
   const handleChooseCategory = (name: string) => {

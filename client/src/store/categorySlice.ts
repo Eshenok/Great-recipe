@@ -1,6 +1,13 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {TEXTS} from "../constants";
 
+type CategoriesT = {
+  name: string,
+  key: string,
+  checked: boolean,
+  image: string
+}
+
 export const categorySlice = createSlice({
   name: 'categories',
   initialState: {
