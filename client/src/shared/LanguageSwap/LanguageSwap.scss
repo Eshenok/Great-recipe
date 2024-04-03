@@ -1,0 +1,105 @@
+@import '../../commonStyles/variables';
+
+.lng-swap {
+  z-index: 2;
+  border-radius: 50px;
+  background-color: $white;
+  padding: 2px 8px;
+  width: max-content;
+  position: relative;
+
+  &__head {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__planet {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: transparent url("../../assets/planet.svg") no-repeat center center;
+    background-size: contain;
+  }
+
+  &__arrow {
+    user-select: none;
+    display: block;
+    width: 8px;
+    height: 5px;
+    background: transparent url("../../assets/arrow_s.svg") no-repeat center center;
+    background-size: cover;
+    /*anim*/
+    transition: all .2s ease-in-out;
+
+    &_open {
+      transform: rotate(-180deg);
+    }
+  }
+
+  &__text {
+    user-select: none;
+    width: max-content;
+    /*font*/
+    color: #333;
+    text-align: center;
+    font-family: $montserrat-font;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+  }
+
+  &__dd-text {
+    display: none;
+  }
+
+  &__dd {
+    z-index: -1;
+    position: absolute;
+    background-color: $white;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    padding: 25px 8px 2px;
+    top: 14px;
+    left: 0;
+    gap: 2px;
+    display: flex;
+    flex-direction: column;
+    visibility: hidden;
+    max-height: 0;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    /*anim*/
+    transition: max-height .2s linear, visibility .2s linear;
+
+    &_open {
+      max-height: 100px;
+      visibility: visible;
+      box-shadow: 0 2px 2px #33333360;
+    }
+  }
+
+  &__text_lng {
+    cursor: pointer;
+    overflow: hidden;
+    width: 2ch;
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .lng-swap {
+    &__dd-text {
+      display: inline;
+    }
+
+    &__text_lng {
+      overflow: hidden;
+      width: 100%;
+      text-align: left;
+    }
+  }
+}

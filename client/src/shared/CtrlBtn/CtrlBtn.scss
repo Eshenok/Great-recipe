@@ -1,0 +1,25 @@
+@import '../../commonStyles/variables.scss';
+
+.control-button {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+
+	cursor: pointer;
+  font-family: $montserrat-font;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+  letter-spacing: 0em;
+  text-align: left;
+
+
+	& a {
+		text-decoration: none;
+	}
+
+	&__icon {
+		width: 24px;
+		height: 24px;
+	}
+}

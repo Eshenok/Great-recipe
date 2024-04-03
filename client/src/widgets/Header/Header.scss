@@ -1,0 +1,72 @@
+@import "../../commonStyles/variables";
+
+.header {
+  z-index: 5;
+  position: fixed;
+  left: -270px;
+  top: 0;
+  transition: left .3s ease-in;
+
+  min-height: min-content;
+  background: white center center no-repeat;
+  background-size: cover;
+  border-radius: 25px;
+  margin: 8px 0 8px 8px;
+  width: 256px;
+  padding: 8px 8px;
+  height: calc(100vh - 16px);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  &__overlay {
+    display: none;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 4;
+
+    &_open {
+      display: block;
+    }
+  }
+
+  &_open {
+    left: 0;
+  }
+
+  &_orange {
+    background-image:  url("../../assets/header_bg_orange.svg");
+  }
+
+  &_blue {
+    background-image:  url("../../assets/header_bg_blue.svg");
+  }
+
+  &_green {
+    background-image:  url("../../assets/header_bg_green.svg");
+  }
+
+  &__menu {
+    margin-top: 8px;
+    margin-bottom: auto;
+    & > svg {
+      margin-bottom: 16px;
+    }
+    padding: 0 26px;
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .header {
+    left: 0;
+
+    &__menu {
+      margin-top: 32px;
+    }
+
+    &__burger {
+      display: none;
+    }
+  }
+}

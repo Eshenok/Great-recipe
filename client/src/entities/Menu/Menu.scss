@@ -1,0 +1,64 @@
+@import "../../commonStyles/variables";
+
+.menu {
+  height: 100%;
+  width: 100%;
+
+  &__navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__link {
+    white-space: nowrap;
+    position: relative;
+    user-select: none;
+    padding: 8px 16px 8px 58px;
+    border-radius: 24px;
+    border: 3px solid #333;
+    background: $white;
+    display: flex;
+    align-items: center;
+
+    /*font*/
+    text-decoration: none;
+    color: $dark-grey;
+    font-family: $montserrat-font;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%; /* 36px */
+
+    & svg {
+      position: absolute;
+      left: 18px;
+    }
+
+    &_colored {
+
+      &_orange {
+        color: $orange-dark;
+        & svg path {
+          fill: $orange-dark;
+        }
+      }
+
+      &_green {
+        color: $green-dark;
+
+        & svg path {
+          fill: $green-dark;
+        }
+      }
+
+      &_blue {
+        color: $blue-dark;
+
+        & svg path {
+          fill: $blue-dark;
+        }
+      }
+    }
+  }
+}

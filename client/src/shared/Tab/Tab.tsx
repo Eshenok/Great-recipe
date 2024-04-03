@@ -1,16 +1,17 @@
-import {FC} from 'react';
+import React, {FC} from 'react';
 import './Tab.scss';
 
 interface ITabProps {
   text: string;
-  onClose: () => void;
+  children: React.ReactNode;
+  isActive: boolean;
 }
 
-const Tab: FC<ITabProps> = ({text, onClose}) => {
+const Tab: FC<ITabProps> = ({text, children, isActive}) => {
   return (
-    <div className={"tab"}>
-      <p className={"tab__text"}>{text}</p>
-      <button className={"tab__close-btn"} onClick={onClose} />
+    <div className={`tab ${isActive ? 'tab_active' : ''}`}>
+      <p className={`tab__text ${children ? 'tab__text_icon' : ''}`}>{text}</p>
+      {children}
     </div>
   );
 };

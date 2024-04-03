@@ -1,46 +1,85 @@
-@import url('../../variables.scss');
+@import '../../commonStyles/variables.scss';
 
 .tab {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  user-select: none;
+  min-height: 15px;
+  border: 1px solid $dark-grey;
+  padding: 0 4px;
+  border-radius: 15px;
+  min-width: 35px;
+  max-width: 160px;
   width: max-content;
-  border-radius: 50px;
   background-color: white;
-  border: 1px solid #333;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 4px;
-  padding: 0 4px;
+
+  /*font*/
+  color: $dark-grey;
+  text-align: center;
+  font-family: $montserrat-font;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 15px */
+
+    &_active {
+      border: 1px solid $orange-dark;
+      .tab__text,.tab__input {
+        color: $orange-dark;
+      }
+    }
 
   &__text {
-    /*font*/
-    color: #333;
-    font-family: "Montserrat", Arial, sans-serif;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 150%;
+    user-select: text;
+
+    &_icon {
+      width: calc(100% - 15px);
+      overflow: hidden; /* Скрываем избытык контента */
+  white-space: nowrap; /* Запрещаем перенос слов */
+  text-overflow: ellipsis;
+    }
+  }
+
+  &__remove-prd-btn {
+    outline: none;
+    border: none;
+    width: 15px;
+    height: 15px;
+    background: transparent url("../../assets/shoping_cart_min.svg") no-repeat center center;
+    background-size: cover;
   }
 
   &__close-btn {
-    background: transparent url("../../assets/close-s.svg") no-repeat center center;
-    background-size: cover;
     outline: none;
     border: none;
     width: 6px;
     height: 6px;
+        background: transparent url("../../assets/close-s.svg") no-repeat center center;
+        background-size: cover;
   }
 }
 
 @media screen and (min-width: 720px) {
   .tab {
     gap: 8px;
-
-    &__text {
-      font-size: 14px;
-    }
+    min-height: 20px;
+    font-size: 14px;
+    min-width: 47px;
 
     &__close-btn {
       width: 8px;
       height: 8px;
+    }
+
+    &__remove-prd-btn {
+      width: 18px;
+      height: 18px;
+
     }
   }
 }

@@ -1,0 +1,52 @@
+@import "../../commonStyles/variables.scss";
+
+.fridge {
+  padding: 8px;
+  overflow-y: auto;
+
+  &__bg {
+    height: calc(100vh - 16px);
+    position: relative;
+    background-color: $dark-grey;
+    border-radius: 25px;
+    padding: 32px 8px 8px;
+    & input {
+      border: 2px solid $blue-dark;
+    }
+  }
+
+  &__white {
+    height: 100%;
+    padding: 16px 8px;
+    background-color: $white;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__products {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .fridge {
+    padding-left: 0;
+    display: grid;
+    grid-template-columns: calc(485px - 256px) 1fr;
+    &__bg {
+      padding: 32px 16px 16px;
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+    }
+
+    &__white {
+      margin: 0 0 0 20px;
+    }
+  }
+}

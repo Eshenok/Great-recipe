@@ -1,0 +1,35 @@
+@import "../../commonStyles/variables.scss";
+
+.form-s {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &__btns {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__login {
+    & div {
+      order: -1;
+      background: transparent url('../../assets/arrow_circle_l.svg') center center no-repeat;
+    }
+  }
+
+  &__auth {
+    & div {
+      order: -1;
+      background: transparent url("../../assets/auth.svg") center center no-repeat;
+    }
+  }
+
+  &__submit {
+    color: $green-dark;
+    & div {
+      background: transparent url('../../assets/enter.svg') center center no-repeat;
+    }
+  }
+}
