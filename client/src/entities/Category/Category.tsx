@@ -4,12 +4,13 @@ import {LanguageContext} from "../../context/LanguageContext";
 import CategoryItem from "./components/CategoryItem/CategoryItem";
 import CheckSwitch from "../../shared/CheckSwitch/CheckSwitch";
 import {useDispatch, useSelector} from "react-redux";
-import {changeCurrCategories} from "../../store/categorySlice";
+import {changeCurrCategories, selectCategories} from "../../store/categorySlice";
+import { CategoryItemFullType } from '../../Types/CategoryItemType';
 
 const Category = () => {
 
   const context = useContext(LanguageContext);
-  const {categories} = useSelector(state => state.categories);
+  const {categories} = useSelector(selectCategories);
   const dispatch = useDispatch();
   const containerRef = useRef<HTMLDivElement>(null);
   const [startX, setStartX] = useState(0);
@@ -41,7 +42,7 @@ const Category = () => {
       <CheckSwitch name={'infridge'} color={'blue'} />
       <h3 className={"category__title"}>{TEXTS[context].titles.category}</h3>
       {
-        categories.map(elem =>
+        categories.map((elem: CategoryItemFullType) =>
           <CategoryItem checked={elem.checked} onChoose={() => {handleChooseCategory(elem.name)}} text={elem.name} icon={elem.image} key={elem.key} />
         )
       }

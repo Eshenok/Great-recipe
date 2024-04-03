@@ -9,6 +9,8 @@ const Registration = () => {
 
     const context = useContext(LanguageContext);
 
+    const ph = TEXTS[context].inputph.account as Record<string, string>;
+
     return (
       <form onSubmit={(e) => {e.preventDefault()}} className="form-s">
         <InputSign
@@ -17,7 +19,7 @@ const Registration = () => {
           isBig={true}
           labelText={TEXTS[context].inputlabel.name}
           errorText=""
-          placeholder={TEXTS[context].inputph.account.name}
+          placeholder={ph.name}
         />
 
         <InputSign
@@ -26,7 +28,7 @@ const Registration = () => {
           isBig={false}
           labelText={TEXTS[context].inputlabel.email}
           errorText=""
-          placeholder={TEXTS[context].inputph.account.email}
+          placeholder={ph.email}
         />
 
         <InputSign
@@ -35,7 +37,7 @@ const Registration = () => {
           isBig={false}
           labelText={TEXTS[context].inputlabel.pass}
           errorText=""
-          placeholder={TEXTS[context].inputph.account.pass}
+          placeholder={ph.pass}
         />
 
         <InputSign
@@ -43,7 +45,7 @@ const Registration = () => {
           name="userPassChecker"
           isBig={false}
           labelText={TEXTS[context].inputlabel.passcheck}
-          errorText="" placeholder={TEXTS[context].inputph.account.passcheck}
+          errorText="" placeholder={ph.passcheck}
         />
 
         <div className="form-s__btns">

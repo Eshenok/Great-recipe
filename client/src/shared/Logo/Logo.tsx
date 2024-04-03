@@ -1,4 +1,3 @@
-import React from 'react';
 import './Logo.scss';
 import { useLocation } from 'react-router-dom';
 

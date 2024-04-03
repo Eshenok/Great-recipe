@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import {useContext} from 'react';
 import CtrlBtn from "../../../shared/CtrlBtn/CtrlBtn";
 import InputSign from "../../../shared/InputSign/InputSign";
 import {TEXTS} from "../../../constants";
@@ -9,6 +9,8 @@ const Login = () => {
 
   const context = useContext(LanguageContext);
 
+  const phs = TEXTS[context].inputph.account as Record<string, string>
+
   return (
       <form className={"form-s"}>
         <InputSign
@@ -17,7 +19,7 @@ const Login = () => {
           isBig={false}
           labelText={TEXTS[context].inputlabel.email}
           errorText=""
-          placeholder={TEXTS[context].inputph.account.email}
+          placeholder={phs.email}
         />
 
         <InputSign
@@ -26,7 +28,7 @@ const Login = () => {
           isBig={false}
           labelText={TEXTS[context].inputlabel.pass}
           errorText=""
-          placeholder={TEXTS[context].inputph.account.pass}
+          placeholder={phs.pass}
         />
 
         <div className={"form-s__btns"}>

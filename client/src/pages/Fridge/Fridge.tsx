@@ -25,6 +25,8 @@ const Fridge: FC = () => {
     return xdd;
   }
 
+  const phs = TEXTS[context].inputph.fridge as string[]
+
   return (
     <section className={"fridge"}>
       <div className={"fridge__bg"}>
@@ -35,7 +37,7 @@ const Fridge: FC = () => {
             name={'add-prod'}
             values={inputValues['add-prod']}
             onChange={onChange}
-            placeholders={TEXTS[context].inputph.fridge}
+            placeholders={phs}
             isAnim={false}
           />
           <div className={"fridge__products"}>

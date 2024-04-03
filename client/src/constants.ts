@@ -7,8 +7,20 @@ import seafood from './assets/category_seafood.svg';
 import vegan from './assets/category_vegetarian.svg';
 import start from './assets/category_starter.svg';
 import {ServerRecipeType} from "./Types/ServerRecipeType";
+import LanguageType from './Types/LanguageType';
+import { CategoryItemType } from './Types/CategoryItemType';
 
-export const TEXTS = {
+type Texts = {
+  menu: Record<string, string>;
+  inputlabel: Record<string, string>;
+  inputph: Record<string, string | string[] | { [key: string]: string }>;
+  categories: Record<string, CategoryItemType>;
+  titles: Record<string, string>;
+  filter: Record<string, string>;
+  btns: Record<string, string>;
+};
+
+export const TEXTS: Record<LanguageType, Texts> = {
   en: {
     menu: {
       menu: 'Menu',

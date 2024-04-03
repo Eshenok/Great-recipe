@@ -1,4 +1,4 @@
-import React, {FC, useContext} from 'react';
+import {FC, useContext} from 'react';
 import './CardGrid.scss';
 import {TEST_RECIPE, TEXTS} from "../../constants";
 import {ServerRecipeType} from "../../Types/ServerRecipeType";

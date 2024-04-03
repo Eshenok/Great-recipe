@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import {FC, useState} from 'react';
 import './Header.scss';
 import Menu from "../../entities/Menu/Menu";
 import LanguageSwap from "../../shared/LanguageSwap/LanguageSwap";

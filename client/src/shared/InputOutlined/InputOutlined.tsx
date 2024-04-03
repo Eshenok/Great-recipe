@@ -1,10 +1,10 @@
-import React, {FC, useEffect, useRef, useState} from 'react';
+import {ChangeEvent, FC, useEffect, useRef, useState} from 'react';
 import './InputOutlined.scss';
 
 interface IInputOutlinedProps {
   name: string;
-  values: undefined;
-  onChange: (e) => void;
+  values: Record<string, any>;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   placeholders: string[];
   isAnim: boolean;
 

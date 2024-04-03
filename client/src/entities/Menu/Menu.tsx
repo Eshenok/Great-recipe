@@ -1,6 +1,6 @@
 import {FC, useContext} from 'react';
 import './Menu.scss';
-import {NavLink, useLocation} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {LanguageContext} from "../../context/LanguageContext";
 import {TEXTS} from "../../constants";
 
@@ -11,8 +11,6 @@ interface IMenuProps {
 const Menu: FC<IMenuProps> = ({extraClasses}) => {
 
   const context = useContext(LanguageContext);
-
-  const location = useLocation();
 
   return (
     <menu className={`menu ${extraClasses ? extraClasses : ''}`}>

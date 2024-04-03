@@ -1,27 +1,31 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {TEXTS} from "../constants";
+import {CategoryItemFullType} from "../Types/CategoryItemType";
+import LanguageType from "../Types/LanguageType";
 
-type CategoriesT = {
-  name: string,
-  key: string,
-  checked: boolean,
-  image: string
+interface IInititalState {
+  categories: CategoryItemFullType[];
 }
+
+const initialState: IInititalState = {
+  categories: [],
+};
 
 export const categorySlice = createSlice({
   name: 'categories',
-  initialState: {
-    categories: [],
-  },
+  initialState,
   reducers: {
-    initCategories(state, action) {
-      state.categories = Object.entries(TEXTS[action.payload.language].categories).map(([key, category]) => {
-        return {...category, checked: false, key: key}
+    initCategories: (state, action) => {
+      const language: LanguageType = action.payload.language;
+      const arr = Object.entries(TEXTS[language].categories);
+      state.categories = arr.map(([key, category]) => {
+        return { ...category, checked: false, key: key };
       });
     },
     changeCurrCategories(state, action) {
       const currCategory = state.categories.find((category) => action.payload.name === category.name);
-      if (currCategory.checked === true) {
+      if (!currCategory) return;
+      if (currCategory.checked) {
         currCategory.checked = false;
       } else {
         state.categories.forEach((category) => {category.checked = false});
@@ -31,6 +35,8 @@ export const categorySlice = createSlice({
 
   }
 });
+
+export const selectCategories = (state: { categories: IInititalState }) => state.categories;
 
 export const {initCategories, changeCurrCategories} = categorySlice.actions;
 
