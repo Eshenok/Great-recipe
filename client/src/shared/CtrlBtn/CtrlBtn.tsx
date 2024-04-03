@@ -1,14 +1,17 @@
-import React, { FC, ReactNode } from "react";
+import { FC, ReactNode } from "react";
 import './CtrlBtn.scss';
 
 interface ICtrlBtnProps {
-    text: string;
+    text?: string;
     extraClasses?: string;
+    onClick?: () => void;
+    children?: ReactNode;
 }
 
-const CtrlBtn: FC<ICtrlBtnProps> = ({text, extraClasses}) => {
+const CtrlBtn: FC<ICtrlBtnProps> = ({text, extraClasses, onClick, children}) => {
     return (
-        <button className={`animated-btn control-button button ${extraClasses ?? ''}`}>
+        <button onClick={onClick} className={`animated-btn control-button button ${extraClasses ?? ''}`}>
+            {children}
             {text}
             <div className="control-button__icon" />
         </button>

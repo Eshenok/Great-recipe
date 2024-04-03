@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import {useContext} from 'react';
 import {LanguageContext} from "../../../context/LanguageContext";
 import InputSign from "../../../shared/InputSign/InputSign";
 import {TEXTS} from "../../../constants";
@@ -8,6 +8,8 @@ const EditPass = () => {
 
   const context = useContext(LanguageContext);
 
+  const phs = TEXTS[context].inputph.account as Record<string, string>
+
   return (
     <form onSubmit={(e) => {e.preventDefault()}} className="form-s">
       <InputSign
@@ -16,7 +18,7 @@ const EditPass = () => {
         isBig={true}
         labelText={TEXTS[context].inputlabel.name}
         errorText=""
-        placeholder={TEXTS[context].inputph.account.name}
+        placeholder={phs.name}
       />
 
       <InputSign
@@ -25,7 +27,7 @@ const EditPass = () => {
         isBig={false}
         labelText={TEXTS[context].inputlabel.email}
         errorText=""
-        placeholder={TEXTS[context].inputph.account.email}
+        placeholder={phs.email}
       />
 
       <InputSign
@@ -34,7 +36,7 @@ const EditPass = () => {
         isBig={false}
         labelText={TEXTS[context].inputlabel.pass}
         errorText=""
-        placeholder={TEXTS[context].inputph.account.pass}
+        placeholder={phs.pass}
       />
 
       <InputSign
@@ -43,7 +45,7 @@ const EditPass = () => {
         isBig={false}
         labelText={TEXTS[context].inputlabel.pass}
         errorText=""
-        placeholder={TEXTS[context].inputph.account.pass}
+        placeholder={phs.pass}
       />
 
       <InputSign
@@ -51,7 +53,7 @@ const EditPass = () => {
         name="userPassCheckerEditNew"
         isBig={false}
         labelText={TEXTS[context].inputlabel.passcheck}
-        errorText="" placeholder={TEXTS[context].inputph.account.passcheck}
+        errorText="" placeholder={phs.passcheck}
       />
 
       <div className="form-s__btns">

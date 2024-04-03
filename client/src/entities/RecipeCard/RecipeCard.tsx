@@ -1,20 +1,24 @@
-import React, {FC, useContext} from 'react';
+import {FC, useContext} from 'react';
 import './RecipeCard.scss';
 import bread from '../../assets/bread_icon.svg';
 import star from '../../assets/star_icon.svg';
 import LikeBtn from "../../shared/LikeBtn/LikeBtn";
 import {TEXTS} from "../../constants";
 import {LanguageContext} from "../../context/LanguageContext";
-import {ratingType} from "../../Types/ServerRecipeType";
+import {ServerRecipeType, ratingType} from "../../Types/ServerRecipeType";
 
-const RecipeCard: FC = ({recipeInfo}) => {
+interface IRecipeCardProps {
+  recipeInfo: ServerRecipeType
+}
+
+const RecipeCard: FC<IRecipeCardProps> = ({recipeInfo}) => {
 
   const context = useContext(LanguageContext);
 
   const category = TEXTS[context].categories[recipeInfo.strCategory.toLowerCase()];
 
   const covertRating = (rating: ratingType[]): number => rating.reduce((accum, cur) => accum + cur.rate, 0);
-  const checkQuantityIngs = (ing): number => {
+  const checkQuantityIngs = (ing: (string | null)[]): number => {
     return ing.filter(item => !!item).length;
   }
 
@@ -37,7 +41,7 @@ const RecipeCard: FC = ({recipeInfo}) => {
           {covertRating(recipeInfo.rating)}
         </span>
       </div>
-      <LikeBtn isLiked={true} extraClasses={"recipe-card__like"} />
+      <LikeBtn onClick={() => {console.log('click')}} isLiked={true} extraClasses={"recipe-card__like"} />
     </div>
   );
 };

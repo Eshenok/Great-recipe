@@ -1,28 +1,30 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import { TouchEvent, useContext, useRef, useState} from 'react';
 import {TEXTS} from "../../constants";
 import {LanguageContext} from "../../context/LanguageContext";
 import CategoryItem from "./components/CategoryItem/CategoryItem";
 import CheckSwitch from "../../shared/CheckSwitch/CheckSwitch";
-import Title from "../../shared/Title/Title";
 import {useDispatch, useSelector} from "react-redux";
-import {changeCurrCategories} from "../../store/categorySlice";
+import {changeCurrCategories, selectCategories} from "../../store/categorySlice";
+import { CategoryItemFullType } from '../../Types/CategoryItemType';
 
 const Category = () => {
 
   const context = useContext(LanguageContext);
-  const {categories} = useSelector(state => state.categories);
+  const {categories} = useSelector(selectCategories);
   const dispatch = useDispatch();
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [startX, setStartX] = useState(0);
 
-  const handleTouchStart = (e) => {
+  const handleTouchStart = (e: TouchEvent<HTMLDivElement>) => {
     setStartX(e.touches[0].clientX)
   }
 
-  const handleTouchMove = (e) => {
+  const handleTouchMove = (e: TouchEvent<HTMLDivElement>) => {
     const deltaX = e.touches[0].clientX - startX;
-    containerRef.current.scrollLeft -= deltaX;
-    setStartX(e.touches[0].clientX);
+    if (containerRef.current) {
+      containerRef.current.scrollLeft -= deltaX;
+      setStartX(e.touches[0].clientX);
+    }
   };
 
   const handleChooseCategory = (name: string) => {
@@ -40,7 +42,7 @@ const Category = () => {
       <CheckSwitch name={'infridge'} color={'blue'} />
       <h3 className={"category__title"}>{TEXTS[context].titles.category}</h3>
       {
-        categories.map(elem =>
+        categories.map((elem: CategoryItemFullType) =>
           <CategoryItem checked={elem.checked} onChoose={() => {handleChooseCategory(elem.name)}} text={elem.name} icon={elem.image} key={elem.key} />
         )
       }

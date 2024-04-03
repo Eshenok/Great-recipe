@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useState} from 'react';
+import {ChangeEvent, FC} from 'react';
 import './ManagedTab.scss';
 import useForm from "../../hooks/useForm";
 
@@ -16,10 +16,10 @@ const ManagedTab:FC<IManagedTabProps> = ({isActive, placeholder, type, name, max
 
   const {inputValues, onChange, dropValue, onPut} = useForm();
 
-  const validateChangeValue = (e) => {
+  const validateChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length > String(max).length) {
       return;
-    } else if (e.target.value > max) {
+    } else if (Number(e.target.value) > max) {
       onPut(name, max);
     } else {
       onChange(e)

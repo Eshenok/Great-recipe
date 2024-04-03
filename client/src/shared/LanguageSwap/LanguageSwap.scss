@@ -24,6 +24,7 @@
   }
 
   &__arrow {
+    user-select: none;
     display: block;
     width: 8px;
     height: 5px;

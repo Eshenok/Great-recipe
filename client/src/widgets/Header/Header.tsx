@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import {FC, useState} from 'react';
 import './Header.scss';
 import Menu from "../../entities/Menu/Menu";
 import LanguageSwap from "../../shared/LanguageSwap/LanguageSwap";
@@ -20,8 +20,8 @@ const Header: FC<IHeaderProps> = ({onSwapLanguage}) => {
 
   return (
     <>
-    <header
-        className={`header ${isOpenHeader ? 'header_open' : ''} ${location.pathname.includes('/fridge') ? 'header_blue' : location.pathname.includes('/profile') ? 'header_green' : 'header_orange'}`}
+      <header
+        className={`header ${isOpenHeader ? 'header_open' : ''} ${location.pathname.includes('/fridge') ? 'header_blue' : location.pathname.includes('/profile') || location.pathname.includes('sign')  ? 'header_green' : 'header_orange'}`}
       >
         <Burger onClick={openHeader} extraClasses='header__burger'/>
         <LanguageSwap extraClasses={"header__lng"} onSwap={onSwapLanguage} />
@@ -34,8 +34,8 @@ const Header: FC<IHeaderProps> = ({onSwapLanguage}) => {
 
       <div className={`header__overlay ${isOpenHeader ? 'header__overlay_open' : ''}`} onClick={openHeader} />
     </>
-      
-    
+
+
   );
 };
 
