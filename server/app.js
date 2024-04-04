@@ -35,4 +35,4 @@ app.use('/', require('./routes/index'));
 
 app.use(centralErrorHandling);
 
-app.listen(PORT);
+app.listen(PORT, () => {console.log('is worked')});

@@ -55,11 +55,11 @@ module.exports.putRating = async (req, res, next) => {
 // В body передаем массив
 module.exports.findRecipesByIngredients = async (req, res, next) => {
   try {
-    const ingredientsToFind = req.body.ingridients;
+    const ingredientsToFind = req.body.ingridients.map(ing => ing.toLowerCase());
     if (!ingredientsToFind) throw new BadRequest('Ingridients required');
 
     const recipes = await Recipe.find({ arrIngredients: { $in: ingredientsToFind } });
-    if (!recipes) throw new NotFound('Recipes not found');
+    if (!recipes || recipes.length === 0) throw new NotFound('Recipes not found');
 
     return res.status(200).json({recipes: recipes});
   } catch (err) {
