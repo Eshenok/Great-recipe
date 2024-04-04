@@ -5,6 +5,7 @@ import {TEXTS} from "../../../constants";
 import {LanguageContext} from "../../../context/LanguageContext";
 import { Form, Link } from 'react-router-dom';
 import useForm from '../../../hooks/useForm';
+import UserType from '../../../Types/UserType';
 
 export const action = async ({request}) => {
   const data = Object.fromEntries(await request.formData());
@@ -27,7 +28,7 @@ export const action = async ({request}) => {
   if (!res || res.status === 401) {
     return {user: null}
   }
-  const user = await res.json();
+  const user: UserType = await res.json();
   return {user}
 }
 

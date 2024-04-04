@@ -6,7 +6,7 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {Provider} from "react-redux";
 import store from "./store";
 import NotFound from "./pages/NotFound/NotFound";
-import Main from "./pages/Main/Main";
+import Main, { loader as recipeLoader } from "./pages/Main/Main";
 import Sign from "./pages/Sign/Sign";
 import Fridge from "./pages/Fridge/Fridge";
 import { action as loginAction } from './widgets/Form/Login/Login.tsx';
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
     children: [
       {
         children: [
-          {index: true, element: <Main />},
+          {index: true, element: <Main />, loader: recipeLoader},
           {
             path: '/sign-in',
             element: <Sign />,

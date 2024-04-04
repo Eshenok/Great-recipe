@@ -8,6 +8,7 @@ import {LanguageContext} from "./context/LanguageContext";
 import {useDispatch} from "react-redux";
 import {initCategories} from "./store/categorySlice";
 import Header from './widgets/Header/Header';
+import UserType from './Types/UserType';
 
 export const loader = async () => {
   const res = await fetch('http://localhost:2020/users/me', {
@@ -18,7 +19,7 @@ export const loader = async () => {
   if (res.status === 401 || res.status === 500)  {
     return {user: null}
   }
-  const user = await res.json();
+  const user: UserType = await res.json();
   return {user};
 }
 

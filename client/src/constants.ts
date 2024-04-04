@@ -53,6 +53,7 @@ export const TEXTS: Record<LanguageType, Texts> = {
       seafood: {name: 'Seafood', image: seafood},
       vegan: {name: 'Vegetarian', image: vegan},
       starter: {name: 'Starter', image: start},
+      dessert: {name: 'Dessert', image: start},
     },
     titles: {
       infridge: 'In Fridge',

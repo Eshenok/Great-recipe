@@ -85,7 +85,7 @@ module.exports.getRandomRecipes = async (req, res, next) => {
     ])
 
     if (remainingRecipes.length === 0) {
-      return res.status(200).json({message: 'Already all recipes fetched'});
+      return res.status(204).json({message: 'Already all recipes fetched'});
     }
 
     // Добавляем выбранные рецепты в массив уже полученных
@@ -173,7 +173,6 @@ module.exports.getRecipeForId = async (req, res, next) => {
     }
     return res.send(recipe);
   } catch (err) {
-    console.log(err);
     next(err);
   }
 }
