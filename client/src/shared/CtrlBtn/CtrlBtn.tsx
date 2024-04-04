@@ -1,10 +1,10 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, MouseEvent } from "react";
 import './CtrlBtn.scss';
 
 interface ICtrlBtnProps {
     text?: string;
     extraClasses?: string;
-    onClick?: () => void;
+    onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
     children?: ReactNode;
 }
 

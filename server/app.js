@@ -1,5 +1,6 @@
 /*imports*/
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
@@ -9,6 +10,13 @@ require('dotenv').config();
 const { PORT = 2020, CONNECT_DB, NODE_ENV, SESSION_SECRET } = process.env; // Забираем из .env
 
 const app = express();
+
+app.use(cors({
+  // Разрешить все источники (можно указать конкретные источники)
+  origin: ['http://localhost:5173'],
+  // Разрешить запросы с cookies
+  credentials: true
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

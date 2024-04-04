@@ -80,6 +80,7 @@ module.exports.createUser = (req, res, next) => {
 
 module.exports.signin = (req, res, next) => {
   const { password, email } = req.body;
+  console.log(req.body);
 
   User.findUserByCredentials(email, password) // custom method
     .then((user) => {
