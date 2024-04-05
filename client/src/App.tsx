@@ -24,8 +24,8 @@ function App() {
   }
 
   useEffect(() => {
-    
-  }, [])
+    dispatch(getUser());
+  }, [user]);
 
   useEffect(() => {
     dispatch(initCategories({language: language}));

@@ -9,7 +9,7 @@ import NotFound from "./pages/NotFound/NotFound";
 import Main from "./pages/Main/Main";
 import Sign from "./pages/Sign/Sign";
 import Fridge from "./pages/Fridge/Fridge";
-import Login, { action as loginAction } from './widgets/Form/Login/Login.tsx';
+import Login from './widgets/Form/Login/Login.tsx';
 import Registration from './widgets/Form/Registration/Registration.tsx';
 
 const router = createBrowserRouter([
@@ -28,7 +28,6 @@ const router = createBrowserRouter([
               {
                 path: '/sign/in',
                 element: <Login />,
-                action: loginAction,
               },
               {
                 path: '/sign/up',
