@@ -7,13 +7,13 @@ import Title from "../../shared/Title/Title";
 import {LanguageContext} from "../../context/LanguageContext";
 import { useLoaderData } from 'react-router-dom';
 
-const CardGrid: FC = () => {
+interface ICardGridProps {
+  recipes: ServerRecipeType[]
+}
+
+const CardGrid: FC<ICardGridProps> = ({recipes}) => {
 
   const context = useContext(LanguageContext);
-
-  const {recipes} = useLoaderData();
-
-  console.log(recipes);
 
   const xdd = (): ServerRecipeType[] => {
     const maxCards = 50;
@@ -29,7 +29,7 @@ const CardGrid: FC = () => {
       <Title text={TEXTS[context].titles.recipes} />
       <div className={"cards__grid"}>
         {
-          recipes && recipes.recipes.map((item) =>
+          xdd().map((item) =>
             <RecipeCard key={item._id} recipeInfo={item} />
           )
         }

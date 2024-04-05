@@ -50,7 +50,7 @@ const Registration = () => {
 
         <div className="form-s__btns">
           <CtrlBtn extraClasses="form-s__login">
-            <Link to='/sign-in'>{TEXTS[context].btns.log}</Link>
+            <Link to='/sign/in'>{TEXTS[context].btns.log}</Link>
           </CtrlBtn>
           <CtrlBtn extraClasses="form-s__submit" text={TEXTS[context].btns.submit}/>
         </div>

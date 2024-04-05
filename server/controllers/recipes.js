@@ -85,6 +85,7 @@ module.exports.getRandomRecipes = async (req, res, next) => {
     ])
 
     if (remainingRecipes.length === 0) {
+      req.session.fetchedRecipes = [];
       return res.status(204).json({message: 'Already all recipes fetched'});
     }
 

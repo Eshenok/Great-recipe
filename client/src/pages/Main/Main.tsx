@@ -2,23 +2,8 @@ import './Main.scss';
 import Filter from "../../widgets/Filter/Filter";
 import CardGrid from "../../widgets/CardGrid/CardGrid";
 import Category from "../../entities/Category/Category";
-import { useFetcher, useLoaderData } from 'react-router-dom';
 import { FC, useEffect } from 'react';
-
-export const loader = async () => {
-  console.log('we are here')
-  const res = await fetch('http://localhost:2020/recipes/rnd',{
-    method: 'GET',
-    credentials: 'include'
-  });
-
-  if(res.status === 401 || res.status === 500) {
-    return {recipes: null}
-  }
-
-  const recipes = await res.json();
-  return {recipes}
-}
+import { useSelector } from 'react-redux';
 
 interface IMainProps {
   isFridge?: boolean;
@@ -26,12 +11,6 @@ interface IMainProps {
 }
 
 const Main: FC<IMainProps> = (isFridge, ings) => {
-
-  // const fetcher = useFetcher();
-
-  // useEffect(() => {
-
-  // }, [])
 
   return (
     <main className={`main`}>
