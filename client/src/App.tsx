@@ -15,7 +15,7 @@ function App() {
 
   const [language, setLanguage] = useState<'en'|'ru'>('en');
   const dispatch = useDispatch();
-  const {user} = useSelector(state => state.user);
+  const {user}: UserType = useSelector(state => state.user);
 
   const changeLanguage = (lng: 'en' | 'ru') => {
     if (lng === 'en' || lng === 'ru') {

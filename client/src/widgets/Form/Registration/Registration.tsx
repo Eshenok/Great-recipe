@@ -1,25 +1,59 @@
-import { useContext } from "react";
+import { FormEvent, FormEventHandler, useContext, useState } from "react";
 import { TEXTS } from "../../../constants";
 import { LanguageContext } from "../../../context/LanguageContext";
 import InputSign from "../../../shared/InputSign/InputSign";
 import CtrlBtn from "../../../shared/CtrlBtn/CtrlBtn";
 import {Link} from 'react-router-dom';
+import useForm from "../../../hooks/useForm";
+import { useDispatch } from "react-redux";
+import { signUp } from "./Api/SignUp";
 
 const Registration = () => {
 
     const context = useContext(LanguageContext);
 
+    const {inputValues, onChange} = useForm();
+    const [errorPassCheck, setErrorPassCheck] = useState('');
+    const dispatch = useDispatch();
+
     const ph = TEXTS[context].inputph.account as Record<string, string>;
 
+    const validatePass = (value1: string, value2: string): boolean => {
+      if (value1 !== value2) {
+        setErrorPassCheck('Парли не совпадают');
+        return false
+      } else {
+        return true;
+      }
+    };
+
+    const createUser = (e: FormEvent): void => {
+      e.preventDefault();
+      if (!validatePass(inputValues["userPass"], inputValues["userPassChecker"])) {
+        return;
+      }
+
+      const formData = {
+        email: inputValues["userEmail"],
+        password: inputValues["userPass"],
+        name: inputValues["userName"]
+      }
+
+      dispatch(signUp(formData))
+    }
+
     return (
-      <form onSubmit={(e) => {e.preventDefault()}} className="form-s">
+      <form onSubmit={createUser} className="form-s">
         <InputSign
+        req={true}
           type="text"
           name="userName"
           isBig={true}
           labelText={TEXTS[context].inputlabel.name}
           errorText=""
           placeholder={ph.name}
+          onChange={onChange}
+          value={inputValues["userName"]}
         />
 
         <InputSign
@@ -29,6 +63,8 @@ const Registration = () => {
           labelText={TEXTS[context].inputlabel.email}
           errorText=""
           placeholder={ph.email}
+          onChange={onChange}
+          value={inputValues["userEmail"]}
         />
 
         <InputSign
@@ -38,6 +74,8 @@ const Registration = () => {
           labelText={TEXTS[context].inputlabel.pass}
           errorText=""
           placeholder={ph.pass}
+          onChange={onChange}
+          value={inputValues["userPass"]}
         />
 
         <InputSign
@@ -45,14 +83,16 @@ const Registration = () => {
           name="userPassChecker"
           isBig={false}
           labelText={TEXTS[context].inputlabel.passcheck}
-          errorText="" placeholder={ph.passcheck}
+          errorText={errorPassCheck} placeholder={ph.passcheck}
+          onChange={onChange}
+          value={inputValues["userPassChecker"]}
         />
 
         <div className="form-s__btns">
           <CtrlBtn extraClasses="form-s__login">
             <Link to='/sign/in'>{TEXTS[context].btns.log}</Link>
           </CtrlBtn>
-          <CtrlBtn extraClasses="form-s__submit" text={TEXTS[context].btns.submit}/>
+          <CtrlBtn type="submit" extraClasses="form-s__submit" text={TEXTS[context].btns.submit}/>
         </div>
       </form>
     );
