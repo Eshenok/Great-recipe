@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const centralErrorHandling = require('./errors/centralErrorHandling');
+const cookieParser = require('cookie-parser')
 /*env*/
 require('dotenv').config();
 const { PORT = 2020, CONNECT_DB, NODE_ENV, SESSION_SECRET } = process.env; // Забираем из .env
@@ -26,6 +27,8 @@ mongoose.connect(NODE_ENV === 'production' ? CONNECT_DB : 'mongodb://localhost:2
   useUnifiedTopology: true,
 });
 
+app.use(cookieParser());
+
 app.use(
   session({
     secret: NODE_ENV==='production' ? SESSION_SECRET : 'secret key', // secret key
@@ -35,6 +38,7 @@ app.use(
     cookie: {
       maxAge: 5 * 60 * 60 * 1000, // (5 hours)
       secure: false, // http
+      sameSite: 'none',
     },
   })
 );
