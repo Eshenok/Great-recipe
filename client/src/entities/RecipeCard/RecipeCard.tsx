@@ -15,7 +15,11 @@ const RecipeCard: FC<IRecipeCardProps> = ({recipeInfo}) => {
 
   const context = useContext(LanguageContext);
 
-  const category = TEXTS[context].categories[recipeInfo.strCategory.toLowerCase()];
+  let category = TEXTS[context].categories[recipeInfo.strCategory.toLowerCase()];
+
+  if (!category) {
+    category = TEXTS[context].categories.starter
+  }
 
   const covertRating = (rating: ratingType[]): number => rating.reduce((accum, cur) => accum + cur.rate, 0);
   const checkQuantityIngs = (ing: (string | null)[]): number => {
@@ -26,7 +30,7 @@ const RecipeCard: FC<IRecipeCardProps> = ({recipeInfo}) => {
     <div className={"recipe-card"}>
       <div className={"recipe-card__overlay"} />
       <img src={recipeInfo.strMealThumb} className={"recipe-card__image"}/>
-      <h3 className={"recipe-card__title"}><a href={`#${recipeInfo.strMeal}`}>{recipeInfo.strMeal}</a></h3>
+      <h3 className={"recipe-card__title"}>{recipeInfo.strMeal}</h3>
       <div className={"recipe-card__tags"}>
         <span className={"recipe-card__tag recipe-card__tag_category"}>
           <img src={category.image}/>

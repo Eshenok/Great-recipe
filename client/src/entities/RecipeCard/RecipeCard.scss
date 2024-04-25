@@ -39,7 +39,15 @@
   }
 
   &__title {
+    -webkit-line-clamp: 2;
+	line-clamp: 2;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
     user-select: text;
+    height: 47px;
+    // display: flex;
+    vertical-align: middle;
     text-align: center;
     font-family: $meirienda-font;
     font-size: 16px;
@@ -49,6 +57,7 @@
 
     & a {
       text-decoration: none;
+      cursor: text;
       color: $dark-grey;
     }
   }

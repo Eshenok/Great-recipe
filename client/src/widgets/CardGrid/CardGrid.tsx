@@ -5,8 +5,13 @@ import {ServerRecipeType} from "../../Types/ServerRecipeType";
 import RecipeCard from "../../entities/RecipeCard/RecipeCard";
 import Title from "../../shared/Title/Title";
 import {LanguageContext} from "../../context/LanguageContext";
+import { useLoaderData } from 'react-router-dom';
 
-const CardGrid: FC = () => {
+interface ICardGridProps {
+  recipes: ServerRecipeType[]
+}
+
+const CardGrid: FC<ICardGridProps> = ({recipes}) => {
 
   const context = useContext(LanguageContext);
 

@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import {ChangeEvent, FC} from 'react';
 import './InputSign.scss';
 import useForm from "../../hooks/useForm";
 
@@ -9,19 +9,21 @@ interface IInputSignProps {
     labelText?: string;
     name: string;
     isBig: boolean;
+    value: string;
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    req?: boolean;
 }
 
-const InputSign: FC<IInputSignProps> = ({type, placeholder, errorText, labelText, name, isBig}) => {
-
-    const {inputValues, onChange} = useForm();
+const InputSign: FC<IInputSignProps> = ({type, placeholder, errorText, labelText, name, isBig, value, onChange, req}) => {
 
     return (
         <div className={`input-sign ${isBig ? 'input-sign_big' : ''}`}>
             <input
+            required={req}
                 className={`input input-sign__input ${errorText ? 'input-sign__input_err' : ''}`}
                 name={name}
                 id={name}
-                value={inputValues[name]}
+                value={value}
                 onChange={onChange}
                 type={type}
                 placeholder={placeholder}
@@ -29,7 +31,7 @@ const InputSign: FC<IInputSignProps> = ({type, placeholder, errorText, labelText
             {labelText &&
               <label
                 htmlFor={name}
-                className={"input-sign__label"}>
+                className={`input-sign__label ${errorText ? 'input-sign__label_err' : ''}`}>
                   {errorText ? errorText : labelText}
               </label>
             }

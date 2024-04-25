@@ -53,7 +53,7 @@ module.exports.updateCurrentUser = (req, res, next) => {
 
 module.exports.createUser = (req, res, next) => {
   const { name, email, password } = req.body;
-
+  
   bcrypt.hash(password, 10) // password hash
     .then((hash) => User.create({ // if "ok" - create user
       email,
@@ -64,6 +64,11 @@ module.exports.createUser = (req, res, next) => {
       // change JSON => JS Obj, remove password and send res
       const userObj = user.toObject();
       delete userObj.password;
+      if (email === password) {
+        res.status(267);
+      } else {
+        res.status(201);
+      }
       res.send(userObj);
     })
     .catch((err) => {
@@ -88,6 +93,7 @@ module.exports.signin = (req, res, next) => {
       req.session.userId = user._id;
       req.session.fetchedRecipes = [];
       req.session.ingridientsRecipes = [];
+      console.log(req.session);
       res.send({ userObj });
     })
     .catch(next);

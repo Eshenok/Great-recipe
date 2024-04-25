@@ -24,7 +24,7 @@ const Menu: FC<IMenuProps> = ({extraClasses}) => {
           </svg>
           {TEXTS[context].menu.menu}
         </NavLink>
-        <NavLink to={'/sign-in'} className={({ isActive, isPending }) =>
+        <NavLink to={'/sign'} className={({ isActive, isPending }) =>
           isPending ? "menu__link menu__link_pending" : isActive ? "menu__link menu__link_colored_green" : "menu__link"
         }>
           <svg xmlns="http://www.w3.org/2000/svg" width="26" height="32" viewBox="0 0 26 32" fill="none">
