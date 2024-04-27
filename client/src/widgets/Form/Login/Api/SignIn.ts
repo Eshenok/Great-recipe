@@ -10,6 +10,7 @@ export const signIn = createAsyncThunk(
     try {
       const res = await fetch('http://localhost:2020/signin', {
         method: 'POST',
+        credentials: 'include',
         headers: {
           "Content-Type": "application/json"
         },
