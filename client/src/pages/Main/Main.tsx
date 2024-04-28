@@ -5,6 +5,7 @@ import Category from "../../entities/Category/Category";
 import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRndRecipes } from './Api/GetRndRecipes';
+import { dropFetchedRecipes } from './Api/DropFetchedRecipes';
 
 interface IMainProps {
   isFridge?: boolean;
@@ -18,6 +19,9 @@ const Main: FC<IMainProps> = (isFridge, ings) => {
   const {recipes} = useSelector(state => state.recipes);
 
   useEffect(() => {
+    if (!localStorage.getItem('recipes') || localStorage.getItem('recipes')?.length !== 0) {
+      dispatch(dropFetchedRecipes());
+    }
     dispatch(getRndRecipes());
   }, []);
 

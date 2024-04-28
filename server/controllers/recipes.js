@@ -22,9 +22,6 @@ module.exports.putRating = async (req, res, next) => {
       "rating.user": user._id,
     });
 
-
-
-
     if (existingRating) {
       await Recipe.updateOne(
         {
@@ -85,7 +82,6 @@ module.exports.getRandomRecipes = async (req, res, next) => {
     ])
 
     if (remainingRecipes.length === 0) {
-      req.session.fetchedRecipes = [];
       return res.status(204).json({message: 'Already all recipes fetched'});
     }
 
@@ -94,6 +90,15 @@ module.exports.getRandomRecipes = async (req, res, next) => {
     return res.status(200).json({ recipes: remainingRecipes });
   } catch (err) {
     next(err)
+  }
+}
+
+module.exports.refreshFetchedRecipes = async (req, res, next) => {
+  try {
+    req.session.fetchedRecipes = [];
+    res.status(200).json({message: 'fetched recipes refresh'});
+  } catch (err) {
+    next(err);
   }
 }
 
