@@ -19,7 +19,11 @@ const Main: FC<IMainProps> = (isFridge, ings) => {
 
   useEffect(() => {
     dispatch(getRndRecipes());
-  }, [])
+  }, []);
+
+  const getMoreRecipes = () => {
+    dispatch(getRndRecipes());
+  }
 
   return (
     <main className={`main`}>
@@ -27,7 +31,7 @@ const Main: FC<IMainProps> = (isFridge, ings) => {
         <Filter />
         <div className={"main__recipes"}>
           <Category />
-          <CardGrid recipes={recipes} />
+          <CardGrid recipes={recipes} getMoreFn={getMoreRecipes} />
         </div>
       </section>
     </main>
