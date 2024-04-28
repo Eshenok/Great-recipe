@@ -1,4 +1,4 @@
-import {FC, useContext, useEffect, useRef} from 'react';
+import React, {FC, useContext} from 'react';
 import './CardGrid.scss';
 import {TEST_RECIPE, TEXTS} from "../../constants";
 import {ServerRecipeType} from "../../Types/ServerRecipeType";
@@ -14,46 +14,26 @@ interface ICardGridProps {
 const CardGrid: FC<ICardGridProps> = ({recipes, getMoreFn}) => {
 
   const context = useContext(LanguageContext);
-  const gridRef = useRef(null);
 
-  const xdd = (): ServerRecipeType[] => {
-    const maxCards = 50;
-    const xdds = [];
-    for (let i=0;i<maxCards;i++) {
-      xdds.push(TEST_RECIPE);
-    }
-    return xdds;
-  }
+  console.log(recipes.length);
 
-  function checkPosition() { //ДОКА Спасибо)
-    // Высота документа и экрана
-    const height = document.body.offsetHeight
-    const screenHeight = window.innerHeight
-  
-    // Сколько пикселей уже проскроллили
-    const scrolled = window.scrollY
-  
-    // Порог
-    const threshold = height - screenHeight / 4
-  
-    // Низ экрана относительно страницы
-    const position = scrolled + screenHeight
-  
-    if (position >= threshold && getMoreFn) {
-      getMoreFn();
-    }
-  }
+  function checkPosition(e: React.UIEvent<HTMLDivElement>): void {
+    const target = e.target as HTMLDivElement;
+    const height = target.scrollHeight;
+    const scrolled = target.scrollTop;
+    if (scrolled >= height/2 && getMoreFn) {getMoreFn()};
+  };
 
-  useEffect(() => {
-    if (gridRef.current) {
-      gridRef.current.addEventListener('scroll', checkPosition);
-    }
-  }, [gridRef])
+  // useEffect(() => {
+  //   if (gridRef.current) {
+  //     gridRef.current.addEventListener('scroll', checkPosition);
+  //   }
+  // }, [gridRef])
 
   return (
     <section className={"cards"}>
       <Title text={TEXTS[context].titles.recipes} />
-      <div className={"cards__grid"} ref={gridRef}>
+      <div className={"cards__grid"} onScroll={checkPosition}>
         {
           recipes.map((item) =>
             <RecipeCard key={item._id} recipeInfo={item} />
