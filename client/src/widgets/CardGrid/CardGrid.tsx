@@ -8,7 +8,7 @@ import {LanguageContext} from "../../context/LanguageContext";
 import { useLoaderData } from 'react-router-dom';
 
 interface ICardGridProps {
-  recipes: ServerRecipeType[]
+  recipes: ServerRecipeType[],
 }
 
 const CardGrid: FC<ICardGridProps> = ({recipes}) => {
@@ -29,7 +29,7 @@ const CardGrid: FC<ICardGridProps> = ({recipes}) => {
       <Title text={TEXTS[context].titles.recipes} />
       <div className={"cards__grid"}>
         {
-          xdd().map((item) =>
+          recipes.map((item) =>
             <RecipeCard key={item._id} recipeInfo={item} />
           )
         }
