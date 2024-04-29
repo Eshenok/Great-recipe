@@ -3,6 +3,8 @@
 .cards {
   height: calc(100% - 48px);
   overflow-y: scroll;
+  border-radius: 25px;
+  background-color: $white;
 
   & h2 {
     width: 100%;
@@ -10,7 +12,6 @@
   }
 
   &__grid {
-
     padding: 8px 0;
     display: grid;
     grid-template-columns: repeat(auto-fit, 190px);
