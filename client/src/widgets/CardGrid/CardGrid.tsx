@@ -1,6 +1,6 @@
 import React, {FC, useContext} from 'react';
 import './CardGrid.scss';
-import {TEST_RECIPE, TEXTS} from "../../constants";
+import {TEXTS} from "../../constants";
 import {ServerRecipeType} from "../../Types/ServerRecipeType";
 import RecipeCard from "../../entities/RecipeCard/RecipeCard";
 import Title from "../../shared/Title/Title";
@@ -23,12 +23,6 @@ const CardGrid: FC<ICardGridProps> = ({recipes, getMoreFn}) => {
     const scrolled = target.scrollTop;
     if (scrolled >= height/2 && getMoreFn) {getMoreFn()};
   };
-
-  // useEffect(() => {
-  //   if (gridRef.current) {
-  //     gridRef.current.addEventListener('scroll', checkPosition);
-  //   }
-  // }, [gridRef])
 
   return (
     <section className={"cards"}>

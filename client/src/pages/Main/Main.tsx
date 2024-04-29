@@ -18,13 +18,6 @@ const Main: FC<IMainProps> = (isFridge, ings) => {
 
   const {recipes} = useSelector(state => state.recipes);
 
-  useEffect(() => {
-    if (!localStorage.getItem('recipes') || localStorage.getItem('recipes')?.length !== 0) {
-      dispatch(dropFetchedRecipes());
-    }
-    dispatch(getRndRecipes());
-  }, []);
-
   const getMoreRecipes = () => {
     dispatch(getRndRecipes());
   }

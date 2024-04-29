@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ServerRecipeType } from "../Types/ServerRecipeType";
+import { RootState } from ".";
 
 interface IInitialState {
   recipes: ServerRecipeType[],
@@ -28,6 +29,8 @@ export const recipesSlice = createSlice({
     }
   }
 })
+
+export const selectRecipes = (state: RootState) => state.recipes.recipes;
 
 export const {pushRecipesFridge, pushRecipesMain, changeFetchRecipesFstatus, changeFetchRecipesStatus} = recipesSlice.actions;
 
