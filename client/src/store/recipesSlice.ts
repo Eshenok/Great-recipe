@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ServerRecipeType } from "../Types/ServerRecipeType";
+import { ClippedServerRecipeType } from "../Types/ServerRecipeType";
 import { RootState } from ".";
 
 interface IInitialState {
-  recipes: ServerRecipeType[],
-  fridgeRecipes: ServerRecipeType[],
+  recipes: ClippedServerRecipeType[],
+  fridgeRecipes: ClippedServerRecipeType[],
   recipesStatus: boolean,
   fridgeRecipesStatus: boolean,
 }

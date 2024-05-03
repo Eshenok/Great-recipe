@@ -21,3 +21,12 @@ export type ServerRecipeType = {
   arrIngredients: (string | null)[];
   arrMeasure: (string | null)[];
 }
+
+export type ClippedServerRecipeType = {
+  _id: string;
+  name: string;
+  ingridientsQuantity: number;
+  rating: number;
+  category: string;
+  image: string;
+}

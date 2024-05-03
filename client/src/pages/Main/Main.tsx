@@ -6,6 +6,7 @@ import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRndRecipes } from './Api/GetRndRecipes';
 import { dropFetchedRecipes } from './Api/DropFetchedRecipes';
+import { useAppDispatch } from '../../hooks/useAppRedux';
 
 interface IMainProps {
   isFridge?: boolean;
@@ -14,7 +15,7 @@ interface IMainProps {
 
 const Main: FC<IMainProps> = (isFridge, ings) => {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const {recipes} = useSelector(state => state.recipes);
 

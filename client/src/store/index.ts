@@ -8,7 +8,7 @@ const store = configureStore ({
     categories: categorySlice,
     user: userSlice,
     recipes: recipesSlice,
-  }
+  },
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

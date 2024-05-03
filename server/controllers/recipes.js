@@ -85,9 +85,20 @@ module.exports.getRandomRecipes = async (req, res, next) => {
       return res.status(204).json({message: 'Already all recipes fetched'});
     }
 
+    const refactorRecipes = await remainingRecipes.map((recipe) => {
+      return {
+        _id: recipe._id,
+        name: recipe.strMeal,
+        category: recipe.strCategory,
+        rating: recipe.rating.reduce((accum, cur) => accum + cur.rate, 0),
+        ingridientsQuantity: recipe.arrIngredients.length,
+        image: recipe.strMealThumb,
+      }
+    })
+
     // Добавляем выбранные рецепты в массив уже полученных
     remainingRecipes.forEach(recipe => req.session.fetchedRecipes.push(recipe._id));
-    return res.status(200).json({ recipes: remainingRecipes });
+    return res.status(200).json({ recipes: refactorRecipes });
   } catch (err) {
     next(err)
   }
