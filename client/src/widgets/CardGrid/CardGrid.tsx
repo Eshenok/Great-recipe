@@ -1,17 +1,18 @@
 import React, {FC, useContext} from 'react';
 import './CardGrid.scss';
 import {TEXTS} from "../../constants";
-import {ServerRecipeType} from "../../Types/ServerRecipeType";
+import {ClippedServerRecipeType, ServerRecipeType} from "../../Types/ServerRecipeType";
 import RecipeCard from "../../entities/RecipeCard/RecipeCard";
 import Title from "../../shared/Title/Title";
 import {LanguageContext} from "../../context/LanguageContext";
 
 interface ICardGridProps {
-  recipes: ServerRecipeType[],
+  recipes: ClippedServerRecipeType[],
   getMoreFn?: () => void;
+  clearFilter?: () => void;
 }
 
-const CardGrid: FC<ICardGridProps> = ({recipes, getMoreFn}) => {
+const CardGrid: FC<ICardGridProps> = ({recipes, getMoreFn, clearFilter}) => {
 
   const context = useContext(LanguageContext);
 
@@ -29,9 +30,17 @@ const CardGrid: FC<ICardGridProps> = ({recipes, getMoreFn}) => {
       <Title text={TEXTS[context].titles.recipes} />
       <div className={"cards__grid"} onScroll={checkPosition}>
         {
-          recipes.map((item) =>
+          recipes.length > 0 && recipes.map((item) =>
             <RecipeCard key={item._id} recipeInfo={item} />
           )
+        }
+        {
+          recipes.length === 0 && 
+          <div className='cards__nf'>
+            <h3 className='cards__subtitle'>{TEXTS[context].info.recipesNf}</h3>
+            <div className='cards__nf-image'/>
+            <p className='cards__drop-filter' onClick={clearFilter}>{TEXTS[context].btns.clearFilter}</p>
+          </div>
         }
       </div>
     </section>

@@ -18,6 +18,7 @@ type Texts = {
   titles: Record<string, string>;
   filter: Record<string, string>;
   btns: Record<string, string>;
+  info: Record<string, string>;
 };
 
 export const TEXTS: Record<LanguageType, Texts> = {
@@ -76,7 +77,11 @@ export const TEXTS: Record<LanguageType, Texts> = {
       edit: 'Edit profile',
       exit: 'Exit',
       change: 'Change Password',
-    }
+      clearFilter: 'clear filter',
+    },
+    info: {
+      recipesNf: 'No one receipt find',
+    },
   },
   ru: {
     menu: {
@@ -132,6 +137,10 @@ export const TEXTS: Record<LanguageType, Texts> = {
       edit: 'Изменить профиль',
       exit: 'Выход',
       change: 'Сменить пароль',
+      clearFilter: 'очистить фильтр'
+    },
+    info: {
+      recipesNf: 'Ни одного рецепта не найдено',
     }
   }
 }
