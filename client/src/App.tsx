@@ -11,13 +11,14 @@ import Header from './widgets/Header/Header';
 import UserType from './Types/UserType';
 import { getUser } from './store/userSlice';
 import { dropFetchedRecipes } from './pages/Main/Api/DropFetchedRecipes';
-import { getRndRecipes, useGetRandomRecipes } from './pages/Main/Api/GetRndRecipes';
-import { useAppDispatch } from './hooks/useAppRedux';
+import { getRndRecipes } from './pages/Main/Api/GetRndRecipes';
+import { useAppDispatch, useAppSelector } from './hooks/useAppRedux';
 
 function App() {
 
   const [language, setLanguage] = useState<'en'|'ru'>('en');
   const dispatch = useAppDispatch();
+  const {user} = useAppSelector(state => state.user);
 
   const changeLanguage = (lng: 'en' | 'ru') => {
     if (lng === 'en' || lng === 'ru') {
@@ -30,7 +31,7 @@ function App() {
       dispatch(dropFetchedRecipes());
     }
     dispatch(getRndRecipes());
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     dispatch(getUser());

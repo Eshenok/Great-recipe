@@ -11,6 +11,7 @@ import Sign from "./pages/Sign/Sign";
 import Fridge from "./pages/Fridge/Fridge";
 import Login from './widgets/Form/Login/Login.tsx';
 import Registration from './widgets/Form/Registration/Registration.tsx';
+import { RecipePage } from './pages/RecipePage/RecipePage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
     children: [
       {
         children: [
-          {index: true, element: <Main />},
+          {index: true, element: <RecipePage />},
           {
             path: '/sign',
             element: <Sign />,

@@ -1,0 +1,14 @@
+@import '../../commonStyles/variables.scss';
+
+.recipe-page {
+  &__title {
+    height: 48px;
+    color: $dark-grey;
+     & span {
+      color: $orange-dark
+     }
+  }
+  &__image {
+    width: 100%;
+  };
+};
