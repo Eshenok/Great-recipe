@@ -1,14 +1,111 @@
 @import '../../commonStyles/variables.scss';
 
 .recipe-page {
-  &__title {
-    height: 48px;
-    color: $dark-grey;
-     & span {
-      color: $orange-dark
-     }
+  height: 100vh;
+  overflow-y: hidden;
+
+  &__card {
+    margin: 8px;
+    padding: 16px;
+    border-radius: 25px;
+    background-color: $white;
+    display: block;
+    overflow-y: scroll;
+    height: calc(100% - 64px);
   }
+
+  &__logo {
+    width: 185px;
+    display: flex;
+    height: 48px;
+    align-items: center;
+  }
+
+  &__header {
+    position: relative;
+  }
+
   &__image {
     width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 25px;
   };
+
+  &__like {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+  }
+
+  &__title {
+  font-family: $meirienda-font;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: center;
+  color: $dark-grey;
+  }
+
+  &__tags {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    align-items: center
+  }
+
+  &__tag {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    &_img {
+      width: 20px;
+      height: 20px;
+    }
+
+    &_text {
+      font-family: $montserrat-font;
+      font-size: 10px;
+      font-weight: 400;
+      line-height: 15px;
+      text-align: left;
+      color: $dark-grey;
+    }
+  }
+
+  &__dd {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+    /*font*/
+    font-family: $montserrat-font;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    text-align: center;
+    color: $dark-grey;
+
+    transition: opacity .3s ease-in-out;
+
+    &:hover {
+      cursor: pointer;
+      opacity: .8;
+    }
+
+    &::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: transparent url('../../assets/arrow_s.svg') center center no-repeat;
+      background-size: 8px 8px;
+
+      transition: transform .34s ease-in-out;
+    }
+
+    &_open {
+      &::after {
+        transform: rotate(-180deg);
+      }
+    }
+  }
 };

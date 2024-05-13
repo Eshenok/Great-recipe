@@ -78,6 +78,7 @@ export const TEXTS: Record<LanguageType, Texts> = {
       exit: 'Exit',
       change: 'Change Password',
       clearFilter: 'clear filter',
+      ings: 'Ingridients'
     },
     info: {
       recipesNf: 'No one receipt find',
@@ -137,7 +138,8 @@ export const TEXTS: Record<LanguageType, Texts> = {
       edit: 'Изменить профиль',
       exit: 'Выход',
       change: 'Сменить пароль',
-      clearFilter: 'очистить фильтр'
+      clearFilter: 'очистить фильтр',
+      ings: 'Игнридиентов'
     },
     info: {
       recipesNf: 'Ни одного рецепта не найдено',
