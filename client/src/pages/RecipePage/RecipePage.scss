@@ -3,6 +3,11 @@
 .recipe-page {
   height: 100vh;
   overflow-y: hidden;
+  font-family: $montserrat-font;
+
+  &__cat, &__grid, &__filter {
+    display: none;
+  }
 
   &__card {
     margin: 8px;
@@ -39,7 +44,7 @@
 
   &__title {
   font-family: $meirienda-font;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
   line-height: 24px;
   text-align: center;
@@ -64,7 +69,7 @@
 
     &_text {
       font-family: $montserrat-font;
-      font-size: 10px;
+      font-size: .6rem;
       font-weight: 400;
       line-height: 15px;
       text-align: left;
@@ -108,4 +113,116 @@
       }
     }
   }
+
+  &__list {
+    padding: 0;
+    margin: 0;
+    max-height: 0px;
+    opacity: 0;
+    overflow-y: hidden;
+    list-style: none;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 150px);
+
+    transition: max-height .3s ease-in-out, opacity .3s ease-in-out;
+
+    /*font*/
+    font-family: $dark-grey;
+    font-size: .25rem;
+    font-weight: 400;
+    line-height: 12px;
+    text-align: left;
+  }
+
+  &__dd_open + &__list {
+    max-height: 250px;
+    opacity: 1;
+  }
+
+  &__list_item {
+    white-space: nowrap;
+    width: 100%;
+    padding-left: 12px;
+    background: transparent url('../../assets/dot.svg') 5px center no-repeat;
+    font-size: .5rem;
+    display: flex;
+    align-items: center;
+
+    & span {
+      display: block;
+    }
+    & span:first-child {
+      width: min-content;
+      overflow: hidden;
+    }
+  }
+
+  &__recipe {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    font-family: $montserrat-font;
+    font-size: .875rem;
+    font-weight: 400;
+    line-height: 1.3rem;
+    text-align: left;
+
+    & p:first-child:first-letter {
+      font-family: $meirienda-font;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5rem;
+      text-align: left;
+    }
+
+    & p {
+      &::first-letter {
+        padding-left: .7rem;
+      }
+    }
+  }
 };
+
+@media screen and (min-width: 720px) {
+  .recipe-page {
+    &__cat, &__grid, &__filter {
+      width: 100%;
+      display: block;
+    }
+    &__cat {
+      display: flex;
+      justify-content: start;
+      grid-area: cat;
+    }
+    &__grid {
+      grid-area: grd;
+    }
+    &__filter {
+      grid-area: fil;
+    }
+    &__card {
+      grid-area: crd;
+    }
+    &__logo {
+      display: none;
+    }
+
+    display: grid;
+    grid-template-columns: 115px 1.4fr 1.4fr 1fr;
+    grid-template-rows: min-content 1fr;
+    grid-template-areas: 
+    "fil fil fil fil"
+    "cat crd crd grd";
+
+    &__card {
+      margin-top: 0;
+      margin-right: 0;
+      height: calc(100%);
+    }
+
+    &__header {
+      
+    }
+  }
+}

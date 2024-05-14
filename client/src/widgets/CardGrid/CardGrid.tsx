@@ -10,9 +10,10 @@ interface ICardGridProps {
   recipes: ClippedServerRecipeType[],
   getMoreFn?: () => void;
   clearFilter?: () => void;
+  extraClasses?: string;
 }
 
-const CardGrid: FC<ICardGridProps> = ({recipes, getMoreFn, clearFilter}) => {
+const CardGrid: FC<ICardGridProps> = ({recipes, getMoreFn, clearFilter, extraClasses}) => {
 
   const context = useContext(LanguageContext);
 
@@ -26,7 +27,7 @@ const CardGrid: FC<ICardGridProps> = ({recipes, getMoreFn, clearFilter}) => {
   };
 
   return (
-    <section className={"cards"}>
+    <section className={`cards ${extraClasses ? extraClasses : ''}`}>
       <Title text={TEXTS[context].titles.recipes} />
       <div className={"cards__grid"} onScroll={checkPosition}>
         {
