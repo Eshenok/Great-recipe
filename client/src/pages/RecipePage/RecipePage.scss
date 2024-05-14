@@ -209,7 +209,7 @@
     }
 
     display: grid;
-    grid-template-columns: 115px 1.4fr 1.4fr 1fr;
+    grid-template-columns: 115px 1fr 320px 1fr;
     grid-template-rows: min-content 1fr;
     grid-template-areas: 
     "fil fil fil fil"
@@ -221,8 +221,29 @@
       height: calc(100%);
     }
 
+    &__ings {
+      grid-area: ing;
+    }
+
+    &__image {
+      grid-area: img;
+    }
+
+    &__tags {
+      grid-area: tag;
+    }
+
+    &__title {
+      grid-area: ttl;
+    }
+
     &__header {
-      
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas: 
+      'img ttl'
+      'img tag'
+      'img ing';
     }
   }
 }
