@@ -31,8 +31,10 @@ export const RecipePage: FC = () => {
       <Category extraClasses="recipe-page__cat" />
       <article className="recipe-page__card">
         <aside className="recipe-page__header">
-          <img className="recipe-page__image" src={TEST_RECIPE.strMealThumb} />
-          <LikeBtn onClick={() => {console.log('WOW! 1984')}} extraClasses="recipe-page__like" isLiked={true} />
+          <div className="recipe-page__img-container">
+            <img className="recipe-page__image" src={TEST_RECIPE.strMealThumb} />
+            <LikeBtn onClick={() => {console.log('WOW! 1984')}} extraClasses="recipe-page__like" isLiked={true} />
+          </div>
           <h2 className="subtitle recipe-page__title">{TEST_RECIPE.strMeal}</h2>
           <div className="recipe-page__tags">
             

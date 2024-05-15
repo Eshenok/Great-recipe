@@ -59,6 +59,7 @@
 
 @media screen and (min-width: 720px) {
   .cards {
+    scrollbar-gutter: stable;
     margin: 0;
     height: 100%;
     overflow-y: hidden;

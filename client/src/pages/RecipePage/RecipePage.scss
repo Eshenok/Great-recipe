@@ -9,6 +9,10 @@
     display: none;
   }
 
+  &__img-container {
+    position: relative;
+  }
+
   &__card {
     margin: 8px;
     padding: 16px;
@@ -38,8 +42,8 @@
 
   &__like {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: 10px;
+    right: 10px;
   }
 
   &__title {
@@ -186,47 +190,61 @@
 
 @media screen and (min-width: 720px) {
   .recipe-page {
-    &__cat, &__grid, &__filter {
-      width: 100%;
-      display: block;
-    }
-    &__cat {
-      display: flex;
-      justify-content: start;
-      grid-area: cat;
-    }
-    &__grid {
-      grid-area: grd;
-    }
-    &__filter {
-      grid-area: fil;
-    }
-    &__card {
-      grid-area: crd;
-    }
-    &__logo {
-      display: none;
-    }
-
     display: grid;
-    grid-template-columns: 115px 1fr 320px 1fr;
+    grid-template-columns: 115px 1fr 320px 225px;
     grid-template-rows: min-content 1fr;
     grid-template-areas: 
     "fil fil fil fil"
     "cat crd crd grd";
 
+    &__cat, &__grid, &__filter {
+      width: 100%;
+      display: block;
+    }
+
+    &__cat {
+      display: flex;
+      justify-content: start;
+      grid-area: cat;
+    }
+
+    &__grid {
+      grid-area: grd;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    &__filter {
+      grid-area: fil;
+    }
+
+    &__card {
+      grid-area: crd;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    
+    &__logo {
+      display: none;
+    }
+
     &__card {
       margin-top: 0;
       margin-right: 0;
       height: calc(100%);
+      overflow-y: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
     &__ings {
       grid-area: ing;
     }
 
-    &__image {
+    &__img-container {
       grid-area: img;
+      margin-right: 8px;
+      max-width: 300px;
     }
 
     &__tags {
@@ -235,11 +253,37 @@
 
     &__title {
       grid-area: ttl;
+
+      /*font*/
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 48px;
+      text-align: center;
+
+    }
+
+    &__main {
+      margin-top: 10px;
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    &__dd {
+      font-size: .85rem;
+    }
+
+    &__list {
+      &_item {
+        font-size: .6rem;
+      }
+      
     }
 
     &__header {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      align-items: start;
+      grid-template-rows: min-content min-content 1fr;
+      grid-template-columns: minmax(1px, 300px) 1fr;
       grid-template-areas: 
       'img ttl'
       'img tag'
