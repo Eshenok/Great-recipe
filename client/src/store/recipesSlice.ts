@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ClippedServerRecipeType } from "../Types/ServerRecipeType";
+import { ClippedServerRecipeType, ServerRecipeType } from "../Types/ServerRecipeType";
 import { RootState } from ".";
 
 interface IInitialState {
@@ -7,9 +7,10 @@ interface IInitialState {
   fridgeRecipes: ClippedServerRecipeType[],
   recipesStatus: boolean,
   fridgeRecipesStatus: boolean,
+  currRecipe: ServerRecipeType | {},
 }
 
-const initialState: IInitialState = {recipes: [], fridgeRecipes: [], recipesStatus: true, fridgeRecipesStatus: true};
+const initialState: IInitialState = {recipes: [], fridgeRecipes: [], recipesStatus: true, fridgeRecipesStatus: true, currRecipe: {}};
 
 export const recipesSlice = createSlice({
   name: 'recipes',
@@ -26,12 +27,15 @@ export const recipesSlice = createSlice({
     },
     changeFetchRecipesFstatus: (state, action) => {
       state.fridgeRecipesStatus = action.payload;
+    },
+    setCurrRecipe: (state, action) => {
+      state.currRecipe = action.payload;
     }
   }
 })
 
 export const selectRecipes = (state: RootState) => state.recipes.recipes;
 
-export const {pushRecipesFridge, pushRecipesMain, changeFetchRecipesFstatus, changeFetchRecipesStatus} = recipesSlice.actions;
+export const {pushRecipesFridge, pushRecipesMain, changeFetchRecipesFstatus, changeFetchRecipesStatus, setCurrRecipe} = recipesSlice.actions;
 
 export default recipesSlice.reducer;

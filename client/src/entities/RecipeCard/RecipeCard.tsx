@@ -6,6 +6,7 @@ import LikeBtn from "../../shared/LikeBtn/LikeBtn";
 import {TEXTS} from "../../constants";
 import {LanguageContext} from "../../context/LanguageContext";
 import {ClippedServerRecipeType} from "../../Types/ServerRecipeType";
+import { redirect, useNavigate, useNavigation } from 'react-router-dom';
 
 interface IRecipeCardProps {
   recipeInfo: ClippedServerRecipeType
@@ -14,6 +15,7 @@ interface IRecipeCardProps {
 const RecipeCard: FC<IRecipeCardProps> = ({recipeInfo}) => {
 
   const context = useContext(LanguageContext);
+  const navigate = useNavigate();
 
   let category = TEXTS[context].categories[recipeInfo.category.toLowerCase()];
 
@@ -26,9 +28,14 @@ const RecipeCard: FC<IRecipeCardProps> = ({recipeInfo}) => {
   //   return ing.filter(item => !!item).length;
   // }
 
+  const chooseThis = () => {
+    navigate(`/${recipeInfo._id}`);
+    console.log('asd')
+  }
+
   return (
     <div className={"recipe-card"}>
-      <div className={"recipe-card__overlay"} />
+      <div onClick={chooseThis} className={"recipe-card__overlay"} />
       <img src={recipeInfo.image} className={"recipe-card__image"}/>
       <h3 className={"recipe-card__title"}>{recipeInfo.name}</h3>
       <div className={"recipe-card__tags"}>
