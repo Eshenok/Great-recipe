@@ -7,7 +7,12 @@ import ManagedTab from "../../shared/ManagedTab/ManagedTab";
 import {LanguageContext} from "../../context/LanguageContext";
 import {TEXTS} from "../../constants";
 
-const Filter: FC = () => {
+interface IFilterProps {
+  clipped?: boolean;
+  extraClasses?: string;
+}
+
+const Filter: FC<IFilterProps> = ({clipped, extraClasses}) => {
 
   const context = useContext(LanguageContext);
 
@@ -29,16 +34,16 @@ const Filter: FC = () => {
   }
 
   return (
-    <section className={`filter`}>
+    <section className={`filter ${extraClasses ? extraClasses : ''}`}>
       <div className={"filter__header"}>
-        <Search isOpen={isOpen} onOpen={() => {setIsOpen(!isOpen)}} />
+        <Search clipped={clipped} isOpen={isOpen} onOpen={() => {setIsOpen(!isOpen)}} />
         <div className={"filter__prev"}>
           {
             tabsPrevFinded()
           }
         </div>
       </div>
-      <div className={`filter__bottom ${isOpen ? 'filter__bottom_open' : ''}`}>
+      {!clipped && <div className={`filter__bottom ${isOpen ? 'filter__bottom_open' : ''}`}>
         <div className={"filter__rating filter__section"}>
           <h3 className={"filter__title"}>{TEXTS[context].filter.rating}</h3>
           <Tab text={'1'} isActive={false}>&#128528;</Tab>
@@ -55,7 +60,7 @@ const Filter: FC = () => {
           <h3 className={"filter__title"}>{TEXTS[context].filter.favourite}</h3>
           <CheckSwitch name={'isLiked'} color={'red'} />
         </div>
-      </div>
+      </div>}
     </section>
   );
 };

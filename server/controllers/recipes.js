@@ -22,9 +22,6 @@ module.exports.putRating = async (req, res, next) => {
       "rating.user": user._id,
     });
 
-
-
-
     if (existingRating) {
       await Recipe.updateOne(
         {
@@ -85,15 +82,34 @@ module.exports.getRandomRecipes = async (req, res, next) => {
     ])
 
     if (remainingRecipes.length === 0) {
-      req.session.fetchedRecipes = [];
       return res.status(204).json({message: 'Already all recipes fetched'});
     }
 
+    const refactorRecipes = await remainingRecipes.map((recipe) => {
+      return {
+        _id: recipe._id,
+        name: recipe.strMeal,
+        category: recipe.strCategory,
+        rating: recipe.rating.reduce((accum, cur) => accum + cur.rate, 0),
+        ingridientsQuantity: recipe.arrIngredients.filter(item => Boolean(item)).length,
+        image: recipe.strMealThumb,
+      }
+    })
+
     // Добавляем выбранные рецепты в массив уже полученных
     remainingRecipes.forEach(recipe => req.session.fetchedRecipes.push(recipe._id));
-    return res.status(200).json({ recipes: remainingRecipes });
+    return res.status(200).json({ recipes: refactorRecipes });
   } catch (err) {
     next(err)
+  }
+}
+
+module.exports.refreshFetchedRecipes = async (req, res, next) => {
+  try {
+    req.session.fetchedRecipes = [];
+    res.status(200).json({message: 'fetched recipes refresh'});
+  } catch (err) {
+    next(err);
   }
 }
 

@@ -1,4 +1,4 @@
-import { TouchEvent, useContext, useRef, useState} from 'react';
+import { FC, TouchEvent, useContext, useRef, useState} from 'react';
 import {TEXTS} from "../../constants";
 import {LanguageContext} from "../../context/LanguageContext";
 import CategoryItem from "./components/CategoryItem/CategoryItem";
@@ -7,7 +7,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {changeCurrCategories, selectCategories} from "../../store/categorySlice";
 import { CategoryItemFullType } from '../../Types/CategoryItemType';
 
-const Category = () => {
+interface ICategoryProps {
+  extraClasses?: string;
+}
+
+const Category: FC<ICategoryProps> = ({extraClasses}) => {
 
   const context = useContext(LanguageContext);
   const {categories} = useSelector(selectCategories);
@@ -33,7 +37,7 @@ const Category = () => {
 
   return (
     <div
-      className={"category"}
+      className={`category ${extraClasses ? extraClasses : ''}`}
       ref={containerRef}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}

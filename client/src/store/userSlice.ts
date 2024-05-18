@@ -6,7 +6,6 @@ export const getUser = createAsyncThunk(
   async (_, {dispatch, rejectWithValue}) => {
     try {
       const res = await fetch('http://localhost:2020/users/me',{
-        method: 'GET',
         credentials: 'include',
       });
       if (res.status === 401 || res.status === 500) {
