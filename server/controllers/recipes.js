@@ -91,7 +91,7 @@ module.exports.getRandomRecipes = async (req, res, next) => {
         name: recipe.strMeal,
         category: recipe.strCategory,
         rating: recipe.rating.reduce((accum, cur) => accum + cur.rate, 0),
-        ingridientsQuantity: recipe.arrIngredients.length,
+        ingridientsQuantity: recipe.arrIngredients.filter(item => Boolean(item)).length,
         image: recipe.strMealThumb,
       }
     })

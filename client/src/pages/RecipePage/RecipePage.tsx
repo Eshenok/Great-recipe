@@ -33,7 +33,7 @@ export const RecipePage: FC = () => {
   const {recipes} = useAppSelector(state => state.recipes);
   const [isOpen, setIsOpen] = useState(true);
 
-  const quantityIngs: number = TEST_RECIPE.arrIngredients.reduce((prev, curr) => {
+  const quantityIngs: number = recipe.arrIngredients.reduce((prev, curr) => {
     if (!curr) return prev;
     return prev += 1;
   }, 0)

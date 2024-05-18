@@ -23,6 +23,8 @@ const RecipeCard: FC<IRecipeCardProps> = ({recipeInfo}) => {
     category = TEXTS[context].categories.starter
   }
 
+  console.log(recipeInfo)
+
   // const covertRating = (rating: ratingType[]): number => rating.reduce((accum, cur) => accum + cur.rate, 0);
   // const checkQuantityIngs = (ing: (string | null)[]): number => {
   //   return ing.filter(item => !!item).length;
