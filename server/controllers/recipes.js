@@ -65,17 +65,7 @@ module.exports.findRecipesByIngredients = async (req, res, next) => {
 
     const recipesArr = [...recipesFindByNames, ...recipesFindByIngs];
 
-    const uniqueRecipes = recipesArr.reduce((accumulator, currentValue) => {
-      const isUnique = accumulator.every(item => item._id !== currentValue._id);
-      if (isUnique) {
-        accumulator.push(currentValue);
-      }
-      return accumulator;
-    }, []);
-
-    console.log(uniqueRecipes);
-
-    const refactorRecipes = uniqueRecipes.map((recipe) => {
+    const refactorRecipes = recipesArr.map((recipe) => {
       return {
         _id: recipe._id,
         name: recipe.strMeal,
