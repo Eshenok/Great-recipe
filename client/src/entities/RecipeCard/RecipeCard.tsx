@@ -6,7 +6,7 @@ import LikeBtn from "../../shared/LikeBtn/LikeBtn";
 import {TEXTS} from "../../constants";
 import {LanguageContext} from "../../context/LanguageContext";
 import {ClippedServerRecipeType} from "../../Types/ServerRecipeType";
-import { redirect, useNavigate, useNavigation } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 interface IRecipeCardProps {
   recipeInfo: ClippedServerRecipeType
@@ -23,8 +23,6 @@ const RecipeCard: FC<IRecipeCardProps> = ({recipeInfo}) => {
     category = TEXTS[context].categories.starter
   }
 
-  console.log(recipeInfo)
-
   // const covertRating = (rating: ratingType[]): number => rating.reduce((accum, cur) => accum + cur.rate, 0);
   // const checkQuantityIngs = (ing: (string | null)[]): number => {
   //   return ing.filter(item => !!item).length;
@@ -32,7 +30,6 @@ const RecipeCard: FC<IRecipeCardProps> = ({recipeInfo}) => {
 
   const chooseThis = () => {
     navigate(`/${recipeInfo._id}`);
-    console.log('asd')
   }
 
   return (

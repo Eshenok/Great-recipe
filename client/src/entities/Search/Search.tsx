@@ -10,9 +10,10 @@ interface ISearchProps {
   isOpen: boolean;
   onOpen: () => void;
   clipped?: boolean;
+  onSubmit: (value: string) => void;
 }
 
-const Search: FC<ISearchProps> = ({isOpen, onOpen, clipped}) => {
+const Search: FC<ISearchProps> = ({isOpen, onOpen, clipped, onSubmit}) => {
 
   const {inputValues, onChange} = useForm();
   const context = useContext(LanguageContext);
@@ -20,9 +21,9 @@ const Search: FC<ISearchProps> = ({isOpen, onOpen, clipped}) => {
 
   return (
     <form className={"search"} onSubmit={(e) => {e.preventDefault()}}>
-      <InputOutlined isAnim={true} placeholders={phs} name={"input-1"} values={inputValues} onChange={onChange} />
+      <InputOutlined isAnim={true} placeholders={phs} name={"input-search"} values={inputValues} onChange={onChange} />
       <div className={"search__btns"}>
-        <InputBtn onClick={() => {console.log('search')}} extraClasses={"search__lupa"} />
+        <InputBtn onClick={() => {onSubmit(inputValues["input-search"])}} extraClasses={"search__lupa"} />
         {!clipped && <InputBtn onClick={onOpen} extraClasses={`search__filter ${isOpen ? 'search__filter_active' : ''}`} />}
       </div>
     </form>

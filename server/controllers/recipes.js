@@ -57,16 +57,38 @@ module.exports.findRecipesByIngredients = async (req, res, next) => {
 
     const nameRegexes = keysToFind.map(key => new RegExp(key, 'i'));
 
-    const recipesFindByIngs = await Recipe.find({ arrIngredients: { $in: nameRegexes } });
-
     const recipesFindByNames = await Recipe.find({ strMeal: { $in: nameRegexes } });
 
-    const recipesSet = new Set([...recipesFindByNames, ...recipesFindByIngs]);
-    const recipes = Array.from(recipesSet);
+    const foundRecipeIds = recipesFindByNames.map(recipe => recipe.id);
 
-    if (!recipes || recipes.length === 0) throw new NotFound('Recipes not found');
+    const recipesFindByIngs = await Recipe.find({ arrIngredients: { $in: nameRegexes }, _id: { $nin: foundRecipeIds } });
 
-    return res.status(200).json({ recipes });
+    const recipesArr = [...recipesFindByNames, ...recipesFindByIngs];
+
+    const uniqueRecipes = recipesArr.reduce((accumulator, currentValue) => {
+      const isUnique = accumulator.every(item => item._id !== currentValue._id);
+      if (isUnique) {
+        accumulator.push(currentValue);
+      }
+      return accumulator;
+    }, []);
+
+    console.log(uniqueRecipes);
+
+    const refactorRecipes = uniqueRecipes.map((recipe) => {
+      return {
+        _id: recipe._id,
+        name: recipe.strMeal,
+        category: recipe.strCategory,
+        rating: recipe.rating.reduce((accum, cur) => accum + cur.rate, 0),
+        ingridientsQuantity: recipe.arrIngredients.filter(item => Boolean(item)).length,
+        image: recipe.strMealThumb,
+      }
+    })
+
+    if (!refactorRecipes || refactorRecipes.length === 0) throw new NotFound('Recipes not found');
+
+    return res.status(200).json( refactorRecipes );
   } catch (err) {
     next(err);
   }

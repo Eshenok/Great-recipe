@@ -6,6 +6,9 @@ import CheckSwitch from "../../shared/CheckSwitch/CheckSwitch";
 import ManagedTab from "../../shared/ManagedTab/ManagedTab";
 import {LanguageContext} from "../../context/LanguageContext";
 import {TEXTS} from "../../constants";
+import { useAppDispatch } from '../../hooks/useAppRedux';
+import { findRecipesByKeys } from './Api/FindRecipes';
+import { setFindedRecipes } from '../../store/recipesSlice';
 
 interface IFilterProps {
   clipped?: boolean;
@@ -15,12 +18,13 @@ interface IFilterProps {
 const Filter: FC<IFilterProps> = ({clipped, extraClasses}) => {
 
   const context = useContext(LanguageContext);
+  const dispatch = useAppDispatch();
 
   const [isOpen, setIsOpen] = useState(true);
   const ph = TEXTS[context].inputph.ings as string;
 
   const tabsPrevFinded = () => {
-    const maxQuantity = 7;
+    const maxQuantity = 20;
     const tabs = [];
 
     for (let i=0;i<maxQuantity;i++) {
@@ -33,10 +37,19 @@ const Filter: FC<IFilterProps> = ({clipped, extraClasses}) => {
     return tabs;
   }
 
+  const findRecipe = (value: string) => {
+    if (value === '' || !value) {
+      dispatch(setFindedRecipes([]))
+      return;
+    }
+    const keysForFind: string[] = value.replace(/[^a-zа-яё\s]/gi, ' ').replace(/\s+/g, ' ').split(' ');
+    dispatch(findRecipesByKeys(keysForFind));
+  }
+
   return (
     <section className={`filter ${extraClasses ? extraClasses : ''}`}>
       <div className={"filter__header"}>
-        <Search clipped={clipped} isOpen={isOpen} onOpen={() => {setIsOpen(!isOpen)}} />
+        <Search onSubmit={findRecipe} clipped={clipped} isOpen={isOpen} onOpen={() => {setIsOpen(!isOpen)}} />
         <div className={"filter__prev"}>
           {
             tabsPrevFinded()
