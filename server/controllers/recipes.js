@@ -55,13 +55,13 @@ module.exports.findRecipesByIngredients = async (req, res, next) => {
     const keysToFind = req.body.ingredients.map(ing => ing.toLowerCase());
     if (!keysToFind || keysToFind.length === 0) throw new BadRequest('Ingredients required');
 
-    const recipesFindByIngs = await Recipe.find({ arrIngredients: { $in: keysToFind } });
-
     const nameRegexes = keysToFind.map(key => new RegExp(key, 'i'));
+
+    const recipesFindByIngs = await Recipe.find({ arrIngredients: { $in: nameRegexes } });
 
     const recipesFindByNames = await Recipe.find({ strMeal: { $in: nameRegexes } });
 
-    const recipesSet = new Set([...recipesFindByIngs, ...recipesFindByNames]);
+    const recipesSet = new Set([...recipesFindByNames, ...recipesFindByIngs]);
     const recipes = Array.from(recipesSet);
 
     if (!recipes || recipes.length === 0) throw new NotFound('Recipes not found');
