@@ -10,12 +10,15 @@ import {initCategories} from "./store/categorySlice";
 import Header from './widgets/Header/Header';
 import UserType from './Types/UserType';
 import { getUser } from './store/userSlice';
+import { dropFetchedRecipes } from './pages/Main/Api/DropFetchedRecipes';
+import { getRndRecipes } from './pages/Main/Api/GetRndRecipes';
+import { useAppDispatch, useAppSelector } from './hooks/useAppRedux';
 
 function App() {
 
   const [language, setLanguage] = useState<'en'|'ru'>('en');
-  const dispatch = useDispatch();
-  const {user}: UserType = useSelector(state => state.user);
+  const dispatch = useAppDispatch();
+  const {user} = useAppSelector(state => state.user);
 
   const changeLanguage = (lng: 'en' | 'ru') => {
     if (lng === 'en' || lng === 'ru') {
@@ -24,8 +27,15 @@ function App() {
   }
 
   useEffect(() => {
-    dispatch(getUser());
+    if (!localStorage.getItem('recipes') || localStorage.getItem('recipes')?.length !== 0) {
+      dispatch(dropFetchedRecipes());
+    }
+    dispatch(getRndRecipes());
   }, [user]);
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
 
   useEffect(() => {
     dispatch(initCategories({language: language}));

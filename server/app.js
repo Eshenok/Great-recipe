@@ -14,10 +14,18 @@ const app = express();
 
 app.use(cors({
   // Разрешить все источники (можно указать конкретные источники)
-  origin: ['http://localhost:5173'],
+  origin: ['http://localhost:2021'],
   // Разрешить запросы с cookies
   credentials: true
 }));
+
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+  next();
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -38,7 +46,7 @@ app.use(
     cookie: {
       maxAge: 5 * 60 * 60 * 1000, // (5 hours)
       secure: false, // http
-      sameSite: 'none',
+      sameSite: false,
     },
   })
 );

@@ -9,9 +9,10 @@ import {LanguageContext} from "../../context/LanguageContext";
 interface ISearchProps {
   isOpen: boolean;
   onOpen: () => void;
+  clipped?: boolean;
 }
 
-const Search: FC<ISearchProps> = ({isOpen, onOpen}) => {
+const Search: FC<ISearchProps> = ({isOpen, onOpen, clipped}) => {
 
   const {inputValues, onChange} = useForm();
   const context = useContext(LanguageContext);
@@ -22,7 +23,7 @@ const Search: FC<ISearchProps> = ({isOpen, onOpen}) => {
       <InputOutlined isAnim={true} placeholders={phs} name={"input-1"} values={inputValues} onChange={onChange} />
       <div className={"search__btns"}>
         <InputBtn onClick={() => {console.log('search')}} extraClasses={"search__lupa"} />
-        <InputBtn onClick={onOpen} extraClasses={`search__filter ${isOpen ? 'search__filter_active' : ''}`} />
+        {!clipped && <InputBtn onClick={onOpen} extraClasses={`search__filter ${isOpen ? 'search__filter_active' : ''}`} />}
       </div>
     </form>
   );

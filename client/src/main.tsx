@@ -11,6 +11,7 @@ import Sign from "./pages/Sign/Sign";
 import Fridge from "./pages/Fridge/Fridge";
 import Login from './widgets/Form/Login/Login.tsx';
 import Registration from './widgets/Form/Registration/Registration.tsx';
+import { RecipePage, loader as RecipePageLoader } from './pages/RecipePage/RecipePage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,11 @@ const router = createBrowserRouter([
           {
             path: 'fridge',
             element: <Fridge />,
+          },
+          {
+            path: ':recipeId',
+            loader: RecipePageLoader,
+            element: <RecipePage />
           }
         ]
       }
