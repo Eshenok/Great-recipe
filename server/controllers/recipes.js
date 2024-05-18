@@ -52,17 +52,27 @@ module.exports.putRating = async (req, res, next) => {
 // В body передаем массив
 module.exports.findRecipesByIngredients = async (req, res, next) => {
   try {
-    const ingredientsToFind = req.body.ingridients.map(ing => ing.toLowerCase());
-    if (!ingredientsToFind) throw new BadRequest('Ingridients required');
+    const keysToFind = req.body.ingredients.map(ing => ing.toLowerCase());
+    if (!keysToFind || keysToFind.length === 0) throw new BadRequest('Ingredients required');
 
-    const recipes = await Recipe.find({ arrIngredients: { $in: ingredientsToFind } });
+    const recipesFindByIngs = await Recipe.find({ arrIngredients: { $in: keysToFind } });
+
+    const nameRegexes = keysToFind.map(key => new RegExp(key, 'i'));
+
+    const recipesFindByNames = await Recipe.find({ strMeal: { $in: nameRegexes } });
+
+    const recipesSet = new Set([...recipesFindByIngs, ...recipesFindByNames]);
+    const recipes = Array.from(recipesSet);
+
     if (!recipes || recipes.length === 0) throw new NotFound('Recipes not found');
 
-    return res.status(200).json({recipes: recipes});
+    return res.status(200).json({ recipes });
   } catch (err) {
-    next(err)
+    next(err);
   }
-}
+};
+
+
 
 /*
 * ПОЛУЧЕНИЕ СЛУЧАЙНЫХ РЕЦЕПТОВ
