@@ -19,6 +19,7 @@ const CardGrid: FC<ICardGridProps> = ({recipes, getMoreFn, clearFilter, extraCla
 
   console.log(recipes.length);
 
+  // Функция проверяет положение скролла и если выше половины то делает запрос на получение еще 50 рецептов
   function checkPosition(e: React.UIEvent<HTMLDivElement>): void {
     const target = e.target as HTMLDivElement;
     const height = target.scrollHeight;

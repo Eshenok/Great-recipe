@@ -1,4 +1,4 @@
-import {FC, useContext } from 'react';
+import {FC, useContext, useEffect, useRef } from 'react';
 import './Search.scss';
 import InputOutlined from "../../shared/InputOutlined/InputOutlined";
 import useForm from "../../hooks/useForm";
@@ -18,6 +18,14 @@ const Search: FC<ISearchProps> = ({isOpen, onOpen, clipped, onSubmit}) => {
   const {inputValues, onChange} = useForm();
   const context = useContext(LanguageContext);
   const phs = TEXTS[context].inputph.search as string[];
+
+  useEffect(() => {
+    const filterQuery = localStorage.getItem('filterQuery');
+    if (filterQuery) {
+      inputValues['input-search'] = filterQuery;
+      onSubmit(filterQuery);
+    }
+  }, [])
 
   return (
     <form className={"search"} onSubmit={(e) => {e.preventDefault()}}>

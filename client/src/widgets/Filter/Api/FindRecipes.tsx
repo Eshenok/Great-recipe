@@ -19,6 +19,7 @@ export const findRecipesByKeys = createAsyncThunk(
       if (res.status === 404) throw new Error('Not Found');
 
       const recipes = await res.json();
+      dispatch(setFindedRecipes([]));
       dispatch(setFindedRecipes(recipes));
     } catch (err) {
       return rejectWithValue(err);

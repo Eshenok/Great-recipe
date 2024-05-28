@@ -6,7 +6,7 @@ recipesRouter.post('/find/:recipeId', getRecipeForId);
 recipesRouter.post('/add/:recipeId', addRecipeToFavorite);
 recipesRouter.post('/remove/:recipeId', removeRecipeFromFavorite);
 recipesRouter.post('/find', findRecipesByIngredients);
-recipesRouter.get('/rnd', getRandomRecipes);
+recipesRouter.post('/rnd', getRandomRecipes);
 recipesRouter.get('/refresh', refreshFetchedRecipes);
 recipesRouter.put('/rate', putRating);
 

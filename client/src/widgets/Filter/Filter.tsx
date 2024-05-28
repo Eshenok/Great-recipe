@@ -1,4 +1,4 @@
-import {FC, useContext, useState} from 'react';
+import {FC, useContext, useEffect, useState} from 'react';
 import './Filter.scss';
 import Search from "../../entities/Search/Search";
 import Tab from "../../shared/Tab/Tab";
@@ -9,6 +9,7 @@ import {TEXTS} from "../../constants";
 import { useAppDispatch } from '../../hooks/useAppRedux';
 import { findRecipesByKeys } from './Api/FindRecipes';
 import { setFindedRecipes } from '../../store/recipesSlice';
+import useForm from '../../hooks/useForm';
 
 interface IFilterProps {
   clipped?: boolean;
@@ -23,27 +24,15 @@ const Filter: FC<IFilterProps> = ({clipped, extraClasses}) => {
   const [isOpen, setIsOpen] = useState(true);
   const ph = TEXTS[context].inputph.ings as string;
 
-  const tabsPrevFinded = () => {
-    const maxQuantity = 20;
-    const tabs = [];
-
-    for (let i=0;i<maxQuantity;i++) {
-      tabs.push(
-        <Tab isActive={false} text={'Apple'} key={i} >
-          <button className={"tab__close-btn animated-btn"} onClick={() => {console.log('Gone.Fludd "Как делишки?" acoustic version')}} />
-        </Tab>
-      )
-    }
-    return tabs;
-  }
-
   const findRecipe = (value: string) => {
     if (value === '' || !value) {
-      dispatch(setFindedRecipes([]))
+      dispatch(setFindedRecipes([]));
+      localStorage.setItem('filterQuery', '');
       return;
     }
     const keysForFind: string[] = value.replace(/[^a-zа-яё\s]/gi, ' ').replace(/\s+/g, ' ').split(' ');
     dispatch(findRecipesByKeys(keysForFind));
+    localStorage.setItem('filterQuery', value);
   }
 
   return (
@@ -51,9 +40,6 @@ const Filter: FC<IFilterProps> = ({clipped, extraClasses}) => {
       <div className={"filter__header"}>
         <Search onSubmit={findRecipe} clipped={clipped} isOpen={isOpen} onOpen={() => {setIsOpen(!isOpen)}} />
         <div className={"filter__prev"}>
-          {
-            tabsPrevFinded()
-          }
         </div>
       </div>
       {!clipped && <div className={`filter__bottom ${isOpen ? 'filter__bottom_open' : ''}`}>

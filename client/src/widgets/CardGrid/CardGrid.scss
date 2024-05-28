@@ -68,6 +68,8 @@
       overflow-y: auto;
       height: calc(100% - 48px);
       row-gap: 8px;
+      // justify-content: start;
+      align-items: start;
     }
   }
 }

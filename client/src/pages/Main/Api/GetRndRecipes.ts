@@ -14,11 +14,11 @@ export const getRndRecipes = createAsyncThunk(
     }
     try {
       const res = await fetch('http://localhost:2020/recipes/rnd', {
-        method: 'GET',
+        method: 'POST',
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
-        }
+        },
       })
 
       Error500(res,'Server');

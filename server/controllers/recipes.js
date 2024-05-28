@@ -95,19 +95,19 @@ module.exports.getRandomRecipes = async (req, res, next) => {
   try {
     const ObjectId = mongoose.Types.ObjectId;
     const batchSize = 50; // Размер каждой порции рецептов
-    const fetchedRecipeIds = req.session.fetchedRecipes.map(id => new ObjectId(id));
+    const fetchedRecipeIds = await req.session.fetchedRecipes.map(id => new ObjectId(id));
 
     // Проверяем, есть ли еще рецепты, которые не были включены в предыдущие запросы
     const remainingRecipes = await Recipe.aggregate([
       {$match: {_id: { $nin: fetchedRecipeIds }}},
-      {$sample: {size: batchSize}}
+      {$sample: {size: batchSize}},
     ])
 
     if (remainingRecipes.length === 0) {
       return res.status(204).json({message: 'Already all recipes fetched'});
     }
 
-    const refactorRecipes = await remainingRecipes.map((recipe) => {
+    const refactorRecipes = remainingRecipes.map((recipe) => {
       return {
         _id: recipe._id,
         name: recipe.strMeal,
@@ -125,6 +125,12 @@ module.exports.getRandomRecipes = async (req, res, next) => {
     next(err)
   }
 }
+
+/*
+ *
+ *
+ * 
+*/
 
 module.exports.refreshFetchedRecipes = async (req, res, next) => {
   try {

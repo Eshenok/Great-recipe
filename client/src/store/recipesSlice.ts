@@ -31,12 +31,15 @@ export const recipesSlice = createSlice({
     },
     setFindedRecipes: (state, action) => {
       state.findedRecipes = action.payload;
+    },
+    dropRecipes: (state) => {
+      state.recipes = [];
     }
   }
 })
 
 export const selectRecipes = (state: RootState) => state.recipes.recipes;
 
-export const {pushRecipesFridge, pushRecipesMain, changeFetchRecipesFstatus, changeFetchRecipesStatus, setFindedRecipes} = recipesSlice.actions;
+export const {pushRecipesFridge, pushRecipesMain, changeFetchRecipesFstatus, changeFetchRecipesStatus, setFindedRecipes, dropRecipes} = recipesSlice.actions;
 
 export default recipesSlice.reducer;
