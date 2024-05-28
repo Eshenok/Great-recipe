@@ -1,9 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Error500 } from "../../../errorHandler/Error500";
+import { changeFetchRecipesStatus, dropRecipes } from "../../../store/recipesSlice";
 
 export const dropFetchedRecipes = createAsyncThunk(
   'recipes/dropRecipes',
-  async (_, { rejectWithValue}) => {
+  async (_, {dispatch, rejectWithValue}) => {
     try {
       const res = await fetch('http://localhost:2020/recipes//refresh', {
         method: 'GET',
@@ -11,7 +12,9 @@ export const dropFetchedRecipes = createAsyncThunk(
       })
 
       Error500(res,'Server');
-      console.log(res.status);
+      dispatch(dropRecipes());
+      dispatch(changeFetchRecipesStatus(true));
+      
 
     } catch (err) {
       return rejectWithValue(err);

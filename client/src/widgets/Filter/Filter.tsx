@@ -9,7 +9,6 @@ import {TEXTS} from "../../constants";
 import { useAppDispatch } from '../../hooks/useAppRedux';
 import { findRecipesByKeys } from './Api/FindRecipes';
 import { setFindedRecipes } from '../../store/recipesSlice';
-import useForm from '../../hooks/useForm';
 
 interface IFilterProps {
   clipped?: boolean;

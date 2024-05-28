@@ -1,4 +1,4 @@
-import React, {FC, useContext} from 'react';
+import React, {FC, useContext, useEffect} from 'react';
 import './CardGrid.scss';
 import {TEXTS} from "../../constants";
 import {ClippedServerRecipeType, ServerRecipeType} from "../../Types/ServerRecipeType";
@@ -17,14 +17,16 @@ const CardGrid: FC<ICardGridProps> = ({recipes, getMoreFn, clearFilter, extraCla
 
   const context = useContext(LanguageContext);
 
-  console.log(recipes.length);
-
   // Функция проверяет положение скролла и если выше половины то делает запрос на получение еще 50 рецептов
   function checkPosition(e: React.UIEvent<HTMLDivElement>): void {
     const target = e.target as HTMLDivElement;
     const height = target.scrollHeight;
     const scrolled = target.scrollTop;
-    if (scrolled >= height/2 && getMoreFn) {getMoreFn()};
+    function getMore () {
+      if (scrolled >= height/2 && getMoreFn) {getMoreFn()};
+    }
+    setTimeout(getMore, 200);
+    
   };
 
   return (

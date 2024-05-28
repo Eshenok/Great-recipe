@@ -120,6 +120,7 @@ module.exports.getRandomRecipes = async (req, res, next) => {
 
     // Добавляем выбранные рецепты в массив уже полученных
     remainingRecipes.forEach(recipe => req.session.fetchedRecipes.push(recipe._id));
+    console.log(req.session.fetchedRecipes.length);
     return res.status(200).json({ recipes: refactorRecipes });
   } catch (err) {
     next(err)
@@ -135,6 +136,7 @@ module.exports.getRandomRecipes = async (req, res, next) => {
 module.exports.refreshFetchedRecipes = async (req, res, next) => {
   try {
     req.session.fetchedRecipes = [];
+    console.log(req.session.fetchedRecipes);
     res.status(200).json({message: 'fetched recipes refresh'});
   } catch (err) {
     next(err);

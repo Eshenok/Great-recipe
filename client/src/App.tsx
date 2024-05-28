@@ -28,16 +28,16 @@ function App() {
   }
 
   useEffect(() => {
+    dispatch(getUser());
     if (!localStorage.getItem('recipes') || localStorage.getItem('recipes')?.length !== 0) {
       dispatch(dropFetchedRecipes());
-      dispatch(dropRecipes());
     }
-    dispatch(getRndRecipes());
-  }, [user]);
+  }, []);
 
   useEffect(() => {
-    dispatch(getUser());
+    dispatch(getRndRecipes());
   }, []);
+
 
   useEffect(() => {
     dispatch(initCategories({language: language}));

@@ -3,11 +3,8 @@ import Filter from "../../widgets/Filter/Filter";
 import CardGrid from "../../widgets/CardGrid/CardGrid";
 import Category from "../../entities/Category/Category";
 import { FC, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { getRndRecipes } from './Api/GetRndRecipes';
-import { dropFetchedRecipes } from './Api/DropFetchedRecipes';
-import { useAppDispatch } from '../../hooks/useAppRedux';
-import useForm from '../../hooks/useForm';
+import { useAppDispatch, useAppSelector } from '../../hooks/useAppRedux';
 
 interface IMainProps {
   isFridge?: boolean;
@@ -18,7 +15,7 @@ const Main: FC<IMainProps> = (isFridge, ings) => {
 
   const dispatch = useAppDispatch();
 
-  const {recipes, findedRecipes} = useSelector(state => state.recipes);
+  const {recipes, findedRecipes} = useAppSelector(state => state.recipes);
 
   const getMoreRecipes = () => {
     dispatch(getRndRecipes());
