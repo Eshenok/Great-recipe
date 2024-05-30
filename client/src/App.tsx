@@ -29,14 +29,14 @@ function App() {
 
   useEffect(() => {
     dispatch(getUser());
-    if (!localStorage.getItem('recipes') || localStorage.getItem('recipes')?.length !== 0) {
-      dispatch(dropFetchedRecipes());
-    }
   }, []);
 
   useEffect(() => {
+    if (!localStorage.getItem('recipes') || localStorage.getItem('recipes')?.length !== 0) {
+      dispatch(dropFetchedRecipes());
+    }
     dispatch(getRndRecipes());
-  }, []);
+  }, [user]);
 
 
   useEffect(() => {

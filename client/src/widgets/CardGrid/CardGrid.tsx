@@ -5,6 +5,7 @@ import {ClippedServerRecipeType, ServerRecipeType} from "../../Types/ServerRecip
 import RecipeCard from "../../entities/RecipeCard/RecipeCard";
 import Title from "../../shared/Title/Title";
 import {LanguageContext} from "../../context/LanguageContext";
+import { useAppSelector } from '../../hooks/useAppRedux';
 
 interface ICardGridProps {
   recipes: ClippedServerRecipeType[],
@@ -22,11 +23,8 @@ const CardGrid: FC<ICardGridProps> = ({recipes, getMoreFn, clearFilter, extraCla
     const target = e.target as HTMLDivElement;
     const height = target.scrollHeight;
     const scrolled = target.scrollTop;
-    function getMore () {
-      if (scrolled >= height/2 && getMoreFn) {getMoreFn()};
-    }
-    setTimeout(getMore, 200);
-    
+    const clHe = target.clientHeight;
+    if (height - scrolled == clHe && getMoreFn) {getMoreFn()};
   };
 
   return (

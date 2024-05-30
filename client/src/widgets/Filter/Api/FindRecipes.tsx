@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import {setFindedRecipes} from '../../../store/recipesSlice';
 
 export const findRecipesByKeys = createAsyncThunk(
-  'recipes/findByKeys',
+  'recipes/findRecipesByKeys',
   async (keys: string[], {rejectWithValue, dispatch}) => {
     try {
       const res = await fetch(`http://localhost:2020/recipes/find`, {

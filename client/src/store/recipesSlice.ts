@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ClippedServerRecipeType } from "../Types/ServerRecipeType";
 import { RootState } from ".";
+import { findRecipesByKeys } from "../widgets/Filter/Api/FindRecipes";
 
 interface IInitialState {
   recipes: ClippedServerRecipeType[],
@@ -34,12 +35,23 @@ export const recipesSlice = createSlice({
     },
     dropRecipes: (state) => {
       state.recipes = [];
+    },
+    dropfindedRecipesStatus: (state) => {
+      state.findedRecipesStatus = true;
+    }
+  },
+  extraReducers: {
+    [findRecipesByKeys.rejected]: (state) => {
+      state.findedRecipesStatus = false;
+    },
+    [findRecipesByKeys.pending]: (state) => {
+      state.findedRecipesStatus = true;
     }
   }
 })
 
 export const selectRecipes = (state: RootState) => state.recipes.recipes;
 
-export const {pushRecipesFridge, pushRecipesMain, changeFetchRecipesFstatus, changeFetchRecipesStatus, setFindedRecipes, dropRecipes} = recipesSlice.actions;
+export const {dropfindedRecipesStatus, pushRecipesFridge, pushRecipesMain, changeFetchRecipesFstatus, changeFetchRecipesStatus, setFindedRecipes, dropRecipes} = recipesSlice.actions;
 
 export default recipesSlice.reducer;

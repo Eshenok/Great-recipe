@@ -15,7 +15,7 @@ const Main: FC<IMainProps> = (isFridge, ings) => {
 
   const dispatch = useAppDispatch();
 
-  const {recipes, findedRecipes} = useAppSelector(state => state.recipes);
+  const {recipes, findedRecipes, findedRecipesStatus} = useAppSelector(state => state.recipes);
 
   const getMoreRecipes = () => {
     dispatch(getRndRecipes());
@@ -27,7 +27,7 @@ const Main: FC<IMainProps> = (isFridge, ings) => {
         <Filter />
         <div className={"main__recipes"}>
           <Category />
-          <CardGrid recipes={findedRecipes.length > 0 ? findedRecipes : recipes} getMoreFn={getMoreRecipes} />
+          <CardGrid recipes={findedRecipesStatus ? findedRecipes.length > 0 ? findedRecipes : recipes : []} getMoreFn={getMoreRecipes} />
         </div>
       </section>
     </main>

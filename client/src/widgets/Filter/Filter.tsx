@@ -8,7 +8,7 @@ import {LanguageContext} from "../../context/LanguageContext";
 import {TEXTS} from "../../constants";
 import { useAppDispatch } from '../../hooks/useAppRedux';
 import { findRecipesByKeys } from './Api/FindRecipes';
-import { setFindedRecipes } from '../../store/recipesSlice';
+import { dropfindedRecipesStatus, setFindedRecipes } from '../../store/recipesSlice';
 
 interface IFilterProps {
   clipped?: boolean;
@@ -26,6 +26,7 @@ const Filter: FC<IFilterProps> = ({clipped, extraClasses}) => {
   const findRecipe = (value: string) => {
     if (value === '' || !value) {
       dispatch(setFindedRecipes([]));
+      dispatch(dropfindedRecipesStatus());
       localStorage.setItem('filterQuery', '');
       return;
     }
