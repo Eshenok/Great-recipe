@@ -52,29 +52,40 @@ module.exports.putRating = async (req, res, next) => {
 // В body передаем массив
 module.exports.findRecipesByIngredients = async (req, res, next) => {
   try {
+    const body = req.body;
+    console.log(body);
     const keysToFind = req.body.ingredients.map(ing => ing.toLowerCase());
-    if (!keysToFind || keysToFind.length === 0) throw new BadRequest('Ingredients required');
+    let recipesArr = [];
+    let categoriedRecipes = null;
+    if (body.category) {
+      const queryCategory = body.category.charAt(0).toUpperCase() + body.category.slice(1); //Неважно передать с большой или маленькой буквы
+      categoriedRecipes = (await Recipe.find({strCategory: queryCategory})).map(recipe => recipe._id);
+    }
 
-    const nameRegexes = keysToFind.map(key => new RegExp(key, 'i'));
-
-    const recipesFindByNames = await Recipe.find({ strMeal: { $in: nameRegexes } });
-
-    const foundRecipeIds = recipesFindByNames.map(recipe => recipe.id);
-
-    const recipesFindByIngs = await Recipe.find({ arrIngredients: { $in: nameRegexes }, _id: { $nin: foundRecipeIds } });
-
-    const recipesArr = [...recipesFindByNames, ...recipesFindByIngs];
+    if (keysToFind) {
+      const nameRegexes = keysToFind.map(key => new RegExp(key, 'i'));
+      const recipesFindByNames = await Recipe.find({ strMeal: { $in: nameRegexes }, _id: {$in: categoriedRecipes} });
+      recipesArr.push(recipesFindByNames);
+      const ingQuery = [...recipesFindByNames.map(recipe => recipe._id), ...categoriedRecipes.map(recipe => recipe._id)];
+      const recipesFindByIngs = await Recipe.find({ arrIngredients: { $in: nameRegexes }, _id: { $nin: ingQuery } });
+      recipesArr.push(recipesFindByIngs);
+    }
 
     const refactorRecipes = recipesArr.map((recipe) => {
+      // const rating = recipe.rating.reduce((accum, cur) => accum + cur.rate, 0);
+      // const ingridientsQuantity = recipe.arrIngredients.filter(item => Boolean(item)).length;
+      console.log(recipe['strMeal']);
       return {
         _id: recipe._id,
         name: recipe.strMeal,
         category: recipe.strCategory,
-        rating: recipe.rating.reduce((accum, cur) => accum + cur.rate, 0),
-        ingridientsQuantity: recipe.arrIngredients.filter(item => Boolean(item)).length,
+        rating,
+        ingridientsQuantity,
         image: recipe.strMealThumb,
       }
     })
+
+    console.log(refactorRecipes);
 
     if (!refactorRecipes || refactorRecipes.length === 0) throw new NotFound('Recipes not found');
 

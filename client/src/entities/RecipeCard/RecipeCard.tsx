@@ -44,11 +44,11 @@ const RecipeCard: FC<IRecipeCardProps> = ({recipeInfo}) => {
         </span>
         <span className={"recipe-card__tag recipe-card__tag_ings"}>
           <img src={bread} />
-          {recipeInfo.ingridientsQuantity}
+          {recipeInfo?.ingridientsQuantity ? recipeInfo.ingridientsQuantity : 0}
         </span>
         <span className={"recipe-card__tag recipe-card__tag_rating"}>
           <img src={star}/>
-          {recipeInfo.rating}
+          {recipeInfo?.rating ? recipeInfo.rating : 0}
         </span>
       </div>
       <LikeBtn onClick={() => {console.log('click')}} isLiked={true} extraClasses={"recipe-card__like"} />
