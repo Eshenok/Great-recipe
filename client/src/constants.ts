@@ -6,6 +6,7 @@ import pasta from './assets/category_pasta.svg';
 import seafood from './assets/category_seafood.svg';
 import vegan from './assets/category_vegetarian.svg';
 import start from './assets/category_starter.svg';
+import dessert from './assets/category_dessert.svg';
 import {ServerRecipeType} from "./Types/ServerRecipeType";
 import LanguageType from './Types/LanguageType';
 import { CategoryItemType } from './Types/CategoryItemType';
@@ -18,6 +19,7 @@ type Texts = {
   titles: Record<string, string>;
   filter: Record<string, string>;
   btns: Record<string, string>;
+  info: Record<string, string>;
 };
 
 export const TEXTS: Record<LanguageType, Texts> = {
@@ -51,8 +53,9 @@ export const TEXTS: Record<LanguageType, Texts> = {
       miscellaneous: {name: 'Other', image: side},
       pasta: {name: 'Pasta', image: pasta},
       seafood: {name: 'Seafood', image: seafood},
-      vegan: {name: 'Vegetarian', image: vegan},
+      vegetarian: {name: 'Vegetarian', image: vegan},
       starter: {name: 'Starter', image: start},
+      dessert: {name: 'Dessert', image: dessert},
     },
     titles: {
       infridge: 'In Fridge',
@@ -75,7 +78,12 @@ export const TEXTS: Record<LanguageType, Texts> = {
       edit: 'Edit profile',
       exit: 'Exit',
       change: 'Change Password',
-    }
+      clearFilter: 'clear filter',
+      ings: 'Ingridients'
+    },
+    info: {
+      recipesNf: 'No one receipt find',
+    },
   },
   ru: {
     menu: {
@@ -107,8 +115,9 @@ export const TEXTS: Record<LanguageType, Texts> = {
       miscellaneous: {name: 'Другое', image: other},
       pasta: {name: 'Паста', image: pasta},
       seafood: {name: 'Морепродукты', image: seafood},
-      vegan: {name: 'Вегетарианское', image: vegan},
+      vegetarian: {name: 'Вегетарианское', image: vegan},
       starter: {name: 'Стартеры', image: start},
+      dessert: {name: 'Дессерты', image: dessert},
     },
     titles: {
       infridge: 'На кухне',
@@ -131,6 +140,11 @@ export const TEXTS: Record<LanguageType, Texts> = {
       edit: 'Изменить профиль',
       exit: 'Выход',
       change: 'Сменить пароль',
+      clearFilter: 'очистить фильтр',
+      ings: 'Игнридиентов'
+    },
+    info: {
+      recipesNf: 'Ни одного рецепта не найдено',
     }
   }
 }

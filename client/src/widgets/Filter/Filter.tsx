@@ -1,4 +1,4 @@
-import {FC, useContext, useState} from 'react';
+import {FC, useContext, useEffect, useState} from 'react';
 import './Filter.scss';
 import Search from "../../entities/Search/Search";
 import Tab from "../../shared/Tab/Tab";
@@ -6,39 +6,43 @@ import CheckSwitch from "../../shared/CheckSwitch/CheckSwitch";
 import ManagedTab from "../../shared/ManagedTab/ManagedTab";
 import {LanguageContext} from "../../context/LanguageContext";
 import {TEXTS} from "../../constants";
+import { useAppDispatch } from '../../hooks/useAppRedux';
+import { findRecipesByKeys } from './Api/FindRecipes';
+import { dropfindedRecipesStatus, setFindedRecipes } from '../../store/recipesSlice';
 
-const Filter: FC = () => {
+interface IFilterProps {
+  clipped?: boolean;
+  extraClasses?: string;
+}
+
+const Filter: FC<IFilterProps> = ({clipped, extraClasses}) => {
 
   const context = useContext(LanguageContext);
+  const dispatch = useAppDispatch();
 
   const [isOpen, setIsOpen] = useState(true);
   const ph = TEXTS[context].inputph.ings as string;
 
-  const tabsPrevFinded = () => {
-    const maxQuantity = 7;
-    const tabs = [];
-
-    for (let i=0;i<maxQuantity;i++) {
-      tabs.push(
-        <Tab isActive={false} text={'Apple'} key={i} >
-          <button className={"tab__close-btn animated-btn"} onClick={() => {console.log('Gone.Fludd "Как делишки?" acoustic version')}} />
-        </Tab>
-      )
+  const findRecipe = (value: string) => {
+    if (value === '' || !value) {
+      dispatch(setFindedRecipes([]));
+      dispatch(dropfindedRecipesStatus());
+      localStorage.setItem('filterQuery', '');
+      return;
     }
-    return tabs;
+    const keysForFind: string[] = value.replace(/[^a-zа-яё\s]/gi, ' ').replace(/\s+/g, ' ').split(' ');
+    dispatch(findRecipesByKeys(keysForFind));
+    localStorage.setItem('filterQuery', value);
   }
 
   return (
-    <section className={`filter`}>
+    <section className={`filter ${extraClasses ? extraClasses : ''}`}>
       <div className={"filter__header"}>
-        <Search isOpen={isOpen} onOpen={() => {setIsOpen(!isOpen)}} />
+        <Search onSubmit={findRecipe} clipped={clipped} isOpen={isOpen} onOpen={() => {setIsOpen(!isOpen)}} />
         <div className={"filter__prev"}>
-          {
-            tabsPrevFinded()
-          }
         </div>
       </div>
-      <div className={`filter__bottom ${isOpen ? 'filter__bottom_open' : ''}`}>
+      {!clipped && <div className={`filter__bottom ${isOpen ? 'filter__bottom_open' : ''}`}>
         <div className={"filter__rating filter__section"}>
           <h3 className={"filter__title"}>{TEXTS[context].filter.rating}</h3>
           <Tab text={'1'} isActive={false}>&#128528;</Tab>
@@ -55,7 +59,7 @@ const Filter: FC = () => {
           <h3 className={"filter__title"}>{TEXTS[context].filter.favourite}</h3>
           <CheckSwitch name={'isLiked'} color={'red'} />
         </div>
-      </div>
+      </div>}
     </section>
   );
 };

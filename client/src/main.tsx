@@ -9,6 +9,9 @@ import NotFound from "./pages/NotFound/NotFound";
 import Main from "./pages/Main/Main";
 import Sign from "./pages/Sign/Sign";
 import Fridge from "./pages/Fridge/Fridge";
+import Login from './widgets/Form/Login/Login.tsx';
+import Registration from './widgets/Form/Registration/Registration.tsx';
+import { RecipePage, loader as RecipePageLoader } from './pages/RecipePage/RecipePage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -20,12 +23,27 @@ const router = createBrowserRouter([
         children: [
           {index: true, element: <Main />},
           {
-            path: '/sign-in',
+            path: '/sign',
             element: <Sign />,
+            children: [
+              {
+                path: '/sign/in',
+                element: <Login />,
+              },
+              {
+                path: '/sign/up',
+                element: <Registration />
+              },
+            ]
           },
           {
             path: 'fridge',
             element: <Fridge />,
+          },
+          {
+            path: ':recipeId',
+            loader: RecipePageLoader,
+            element: <RecipePage />
           }
         ]
       }
@@ -34,9 +52,7 @@ const router = createBrowserRouter([
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
     <Provider store={store} >
       <RouterProvider router={router} />
     </Provider>
-  </React.StrictMode>,
 )

@@ -26,8 +26,6 @@ const ManagedTab:FC<IManagedTabProps> = ({isActive, placeholder, type, name, max
     }
   }
 
-  console.log(inputValues[name]);
-
   return (
     <div className={`tab tab_managed ${isActive ? 'tab_active' : ''}`}>
       <input
