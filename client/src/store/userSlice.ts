@@ -19,19 +19,23 @@ export const getUser = createAsyncThunk(
   }
 )
 
+interface IInitialState {
+  user: UserType | {},
+  status: {error: null | string, msg: string}, 
+  }
+
+const initialState: IInitialState = {user: {}, status: {error: null, msg: ''}};
+
 export const userSlice = createSlice({
   name: 'user',
-  initialState:{
-    user: {} as UserType | null,
-    status: {error: null, msg: ''}
-  },
+  initialState,
   reducers: {
     initUser: (state, action) => {
       console.log(action.payload)
       state.user = action.payload;
     },
     clearUser: (state) => {
-      state.user = null;
+      state.user = {};
     }
   },
 })

@@ -19,6 +19,20 @@
     }
   }
 
+  &__edit {
+    & div {
+      order: -1;
+      background: transparent url('../../assets/edit.svg') center center no-repeat;
+    }
+  }
+
+  &__passchange {
+    & div {
+      order: -1;
+      background: transparent url('../../assets/sheild_warning.svg') center center no-repeat;
+    }
+  }
+
   &__auth {
     & div {
       order: -1;
