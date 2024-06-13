@@ -12,6 +12,7 @@ import Fridge from "./pages/Fridge/Fridge";
 import Login from './widgets/Form/Login/Login.tsx';
 import Registration from './widgets/Form/Registration/Registration.tsx';
 import { RecipePage, loader as RecipePageLoader } from './pages/RecipePage/RecipePage.tsx';
+import Profile from './pages/Profile/Profile.tsx';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
                 path: '/sign/up',
                 element: <Registration />
               },
+              {
+                path: '/sign/profile',
+                element: <Profile />
+              }
             ]
           },
           {

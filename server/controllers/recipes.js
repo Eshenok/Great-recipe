@@ -66,10 +66,10 @@ module.exports.findRecipesByIngredients = async (req, res, next) => {
     }
 
     const nameRegexes = optionsForSearch.keysToFind.map(key => new RegExp(key, 'i'));
-    const recipesFindByNames = await Recipe.find({ strMeal: { $in: nameRegexes }, strCategory:  optionsForSearch.category });
+    const recipesFindByNames = await Recipe.find({ strMeal: { $in: nameRegexes }  });
     recipesArr.push(...recipesFindByNames);
     const ingQuery = recipesFindByNames.map(recipe => recipe._id);
-    const recipesFindByIngs = await Recipe.find({ arrIngredients: { $in: nameRegexes }, _id: { $nin: ingQuery }, strCategory: optionsForSearch.category });
+    const recipesFindByIngs = await Recipe.find({ arrIngredients: { $in: nameRegexes }, _id: { $nin: ingQuery } });
     recipesArr.push(...recipesFindByIngs);
 
     // console.log(recipesArr);

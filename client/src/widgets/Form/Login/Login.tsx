@@ -3,18 +3,17 @@ import CtrlBtn from "../../../shared/CtrlBtn/CtrlBtn";
 import InputSign from "../../../shared/InputSign/InputSign";
 import {TEXTS} from "../../../constants";
 import {LanguageContext} from "../../../context/LanguageContext";
-import { Form, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useForm from '../../../hooks/useForm';
-import UserType from '../../../Types/UserType';
-import { useDispatch } from 'react-redux';
 import { signIn } from './Api/SignIn';
+import { useAppDispatch } from '../../../hooks/useAppRedux';
 
 const Login = () => {
 
   const context = useContext(LanguageContext);
 
   const {inputValues, onChange} = useForm();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const submitSignIn = (e: MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();

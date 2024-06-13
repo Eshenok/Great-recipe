@@ -15,8 +15,10 @@ const Sign: FC = () => {
   const navigate = useNavigate();
   const {user} = useSelector(state => state.user)
 
+  console.log(user);
+
   useEffect(() => {
-    if (user) {
+    if (!user) {
       navigate('/sign/in');
     } else {
       navigate('/sign/profile')

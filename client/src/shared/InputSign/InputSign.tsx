@@ -12,9 +12,10 @@ interface IInputSignProps {
     value: string;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
     req?: boolean;
+    disabled?: boolean
 }
 
-const InputSign: FC<IInputSignProps> = ({type, placeholder, errorText, labelText, name, isBig, value, onChange, req}) => {
+const InputSign: FC<IInputSignProps> = ({type, placeholder, errorText, labelText, name, isBig, value, onChange, req, disabled}) => {
 
     return (
         <div className={`input-sign ${isBig ? 'input-sign_big' : ''}`}>
@@ -27,8 +28,9 @@ const InputSign: FC<IInputSignProps> = ({type, placeholder, errorText, labelText
                 onChange={onChange}
                 type={type}
                 placeholder={placeholder}
+                disabled={disabled}
             />
-            {labelText &&
+            {labelText && !disabled &&
               <label
                 htmlFor={name}
                 className={`input-sign__label ${errorText ? 'input-sign__label_err' : ''}`}>

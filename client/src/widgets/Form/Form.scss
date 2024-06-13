@@ -32,4 +32,11 @@
       background: transparent url('../../assets/enter.svg') center center no-repeat;
     }
   }
+
+  &__exit {
+    color: $red-dark;
+    & div {
+      background: transparent url('../../assets/exit.svg') center center no-repeat;
+    }
+  }
 }
