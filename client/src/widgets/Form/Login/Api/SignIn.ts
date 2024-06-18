@@ -6,7 +6,6 @@ export const signIn = createAsyncThunk(
   'user/signIn',
   async (formData: {email: string, password: string}, {dispatch, rejectWithValue}) => {
     const {email, password} = formData;
-    console.log(formData);
     try {
       const res = await fetch('http://localhost:2020/signin', {
         method: 'POST',

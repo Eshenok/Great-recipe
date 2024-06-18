@@ -3,7 +3,7 @@ import CtrlBtn from "../../../shared/CtrlBtn/CtrlBtn";
 import InputSign from "../../../shared/InputSign/InputSign";
 import {TEXTS} from "../../../constants";
 import {LanguageContext} from "../../../context/LanguageContext";
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useForm from '../../../hooks/useForm';
 import { signIn } from './Api/SignIn';
 import { useAppDispatch } from '../../../hooks/useAppRedux';
@@ -13,6 +13,7 @@ const Login = () => {
   const context = useContext(LanguageContext);
 
   const {inputValues, onChange} = useForm();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const submitSignIn = (e: MouseEvent<HTMLButtonElement>): void => {
@@ -23,6 +24,7 @@ const Login = () => {
     };
 
     dispatch(signIn(formData));
+    navigate('/sign/profile');
   }
 
   const phs = TEXTS[context].inputph.account as Record<string, string>

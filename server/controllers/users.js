@@ -93,7 +93,7 @@ module.exports.signin = (req, res, next) => {
       req.session.userId = user._id;
       req.session.fetchedRecipes = [];
       req.session.ingridientsRecipes = [];
-      res.send({ userObj });
+      res.send(userObj);
     })
     .catch(next);
 };

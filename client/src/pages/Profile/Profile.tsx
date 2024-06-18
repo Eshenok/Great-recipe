@@ -13,6 +13,7 @@ const Profile: FC = () => {
   const {onChange, inputValues} = useForm();
   const context = useContext(LanguageContext);
   const {user} = useAppSelector(state => state.user);
+  console.log(user);
   const checkedUser = user as UserType;
   const [isEdit, setIsEdit] = useState<boolean>(false);
 
@@ -22,7 +23,6 @@ const Profile: FC = () => {
     e.preventDefault();
     setIsEdit(!isEdit);
   }
-
   
 
   return (
@@ -60,6 +60,7 @@ const Profile: FC = () => {
         labelText={TEXTS[context].inputlabel.passcheck}
         placeholder={phs.passcheck} 
         />
+        <button />
         </>
       }
       
