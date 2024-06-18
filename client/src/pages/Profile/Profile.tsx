@@ -3,16 +3,18 @@ import InputSign from "../../shared/InputSign/InputSign";
 import useForm from "../../hooks/useForm";
 import { LanguageContext } from "../../context/LanguageContext";
 import { TEXTS } from "../../constants";
-import { useAppSelector } from "../../hooks/useAppRedux";
+import { useAppDispatch, useAppSelector } from "../../hooks/useAppRedux";
 import './Profile.scss';
 import CtrlBtn from "../../shared/CtrlBtn/CtrlBtn";
 import UserType from "../../Types/UserType";
+import { signOut } from "./Api/SignOut";
 
 const Profile: FC = () => {
 
   const {onChange, inputValues} = useForm();
   const context = useContext(LanguageContext);
   const {user} = useAppSelector(state => state.user);
+  const dispatch = useAppDispatch();
   console.log(user);
   const checkedUser = user as UserType;
   const [isEdit, setIsEdit] = useState<boolean>(false);
@@ -22,6 +24,12 @@ const Profile: FC = () => {
   const changeEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIsEdit(!isEdit);
+  }
+
+  const logoff = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    dispatch(signOut());
+
   }
   
 
@@ -74,7 +82,7 @@ const Profile: FC = () => {
           : 
           <>
           <CtrlBtn onClick={changeEdit} text={TEXTS[context].btns.edit} extraClasses="form-s__edit" />
-          <CtrlBtn onClick={(e) =>{e.preventDefault()}} extraClasses="form-s__exit" text={TEXTS[context].btns.exit}/>
+          <CtrlBtn onClick={logoff} extraClasses="form-s__exit" text={TEXTS[context].btns.exit}/>
           </> 
         }
       </div>

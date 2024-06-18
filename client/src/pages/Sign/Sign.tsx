@@ -14,13 +14,19 @@ const Sign: FC = () => {
   const {user} = useAppSelector(state => state.user)
 
   useEffect(() => {
-    if (location.pathname === '/sign/profile' || location.pathname === '/sign/up' || location.pathname === '/sign/in') return;
-    if (Object.keys(user).length === 0) {
-      navigate('/sign/in');
-    } else {
-      navigate('/sign/profile')
+    // Проверяем, если пользователь не аутентифицирован и находится на пути /sign
+    if (location.pathname.startsWith('/sign')) {
+      if (Object.keys(user).length === 0) {
+        if (location.pathname !== '/sign/in' && location.pathname !== '/sign/up') {
+          navigate('/sign/in');
+        }
+      } else {
+        if (location.pathname !== '/sign/profile') {
+          navigate('/sign/profile');
+        }
+      }
     }
-  }, [user, location.pathname])
+  }, [user, location.pathname, navigate]);
 
   const getTitle = (path: string): string => {
     return TEXTS[context].titles[path === '/sign/in' ? 'login' : path === '/sign/up' ? 'reg' : 'profile'];

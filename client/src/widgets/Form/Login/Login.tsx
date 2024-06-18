@@ -24,7 +24,7 @@ const Login = () => {
     };
 
     dispatch(signIn(formData));
-    navigate('/sign/profile');
+    // navigate('/sign/profile');
   }
 
   const phs = TEXTS[context].inputph.account as Record<string, string>
@@ -32,7 +32,7 @@ const Login = () => {
   return (
       <form className={"form-s"}>
         <InputSign
-        value={inputValues["userEmailLog"]}
+        value={inputValues["userEmailLog"] ? inputValues["userEmailLog"] : ''}
         onChange={onChange}
           type="email"
           name="userEmailLog"
@@ -43,7 +43,7 @@ const Login = () => {
         />
 
         <InputSign
-        value={inputValues["userPassLog"]}
+        value={inputValues["userPassLog"] ? inputValues["userPassLog"] : ''}
         onChange={onChange}
           type="password"
           name="userPassLog"

@@ -13,6 +13,7 @@ import Login from './widgets/Form/Login/Login.tsx';
 import Registration from './widgets/Form/Registration/Registration.tsx';
 import { RecipePage, loader as RecipePageLoader } from './pages/RecipePage/RecipePage.tsx';
 import Profile from './pages/Profile/Profile.tsx';
+import ProtectedRoute from './widgets/ProtectedRoute/ProtectedRoute.tsx';
 
 const router = createBrowserRouter([
   {
@@ -37,7 +38,11 @@ const router = createBrowserRouter([
               },
               {
                 path: '/sign/profile',
-                element: <Profile />
+                element: (
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+              )
               }
             ]
           },

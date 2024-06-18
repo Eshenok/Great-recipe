@@ -22,6 +22,8 @@ type Texts = {
   info: Record<string, string>;
 };
 
+export const BASE_URL = 'http://localhost:2020';
+
 export const TEXTS: Record<LanguageType, Texts> = {
   en: {
     menu: {

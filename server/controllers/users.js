@@ -5,12 +5,13 @@ const User = require('../models/user');
 const NotFound = require('../errors/NotFound');
 const BadRequest = require('../errors/BadRequest');
 const Conflict = require('../errors/Conflict');
+const { NODE_ENV } = process.env; // Забираем из .env
 
 module.exports.updateFridge = (req, res, next) => {
   const fridgeFromClient = req.body.fridge;
   if (!req.body.fridge) throw new BadRequest('Not data to update');
 
-  const user = User.findByIdAndUpdate(req.session.userId, {fridge: fridgeFromClient}, { new: true, runValidators: true })
+  User.findByIdAndUpdate(req.session.userId, {fridge: fridgeFromClient}, { new: true, runValidators: true })
     .orFail(() => {
       throw new NotFound('User not found');
     })
@@ -95,5 +96,22 @@ module.exports.signin = (req, res, next) => {
       req.session.ingridientsRecipes = [];
       res.send(userObj);
     })
-    .catch(next);
+    .catch((err) => {
+      next(new NotFound('bad credentials'))
+    });
+};
+
+module.exports.signout = (req, res, next) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.clearCookie('connect.sid', {
+      path: '/',
+      httpOnly: true,
+      secure: NODE_ENV === 'production', // true if in production
+      sameSite: NODE_ENV === 'production' ? 'none' : 'lax',
+    });
+    res.status(200).send({ message: 'Successfully signed out' });
+  });
 };
