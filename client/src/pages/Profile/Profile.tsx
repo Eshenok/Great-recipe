@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from "react"
+import { FC, useCallback, useContext, useState } from "react"
 import InputSign from "../../shared/InputSign/InputSign";
 import useForm from "../../hooks/useForm";
 import { LanguageContext } from "../../context/LanguageContext";
@@ -8,6 +8,7 @@ import './Profile.scss';
 import CtrlBtn from "../../shared/CtrlBtn/CtrlBtn";
 import UserType from "../../Types/UserType";
 import { signOut } from "./Api/SignOut";
+import { updateUser } from "./Api/UpdateUser";
 
 const Profile: FC = () => {
 
@@ -29,12 +30,24 @@ const Profile: FC = () => {
   const logoff = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     dispatch(signOut());
+  }
 
+  const handleUpdateUser = (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(inputValues);
+    const dataToUpdate = {
+      email: checkedUser.email,
+      pass: inputValues['profile-pass'],
+      nEmail: inputValues['profile-mail'],
+      name: inputValues['profile-name']
+    }
+
+    dispatch(updateUser(dataToUpdate));
   }
   
 
   return (
-    <form className="form-s profile">
+    <form className="form-s profile" onSubmit={handleUpdateUser}>
       <InputSign 
       value={inputValues['profile-name'] ? inputValues['profile-name'] : checkedUser.name}
       name={'profile-name'}
@@ -60,7 +73,7 @@ const Profile: FC = () => {
       {
         isEdit && <><InputSign
         errorText=""
-        value={inputValues['profile-pass']}
+        value={inputValues['profile-pass'] ? inputValues['profile-pass'] : ''}
         name="profile-pass"
         onChange={onChange}
         type="password"
@@ -68,7 +81,7 @@ const Profile: FC = () => {
         labelText={TEXTS[context].inputlabel.passcheck}
         placeholder={phs.passcheck} 
         />
-        <button />
+        <button className="button profile__close animated-btn" onClick={changeEdit} />
         </>
       }
       
@@ -77,7 +90,7 @@ const Profile: FC = () => {
           isEdit ? 
           <>
           <CtrlBtn onClick={changeEdit} text={TEXTS[context].btns.change} extraClasses="form-s__passchange" />
-          <CtrlBtn onClick={(e) =>{e.preventDefault()}} extraClasses="form-s__submit" text={TEXTS[context].btns.submit}/>
+          <CtrlBtn extraClasses="form-s__submit" text={TEXTS[context].btns.submit}/>
           </>
           : 
           <>

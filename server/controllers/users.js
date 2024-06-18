@@ -32,24 +32,30 @@ module.exports.getCurrentUser = (req, res, next) => {
     .catch(next);
 };
 
-module.exports.updateCurrentUser = (req, res, next) => {
-  const { name, email } = req.body;
+module.exports.updateCurrentUser = async (req, res, next) => {
+  const { password, email, newName, newEmail } = req.body;
+  let unqueNewEmail = false;
+  const user = await User.findUserByCredentials(email, password) // custom method
 
-  User.findByIdAndUpdate(req.session.userId, { name, email }, { new: true, runValidators: true })
-    .orFail(() => {
-      throw new NotFound('User not found');
-    })
-    .then((user) => res.send(user))
-    /*if user find but have errors*/
-    .catch((err) => {
-      if (err.code === 11000) {
-        next(new Conflict());
-      } else if (err.name === 'CastError' || err.name === 'ValidationError') {
-        next(new BadRequest());
-      } else {
-        next(err);
-      }
-    });
+  if (!user) next(new NotFound('User not Found'));
+
+  if (newEmail !== email) {
+    const checkNewEmail = await User.findOne({email: newEmail});
+    if (checkNewEmail) {
+      unqueNewEmail = false;
+      throw new Conflict('User already have this email')
+    }
+  }
+
+  const updatedData = {
+    name: newName
+  };
+  if (unqueNewEmail) {
+    updatedData.email = newEmail;
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(user._id, updatedData, {new: true});
+  res.send(updatedUser);
 };
 
 module.exports.createUser = (req, res, next) => {
