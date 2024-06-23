@@ -5,6 +5,7 @@ const User = require('../models/user');
 const NotFound = require('../errors/NotFound');
 const BadRequest = require('../errors/BadRequest');
 const Conflict = require('../errors/Conflict');
+const Forbidden = require('../errors/Forbidden');
 const { NODE_ENV } = process.env; // Забираем из .env
 
 module.exports.updateFridge = (req, res, next) => {
@@ -33,7 +34,13 @@ module.exports.getCurrentUser = (req, res, next) => {
 };
 
 module.exports.updateCurrentUser = async (req, res, next) => {
-  const { password, email, newName, newEmail } = req.body;
+  try {
+    const { password, email, newName, newEmail } = req.body;
+
+    if (!password || !email) {
+      throw new Forbidden();
+    }
+
   let unqueNewEmail = false;
   const user = await User.findUserByCredentials(email, password) // custom method
 
@@ -43,7 +50,7 @@ module.exports.updateCurrentUser = async (req, res, next) => {
     const checkNewEmail = await User.findOne({email: newEmail});
     if (checkNewEmail) {
       unqueNewEmail = false;
-      throw new Conflict('User already have this email')
+      new Conflict('User already have this email')
     }
   }
 
@@ -56,6 +63,9 @@ module.exports.updateCurrentUser = async (req, res, next) => {
 
   const updatedUser = await User.findByIdAndUpdate(user._id, updatedData, {new: true});
   res.send(updatedUser);
+  } catch (err) {
+    next(err)
+  }
 };
 
 module.exports.createUser = (req, res, next) => {

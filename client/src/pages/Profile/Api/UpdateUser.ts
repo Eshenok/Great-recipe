@@ -20,11 +20,14 @@ export const updateUser = createAsyncThunk(
           newEmail: data.nEmail
         })
       });
-      if (!res || res.status !== 200) Error500(res, 'error');
+      if (!res || res.status === 500) Error500(res, 'error');
+      if (res.status === 407) throw new Error('Отказано в доступе');
+      if (res.status === 404) throw new Error('Пользователь не найдет');
+      console.log(res);
       const user = await res.json();
       dispatch(initUser(user));
     } catch (err) {
-      return rejectWithValue(err);
+      return rejectWithValue(err.message);
     }
   }
 )

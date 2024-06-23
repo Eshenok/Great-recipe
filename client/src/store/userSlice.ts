@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import UserType from "../Types/UserType";
+import { updateUser } from "../pages/Profile/Api/UpdateUser";
+import { error } from "console";
 
 export const getUser = createAsyncThunk(
   'user/getUser',
@@ -35,8 +37,16 @@ export const userSlice = createSlice({
     },
     clearUser: (state) => {
       state.user = {};
+    },
+    dropStatus: (state) => {
+      state.status = {error: null, msg: ''}
     }
   },
+  extraReducers: {
+    [updateUser.rejected]: (state, action) => {
+     state.status = {error: 'error', msg: action.payload} 
+    }
+  }
 })
 
 export const {initUser, clearUser} = userSlice.actions;

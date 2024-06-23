@@ -9,6 +9,7 @@ import CtrlBtn from "../../shared/CtrlBtn/CtrlBtn";
 import UserType from "../../Types/UserType";
 import { signOut } from "./Api/SignOut";
 import { updateUser } from "./Api/UpdateUser";
+import ErrorSpan from "../../shared/ErrorSpan/ErrorSpan";
 
 const Profile: FC = () => {
 
@@ -19,6 +20,9 @@ const Profile: FC = () => {
   console.log(user);
   const checkedUser = user as UserType;
   const [isEdit, setIsEdit] = useState<boolean>(false);
+  const {status} = useAppSelector(state => state.user);
+
+  console.log(status);
 
   const phs = TEXTS[context].inputph.account as Record<string, string>;
 
@@ -82,6 +86,7 @@ const Profile: FC = () => {
         placeholder={phs.passcheck} 
         />
         <button className="button profile__close animated-btn" onClick={changeEdit} />
+        <ErrorSpan text="Ошибка в попе" />
         </>
       }
       
