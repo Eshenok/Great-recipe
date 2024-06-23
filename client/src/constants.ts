@@ -12,6 +12,7 @@ import LanguageType from './Types/LanguageType';
 import { CategoryItemType } from './Types/CategoryItemType';
 
 type Texts = {
+  reses: Record<string, string>;
   menu: Record<string, string>;
   inputlabel: Record<string, string>;
   inputph: Record<string, string | string[] | { [key: string]: string }>;
@@ -26,6 +27,13 @@ export const BASE_URL = 'http://localhost:2020';
 
 export const TEXTS: Record<LanguageType, Texts> = {
   en: {
+    reses: {
+      '200 Update': 'User updated',
+      '404': 'User not found',
+      '403': 'Uncorrect email or password',
+      '409': 'User has been created',
+      '500': 'Server error',
+    },
     menu: {
       menu: 'Menu',
       profile: 'Profile',
@@ -88,6 +96,13 @@ export const TEXTS: Record<LanguageType, Texts> = {
     },
   },
   ru: {
+    reses: {
+      '200 Update': 'Пользователь успешно обновлен',
+      '404': 'Пользователь не найден',
+      '403': 'Неправильная почта или пароль',
+      '409': 'Такой пользователь уже существует',
+      '500': 'Произошла непредвиденная ошибка',
+    },
     menu: {
       menu: 'Меню',
       profile: 'Профиль',

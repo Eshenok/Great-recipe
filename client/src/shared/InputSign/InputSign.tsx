@@ -12,14 +12,17 @@ interface IInputSignProps {
     value: string;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
     req?: boolean;
-    disabled?: boolean
+    disabled?: boolean;
+    dfValue?: string;
 }
 
-const InputSign: FC<IInputSignProps> = ({type, placeholder, errorText, labelText, name, isBig, value, onChange, req, disabled}) => {
+const InputSign: FC<IInputSignProps> = ({type, placeholder, errorText, labelText, name, isBig, value, onChange, req, disabled, dfValue}) => {
 
     return (
         <div className={`input-sign ${isBig ? 'input-sign_big' : ''}`}>
             <input
+            defaultValue={dfValue}
+            autoComplete={type === 'password' ? 'off' : undefined}
             required={req}
                 className={`input input-sign__input ${errorText ? 'input-sign__input_err' : ''}`}
                 name={name}

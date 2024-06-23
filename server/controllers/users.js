@@ -36,12 +36,13 @@ module.exports.getCurrentUser = (req, res, next) => {
 module.exports.updateCurrentUser = async (req, res, next) => {
   try {
     const { password, email, newName, newEmail } = req.body;
+    console.log(newEmail +' '+ password +' '+ email);
 
     if (!password || !email) {
       throw new Forbidden();
     }
 
-  let unqueNewEmail = false;
+  let unqueNewEmail = true;
   const user = await User.findUserByCredentials(email, password) // custom method
 
   if (!user) next(new NotFound('User not Found'));
@@ -50,7 +51,7 @@ module.exports.updateCurrentUser = async (req, res, next) => {
     const checkNewEmail = await User.findOne({email: newEmail});
     if (checkNewEmail) {
       unqueNewEmail = false;
-      new Conflict('User already have this email')
+      throw new Conflict('User already have this email')
     }
   }
 
@@ -60,6 +61,8 @@ module.exports.updateCurrentUser = async (req, res, next) => {
   if (unqueNewEmail) {
     updatedData.email = newEmail;
   }
+
+  console.log(updatedData);
 
   const updatedUser = await User.findByIdAndUpdate(user._id, updatedData, {new: true});
   res.send(updatedUser);

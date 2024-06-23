@@ -1,4 +1,4 @@
-import { FC, useCallback, useContext, useState } from "react"
+import { FC, useCallback, useContext, useEffect, useState } from "react"
 import InputSign from "../../shared/InputSign/InputSign";
 import useForm from "../../hooks/useForm";
 import { LanguageContext } from "../../context/LanguageContext";
@@ -9,7 +9,8 @@ import CtrlBtn from "../../shared/CtrlBtn/CtrlBtn";
 import UserType from "../../Types/UserType";
 import { signOut } from "./Api/SignOut";
 import { updateUser } from "./Api/UpdateUser";
-import ErrorSpan from "../../shared/ErrorSpan/ErrorSpan";
+import ErrorSpan from "../../shared/StatusSpan/StatusSpan";
+import { dropStatus } from "../../store/userSlice";
 
 const Profile: FC = () => {
 
@@ -17,12 +18,11 @@ const Profile: FC = () => {
   const context = useContext(LanguageContext);
   const {user} = useAppSelector(state => state.user);
   const dispatch = useAppDispatch();
-  console.log(user);
   const checkedUser = user as UserType;
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const {status} = useAppSelector(state => state.user);
 
-  console.log(status);
+  console.log(status)
 
   const phs = TEXTS[context].inputph.account as Record<string, string>;
 
@@ -36,7 +36,7 @@ const Profile: FC = () => {
     dispatch(signOut());
   }
 
-  const handleUpdateUser = (e: React.ChangeEvent<HTMLFormElement>) => {
+  const handleUpdateUser = useCallback((e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(inputValues);
     const dataToUpdate = {
@@ -47,13 +47,20 @@ const Profile: FC = () => {
     }
 
     dispatch(updateUser(dataToUpdate));
-  }
+  }, [inputValues])
+
+  useEffect(() => {
+    if (status.error !== null) {
+      console.log('null')
+      dispatch(dropStatus());
+    }
+  }, [inputValues])
   
 
   return (
     <form className="form-s profile" onSubmit={handleUpdateUser}>
       <InputSign 
-      value={inputValues['profile-name'] ? inputValues['profile-name'] : checkedUser.name}
+      value={isEdit ? inputValues['profile-name'] : checkedUser.name}
       name={'profile-name'}
       onChange={onChange}
       type="text"
@@ -64,7 +71,7 @@ const Profile: FC = () => {
       labelText={TEXTS[context].inputlabel.name}
       />
       <InputSign 
-      value={inputValues['profile-mail'] ? inputValues['profile-mail'] : checkedUser.email}
+      value={isEdit ? inputValues['profile-mail'] : checkedUser.email}
       name={'profile-mail'}
       onChange={onChange}
       type="email"
@@ -86,7 +93,7 @@ const Profile: FC = () => {
         placeholder={phs.passcheck} 
         />
         <button className="button profile__close animated-btn" onClick={changeEdit} />
-        <ErrorSpan text="Ошибка в попе" />
+        <ErrorSpan status={!status.error} text={`${status.error !== null ? TEXTS[context].reses[status.msg] : ''}`} />
         </>
       }
       

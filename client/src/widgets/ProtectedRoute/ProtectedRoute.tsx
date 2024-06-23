@@ -10,8 +10,6 @@ interface ProtectedRouteProps {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const {user} = useSelector((state: RootState) => state.user);
 
-  console.log(user);
-
   if (!user || Object.keys(user).length === 0) {
     return <Navigate to="/sign/in" />;
   }

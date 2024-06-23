@@ -23,7 +23,7 @@ export const getUser = createAsyncThunk(
 
 interface IInitialState {
   user: UserType | {},
-  status: {error: null | string, msg: string}, 
+  status: {error: null | boolean, msg: string}, 
   }
 
 const initialState: IInitialState = {user: {}, status: {error: null, msg: ''}};
@@ -42,13 +42,18 @@ export const userSlice = createSlice({
       state.status = {error: null, msg: ''}
     }
   },
-  extraReducers: {
-    [updateUser.rejected]: (state, action) => {
-     state.status = {error: 'error', msg: action.payload} 
-    }
+  extraReducers: (builder) => {
+    builder
+    .addCase(updateUser.rejected, (state, action) => {
+      console.log('we are here')
+      state.status = {error: true, msg: action.payload as string}
+    })
+    .addCase(updateUser.fulfilled, (state) => {
+      state.status = {error: false, msg: '200 Update'}
+    })
   }
 })
 
-export const {initUser, clearUser} = userSlice.actions;
+export const {initUser, clearUser, dropStatus} = userSlice.actions;
 
 export default userSlice.reducer;
