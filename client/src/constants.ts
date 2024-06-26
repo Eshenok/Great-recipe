@@ -29,8 +29,9 @@ export const TEXTS: Record<LanguageType, Texts> = {
   en: {
     reses: {
       '200 Update': 'User updated',
+      '401': 'Uncorrect email or password',
       '404': 'User not found',
-      '403': 'Uncorrect email or password',
+      '403': 'Access forbidden',
       '409': 'User has been created',
       '500': 'Server error',
     },
@@ -98,8 +99,9 @@ export const TEXTS: Record<LanguageType, Texts> = {
   ru: {
     reses: {
       '200 Update': 'Пользователь успешно обновлен',
+      '401': 'Неправильная почта или пароль',
       '404': 'Пользователь не найден',
-      '403': 'Неправильная почта или пароль',
+      '403': 'Доступ запрещен',
       '409': 'Такой пользователь уже существует',
       '500': 'Произошла непредвиденная ошибка',
     },

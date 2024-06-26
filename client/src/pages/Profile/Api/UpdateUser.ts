@@ -23,7 +23,6 @@ export const updateUser = createAsyncThunk(
         })
       });
       CentralErrorHandler(res);
-      console.log(res);
       const updUser = await res.json();
       dispatch(initUser(updUser));
     } catch (err) {

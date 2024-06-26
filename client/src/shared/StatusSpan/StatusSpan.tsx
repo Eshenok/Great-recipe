@@ -9,7 +9,7 @@ interface IStatusSpanProps {
 
 const StatusSpan: FC<IStatusSpanProps> = ({text, extraClasses, status}) => {
   return (
-    <span className={`error-span ${status ? 'error-span__green' : ''} ${extraClasses}`}>{text}</span>
+    <span className={`error-span ${status ? 'error-span__green' : ''} ${extraClasses}`}>{text ? text : ' '}</span>
   )
 }
 

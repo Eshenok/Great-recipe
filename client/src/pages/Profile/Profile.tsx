@@ -22,12 +22,11 @@ const Profile: FC = () => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const {status} = useAppSelector(state => state.user);
 
-  console.log(status)
-
   const phs = TEXTS[context].inputph.account as Record<string, string>;
 
   const changeEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    dispatch(dropStatus())
     setIsEdit(!isEdit);
   }
 
@@ -38,7 +37,6 @@ const Profile: FC = () => {
 
   const handleUpdateUser = useCallback((e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(inputValues);
     const dataToUpdate = {
       email: checkedUser.email,
       pass: inputValues['profile-pass'],
@@ -51,7 +49,6 @@ const Profile: FC = () => {
 
   useEffect(() => {
     if (status.error !== null) {
-      console.log('null')
       dispatch(dropStatus());
     }
   }, [inputValues])

@@ -6,6 +6,7 @@ const NotFound = require('../errors/NotFound');
 const BadRequest = require('../errors/BadRequest');
 const Conflict = require('../errors/Conflict');
 const Forbidden = require('../errors/Forbidden');
+const Unauthorized = require('../errors/Unauthorized');
 const { NODE_ENV } = process.env; // Забираем из .env
 
 module.exports.updateFridge = (req, res, next) => {
@@ -39,13 +40,13 @@ module.exports.updateCurrentUser = async (req, res, next) => {
     console.log(newEmail +' '+ password +' '+ email);
 
     if (!password || !email) {
-      throw new Forbidden();
+      throw new Unauthorized();
     }
 
   let unqueNewEmail = true;
   const user = await User.findUserByCredentials(email, password) // custom method
 
-  if (!user) next(new NotFound('User not Found'));
+  if (!user) throw new NotFound('User not Found');
 
   if (newEmail !== email) {
     const checkNewEmail = await User.findOne({email: newEmail});
