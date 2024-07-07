@@ -8,9 +8,9 @@ interface ICtrlBtnProps {
     children?: ReactNode;
 }
 
-const CtrlBtn: FC<ICtrlBtnProps> = ({text, extraClasses, onClick, children}, props) => {
+const CtrlBtn: FC<ICtrlBtnProps> = ({text, extraClasses, onClick, children}) => {
     return (
-        <button {...props} onClick={onClick} className={`animated-btn control-button button ${extraClasses ?? ''}`}>
+        <button onClick={onClick} className={`animated-btn control-button button ${extraClasses ?? ''}`}>
             {children}
             {text}
             <div className="control-button__icon" />

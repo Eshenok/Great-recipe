@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import UserType from "../Types/UserType";
 import { updateUser } from "../pages/Profile/Api/UpdateUser";
 import { error } from "console";
+import { updateUserPass } from "../widgets/Form/EditPass/Api/UpdateUserPass";
 
 export const getUser = createAsyncThunk(
   'user/getUser',
@@ -49,6 +50,13 @@ export const userSlice = createSlice({
       state.status = {error: true, msg: action.payload as string}
     })
     .addCase(updateUser.fulfilled, (state) => {
+      state.status = {error: false, msg: '200 Update'}
+    })
+    .addCase(updateUserPass.rejected, (state, action) => {
+      console.log('we are here');
+      state.status = {error: true, msg: action.payload as string}
+    })
+    .addCase(updateUserPass.fulfilled, (state) => {
       state.status = {error: false, msg: '200 Update'}
     })
   }

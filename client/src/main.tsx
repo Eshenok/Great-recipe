@@ -14,6 +14,7 @@ import Registration from './widgets/Form/Registration/Registration.tsx';
 import { RecipePage, loader as RecipePageLoader } from './pages/RecipePage/RecipePage.tsx';
 import Profile from './pages/Profile/Profile.tsx';
 import ProtectedRoute from './widgets/ProtectedRoute/ProtectedRoute.tsx';
+import EditPass from './widgets/Form/EditPass/EditPass.tsx';
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,14 @@ const router = createBrowserRouter([
                     <Profile />
                   </ProtectedRoute>
               )
+              },
+              {
+                path: '/sign/profile/pass',
+                element: (
+                  <ProtectedRoute>
+                    <EditPass />
+                  </ProtectedRoute>
+                )
               }
             ]
           },

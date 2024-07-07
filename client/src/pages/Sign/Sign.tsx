@@ -26,7 +26,7 @@ const Sign: FC = () => {
         }
       }
     }
-  }, [user, location.pathname, navigate]);
+  }, [user, navigate]);
 
   const getTitle = (path: string): string => {
     return TEXTS[context].titles[path === '/sign/in' ? 'login' : path === '/sign/up' ? 'reg' : 'profile'];

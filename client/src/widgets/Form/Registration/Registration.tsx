@@ -45,7 +45,7 @@ const Registration = () => {
     return (
       <form onSubmit={createUser} className="form-s">
         <InputSign
-        req={true}
+          req={true}
           type="text"
           name="userName"
           isBig={true}
@@ -57,6 +57,7 @@ const Registration = () => {
         />
 
         <InputSign
+          req={true}
           type="email"
           name="userEmail"
           isBig={false}
@@ -68,6 +69,7 @@ const Registration = () => {
         />
 
         <InputSign
+          req={true}
           type="password"
           name="userPass"
           isBig={false}
@@ -79,6 +81,7 @@ const Registration = () => {
         />
 
         <InputSign
+          req={true}
           type="password"
           name="userPassChecker"
           isBig={false}
@@ -92,7 +95,7 @@ const Registration = () => {
           <CtrlBtn extraClasses="form-s__login">
             <Link to='/sign/in'>{TEXTS[context].btns.log}</Link>
           </CtrlBtn>
-          <CtrlBtn type="submit" extraClasses="form-s__submit" text={TEXTS[context].btns.submit}/>
+          <CtrlBtn extraClasses="form-s__submit" text={TEXTS[context].btns.submit}/>
         </div>
       </form>
     );

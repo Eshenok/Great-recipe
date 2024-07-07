@@ -32,6 +32,7 @@ const Login = () => {
   return (
       <form className={"form-s"}>
         <InputSign
+          req={true}
         value={inputValues["userEmailLog"] ? inputValues["userEmailLog"] : ''}
         onChange={onChange}
           type="email"
@@ -43,6 +44,7 @@ const Login = () => {
         />
 
         <InputSign
+          req={true}
         value={inputValues["userPassLog"] ? inputValues["userPassLog"] : ''}
         onChange={onChange}
           type="password"

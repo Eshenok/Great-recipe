@@ -9,6 +9,9 @@ const Forbidden = require('../errors/Forbidden');
 const Unauthorized = require('../errors/Unauthorized');
 const { NODE_ENV } = process.env; // Забираем из .env
 
+
+// Обнволение продуктов в холодильнике
+// Принимает Array всех продуктов с фронта и перезаписывает поле целиком
 module.exports.updateFridge = (req, res, next) => {
   const fridgeFromClient = req.body.fridge;
   if (!req.body.fridge) throw new BadRequest('Not data to update');
@@ -34,10 +37,14 @@ module.exports.getCurrentUser = (req, res, next) => {
     .catch(next);
 };
 
+/*  
+ * Обновление пользователя
+ * Принимает 4 поля, но фильтрует что именно надо изменить по приниципу:
+ * Все что не совпадает с текущим -> изменить
+*/
 module.exports.updateCurrentUser = async (req, res, next) => {
   try {
     const { password, email, newName, newEmail } = req.body;
-    console.log(newEmail +' '+ password +' '+ email);
 
     if (!password || !email) {
       throw new Unauthorized();
@@ -72,6 +79,28 @@ module.exports.updateCurrentUser = async (req, res, next) => {
   }
 };
 
+module.exports.updatePassCurrentUser = async (req, res, next) => {
+  try {
+    const {email, oldPassword, newPassword} = req.body;
+    if ((!email || !oldPassword || !newPassword) || (oldPassword === newPassword)) throw new BadRequest('Uncorrect data');
+
+    const findedUser = await User.findUserByCredentials(email, oldPassword);
+    if (!findedUser) throw new NotFound('Bad Credentials');
+
+    const hashPass = await bcrypt.hash(newPassword, 10);
+    console.log(hashPass);
+    const updatedData = {password: hashPass};
+    const updatedUser = await User.findByIdAndUpdate(findedUser._id, updatedData, {new: true});
+    console.log(updatedUser);
+    res.send(updatedUser);
+  } catch (err) {
+    next(err);
+  }
+}
+
+
+// Создание пользователя
+// Пароль сразу хэшируется, пользователю это поле вообще не приходит
 module.exports.createUser = (req, res, next) => {
   const { name, email, password } = req.body;
   
@@ -104,6 +133,12 @@ module.exports.createUser = (req, res, next) => {
     });
 };
 
+
+/* 
+ * Вход пользователя:
+ * Принимает почту + пароль, затем ищет в базе совпадение через кастомный метод
+ * Метод возвращает поле пароля, поэтому его едаляем вручную
+*/
 module.exports.signin = (req, res, next) => {
   const { password, email } = req.body;
 
@@ -121,6 +156,7 @@ module.exports.signin = (req, res, next) => {
     });
 };
 
+// Выход юзера, ничего передовать не надо, идет поиск по сессии
 module.exports.signout = (req, res, next) => {
   req.session.destroy((err) => {
     if (err) {

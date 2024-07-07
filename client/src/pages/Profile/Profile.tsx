@@ -11,6 +11,7 @@ import { signOut } from "./Api/SignOut";
 import { updateUser } from "./Api/UpdateUser";
 import ErrorSpan from "../../shared/StatusSpan/StatusSpan";
 import { dropStatus } from "../../store/userSlice";
+import { useNavigate, useNavigation } from "react-router-dom";
 
 const Profile: FC = () => {
 
@@ -21,6 +22,7 @@ const Profile: FC = () => {
   const checkedUser = user as UserType;
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const {status} = useAppSelector(state => state.user);
+  const navigate = useNavigate();
 
   const phs = TEXTS[context].inputph.account as Record<string, string>;
 
@@ -57,6 +59,7 @@ const Profile: FC = () => {
   return (
     <form className="form-s profile" onSubmit={handleUpdateUser}>
       <InputSign 
+      req={true}
       value={isEdit ? inputValues['profile-name'] : checkedUser.name}
       name={'profile-name'}
       onChange={onChange}
@@ -68,6 +71,7 @@ const Profile: FC = () => {
       labelText={TEXTS[context].inputlabel.name}
       />
       <InputSign 
+      req={true}
       value={isEdit ? inputValues['profile-mail'] : checkedUser.email}
       name={'profile-mail'}
       onChange={onChange}
@@ -80,6 +84,7 @@ const Profile: FC = () => {
       />
       {
         isEdit && <><InputSign
+        req={true}
         errorText=""
         value={inputValues['profile-pass'] ? inputValues['profile-pass'] : ''}
         name="profile-pass"
@@ -98,7 +103,7 @@ const Profile: FC = () => {
         {
           isEdit ? 
           <>
-          <CtrlBtn onClick={changeEdit} text={TEXTS[context].btns.change} extraClasses="form-s__passchange" />
+          <CtrlBtn onClick={(e) => {e.preventDefault(); navigate('/sign/profile/pass')}} text={TEXTS[context].btns.change} extraClasses="form-s__passchange" />
           <CtrlBtn extraClasses="form-s__submit" text={TEXTS[context].btns.submit}/>
           </>
           : 

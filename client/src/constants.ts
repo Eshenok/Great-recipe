@@ -42,6 +42,8 @@ export const TEXTS: Record<LanguageType, Texts> = {
     },
     inputlabel: {
       pass: 'Password',
+      oldPass: 'Current password',
+      newPass: 'New password',
       passcheck: 'Confirm password',
       name: 'Name',
       email: 'Email'
@@ -90,10 +92,12 @@ export const TEXTS: Record<LanguageType, Texts> = {
       exit: 'Exit',
       change: 'Change Password',
       clearFilter: 'clear filter',
-      ings: 'Ingridients'
+      ings: 'Ingridients',
+      back: 'Go back'
     },
     info: {
       recipesNf: 'No one receipt find',
+      checkPassErr: 'Password mismatch'
     },
   },
   ru: {
@@ -112,6 +116,8 @@ export const TEXTS: Record<LanguageType, Texts> = {
     },
     inputlabel: {
       pass: 'Пароль',
+      oldPass: 'Текущий пароль',
+      newPass: 'Новый пароль',
       passcheck: 'Подтвердите пароль',
       name: 'Имя',
       email: 'Почта'
@@ -160,10 +166,12 @@ export const TEXTS: Record<LanguageType, Texts> = {
       exit: 'Выход',
       change: 'Сменить пароль',
       clearFilter: 'очистить фильтр',
-      ings: 'Игнридиентов'
+      ings: 'Игнридиентов',
+      back: 'Назад'
     },
     info: {
       recipesNf: 'Ни одного рецепта не найдено',
+      checkPassErr: 'Пароли не совпадают'
     }
   }
 }
