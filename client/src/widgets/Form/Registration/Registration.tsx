@@ -1,4 +1,4 @@
-import { FormEvent, FormEventHandler, useContext, useState } from "react";
+import { FormEvent, FormEventHandler, useContext, useEffect, useState } from "react";
 import { TEXTS } from "../../../constants";
 import { LanguageContext } from "../../../context/LanguageContext";
 import InputSign from "../../../shared/InputSign/InputSign";
@@ -7,6 +7,9 @@ import {Link} from 'react-router-dom';
 import useForm from "../../../hooks/useForm";
 import { useDispatch } from "react-redux";
 import { signUp } from "./Api/SignUp";
+import StatusSpan from "../../../shared/StatusSpan/StatusSpan";
+import { useAppDispatch, useAppSelector } from "../../../hooks/useAppRedux";
+import { dropStatus } from "../../../store/userSlice";
 
 const Registration = () => {
 
@@ -14,7 +17,9 @@ const Registration = () => {
 
     const {inputValues, onChange} = useForm();
     const [errorPassCheck, setErrorPassCheck] = useState('');
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
+    const {status} = useAppSelector(state => state.user);
+
 
     const ph = TEXTS[context].inputph.account as Record<string, string>;
 
@@ -42,10 +47,14 @@ const Registration = () => {
       dispatch(signUp(formData))
     }
 
+    useEffect(() => {
+      dispatch(dropStatus())
+    }, [])
+
     return (
       <form onSubmit={createUser} className="form-s">
         <InputSign
-        req={true}
+          req={true}
           type="text"
           name="userName"
           isBig={true}
@@ -57,6 +66,7 @@ const Registration = () => {
         />
 
         <InputSign
+          req={true}
           type="email"
           name="userEmail"
           isBig={false}
@@ -68,6 +78,7 @@ const Registration = () => {
         />
 
         <InputSign
+          req={true}
           type="password"
           name="userPass"
           isBig={false}
@@ -79,6 +90,7 @@ const Registration = () => {
         />
 
         <InputSign
+          req={true}
           type="password"
           name="userPassChecker"
           isBig={false}
@@ -87,12 +99,13 @@ const Registration = () => {
           onChange={onChange}
           value={inputValues["userPassChecker"]}
         />
+        <StatusSpan status={!status.error} text={`${status.error !== null ? TEXTS[context].reses[status.msg] : ''}`} />
 
         <div className="form-s__btns">
           <CtrlBtn extraClasses="form-s__login">
             <Link to='/sign/in'>{TEXTS[context].btns.log}</Link>
           </CtrlBtn>
-          <CtrlBtn type="submit" extraClasses="form-s__submit" text={TEXTS[context].btns.submit}/>
+          <CtrlBtn extraClasses="form-s__submit" text={TEXTS[context].btns.submit}/>
         </div>
       </form>
     );

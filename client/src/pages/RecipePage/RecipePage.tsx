@@ -30,7 +30,7 @@ export const RecipePage: FC = () => {
   const context = useContext(LanguageContext);
   const {recipe} = useLoaderData();
   const dispatch = useAppDispatch();
-  const {recipes} = useAppSelector(state => state.recipes);
+  const {recipes, findedRecipes, findedRecipesStatus} = useAppSelector(state => state.recipes);
   const [isOpen, setIsOpen] = useState(true);
 
   const quantityIngs: number = recipe.arrIngredients.reduce((prev, curr) => {
@@ -43,7 +43,6 @@ export const RecipePage: FC = () => {
   }
 
   const instructionArr: string[] = recipe.strInstructions.split('\r\n');
-  console.log(recipe);
 
   return (
     <section className="recipe-page">
@@ -98,7 +97,7 @@ export const RecipePage: FC = () => {
           </div>
         </aside>
       </article>
-      <CardGrid getMoreFn={getMoreRecipes} extraClasses="recipe-page__grid" recipes={recipes} />
+      <CardGrid getMoreFn={getMoreRecipes} extraClasses="recipe-page__grid" recipes={findedRecipesStatus ? findedRecipes.length > 0 ? findedRecipes : recipes : []} />
     </section>
   )
 }

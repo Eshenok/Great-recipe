@@ -10,6 +10,8 @@
   }
 
   &__prev {
+    max-height: 52px;
+    overflow-y: auto;
     padding-top: 8px;
     display: flex;
     flex-wrap: wrap;

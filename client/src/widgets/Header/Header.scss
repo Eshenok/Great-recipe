@@ -11,7 +11,7 @@
   background: white center center no-repeat;
   background-size: cover;
   border-radius: 25px;
-  margin: 8px 0 8px 8px;
+  margin: 0 0 0 8px;
   width: 256px;
   padding: 8px 8px;
   height: calc(100vh - 16px);
@@ -60,6 +60,7 @@
 @media screen and (min-width: 720px) {
   .header {
     left: 0;
+    margin: 8px 0 8px 8px;
 
     &__menu {
       margin-top: 32px;

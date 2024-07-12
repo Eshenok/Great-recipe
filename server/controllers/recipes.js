@@ -52,17 +52,50 @@ module.exports.putRating = async (req, res, next) => {
 // В body передаем массив
 module.exports.findRecipesByIngredients = async (req, res, next) => {
   try {
-    const ingredientsToFind = req.body.ingridients.map(ing => ing.toLowerCase());
-    if (!ingredientsToFind) throw new BadRequest('Ingridients required');
+    const body = req.body;
+    let recipesArr = [];
+    const optionsForSearch = {
+      keysToFind: null,
+      category: '',
+    }
+    if (body.ingredients) {
+      optionsForSearch.keysToFind = req.body.ingredients.map(ing => ing.toLowerCase());
+    }
+    if (body.category) {
+      optionsForSearch.category = body.category.toLowerCase().charAt(0).toUpperCase() + body.category.slice(1);
+    }
 
-    const recipes = await Recipe.find({ arrIngredients: { $in: ingredientsToFind } });
-    if (!recipes || recipes.length === 0) throw new NotFound('Recipes not found');
+    const nameRegexes = optionsForSearch.keysToFind.map(key => new RegExp(key, 'i'));
+    const recipesFindByNames = await Recipe.find({ strMeal: { $in: nameRegexes }  });
+    recipesArr.push(...recipesFindByNames);
+    const ingQuery = recipesFindByNames.map(recipe => recipe._id);
+    const recipesFindByIngs = await Recipe.find({ arrIngredients: { $in: nameRegexes }, _id: { $nin: ingQuery } });
+    recipesArr.push(...recipesFindByIngs);
 
-    return res.status(200).json({recipes: recipes});
+    // console.log(recipesArr);
+    const refactorRecipes = recipesArr.map((recipe) => {
+      
+      const rating = recipe.rating.reduce((accum, cur) => accum + cur.rate, 0);
+      const ingridientsQuantity = recipe.arrIngredients.filter(item => Boolean(item)).length;
+      return {
+        _id: recipe._id,
+        name: recipe.strMeal,
+        category: recipe.strCategory,
+        rating,
+        ingridientsQuantity,
+        image: recipe.strMealThumb,
+      }
+    })
+
+    if (!refactorRecipes || refactorRecipes.length === 0) throw new NotFound('Recipes not found');
+
+    return res.status(200).json( refactorRecipes );
   } catch (err) {
-    next(err)
+    next(err);
   }
-}
+};
+
+
 
 /*
 * ПОЛУЧЕНИЕ СЛУЧАЙНЫХ РЕЦЕПТОВ
@@ -73,19 +106,19 @@ module.exports.getRandomRecipes = async (req, res, next) => {
   try {
     const ObjectId = mongoose.Types.ObjectId;
     const batchSize = 50; // Размер каждой порции рецептов
-    const fetchedRecipeIds = req.session.fetchedRecipes.map(id => new ObjectId(id));
+    const fetchedRecipeIds = await req.session.fetchedRecipes.map(id => new ObjectId(id));
 
     // Проверяем, есть ли еще рецепты, которые не были включены в предыдущие запросы
     const remainingRecipes = await Recipe.aggregate([
       {$match: {_id: { $nin: fetchedRecipeIds }}},
-      {$sample: {size: batchSize}}
+      {$sample: {size: batchSize}},
     ])
 
     if (remainingRecipes.length === 0) {
       return res.status(204).json({message: 'Already all recipes fetched'});
     }
 
-    const refactorRecipes = await remainingRecipes.map((recipe) => {
+    const refactorRecipes = remainingRecipes.map((recipe) => {
       return {
         _id: recipe._id,
         name: recipe.strMeal,
@@ -98,15 +131,23 @@ module.exports.getRandomRecipes = async (req, res, next) => {
 
     // Добавляем выбранные рецепты в массив уже полученных
     remainingRecipes.forEach(recipe => req.session.fetchedRecipes.push(recipe._id));
+    console.log(req.session.fetchedRecipes.length);
     return res.status(200).json({ recipes: refactorRecipes });
   } catch (err) {
     next(err)
   }
 }
 
+/*
+ *
+ *
+ * 
+*/
+
 module.exports.refreshFetchedRecipes = async (req, res, next) => {
   try {
     req.session.fetchedRecipes = [];
+    console.log(req.session.fetchedRecipes);
     res.status(200).json({message: 'fetched recipes refresh'});
   } catch (err) {
     next(err);

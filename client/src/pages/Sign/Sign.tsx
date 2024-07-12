@@ -1,27 +1,34 @@
 import {FC, useContext, useEffect} from 'react';
 import './Sign.scss';
-import Login from "../../widgets/Form/Login/Login";
-import Registration from "../../widgets/Form/Registration/Registration";
 import Title from "../../shared/Title/Title";
 import {LanguageContext} from "../../context/LanguageContext";
 import {TEXTS} from "../../constants";
-import { Outlet, redirect, useLocation, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/useAppRedux';
 
 const Sign: FC = () => {
 
   const context = useContext(LanguageContext);
   const location = useLocation();
   const navigate = useNavigate();
-  const {user} = useSelector(state => state.user)
+  const {user} = useAppSelector(state => state.user)
 
   useEffect(() => {
-    if (user) {
-      navigate('/sign/in');
-    } else {
-      navigate('/sign/profile')
+    // Проверяем, если пользователь не аутентифицирован и находится на пути /sign
+    if (location.pathname.startsWith('/sign')) {
+      if (Object.keys(user).length === 0) {
+        if (location.pathname !== '/sign/in' && location.pathname !== '/sign/up') {
+          navigate('/sign/in');
+        }
+      } else {
+        if (location.pathname.includes('/pass')) {
+          navigate('/sign/profile/pass');
+        } else {
+          navigate('/sign/profile');
+        }
+      }
     }
-  }, [])
+  }, [user, navigate]);
 
   const getTitle = (path: string): string => {
     return TEXTS[context].titles[path === '/sign/in' ? 'login' : path === '/sign/up' ? 'reg' : 'profile'];

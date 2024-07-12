@@ -13,6 +13,7 @@ import { getUser } from './store/userSlice';
 import { dropFetchedRecipes } from './pages/Main/Api/DropFetchedRecipes';
 import { getRndRecipes } from './pages/Main/Api/GetRndRecipes';
 import { useAppDispatch, useAppSelector } from './hooks/useAppRedux';
+import { dropRecipes } from './store/recipesSlice';
 
 function App() {
 
@@ -27,15 +28,16 @@ function App() {
   }
 
   useEffect(() => {
+    dispatch(getUser());
+  }, []);
+
+  useEffect(() => {
     if (!localStorage.getItem('recipes') || localStorage.getItem('recipes')?.length !== 0) {
       dispatch(dropFetchedRecipes());
     }
     dispatch(getRndRecipes());
   }, [user]);
 
-  useEffect(() => {
-    dispatch(getUser());
-  }, []);
 
   useEffect(() => {
     dispatch(initCategories({language: language}));

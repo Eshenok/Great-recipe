@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { CentralErrorHandler } from "../../../../errorHandler/CentralErrorHandler";
 
 export const signUp = createAsyncThunk(
   'user/signUp',
@@ -17,14 +18,9 @@ export const signUp = createAsyncThunk(
         })
       });
 
-      if (!res || res.status === 500) {
-        throw new Error("Server error");
-      };
-      if (res.status === 409) {
-        throw new Error("User already been created");
-      };
+      CentralErrorHandler(res);
     } catch (err) {
-      return rejectWithValue(err);
+      return rejectWithValue(err.message);
     }
   }
 )

@@ -1,0 +1,15 @@
+@import '../../commonStyles/variables.scss';
+.error-span {
+  width: 100%;
+  color: $red-dark;
+  font-family: $montserrat-font;
+  font-size: .875rem;
+  font-weight: 400;
+  line-height: 1.31rem;
+  text-align: center;
+  height: 1.31rem;
+
+  &__green {
+    color: $green-dark;
+  }
+}

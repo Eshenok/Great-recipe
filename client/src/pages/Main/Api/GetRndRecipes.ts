@@ -1,9 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { BaseQueryFn, EndpointDefinitions, FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta, createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { Error500 } from "../../../errorHandler/Error500";
 import { ServerRecipeType } from "../../../Types/ServerRecipeType";
 import { changeFetchRecipesStatus, pushRecipesMain } from "../../../store/recipesSlice";
-import { EndpointBuilder } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 
 export const getRndRecipes = createAsyncThunk(
   'recipes/getRnd',
@@ -14,11 +12,11 @@ export const getRndRecipes = createAsyncThunk(
     }
     try {
       const res = await fetch('http://localhost:2020/recipes/rnd', {
-        method: 'GET',
+        method: 'POST',
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
-        }
+        },
       })
 
       Error500(res,'Server');

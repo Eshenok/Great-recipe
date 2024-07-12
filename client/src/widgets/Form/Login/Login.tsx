@@ -1,20 +1,24 @@
-import {useContext, MouseEvent} from 'react';
+import {useContext, MouseEvent, useEffect} from 'react';
 import CtrlBtn from "../../../shared/CtrlBtn/CtrlBtn";
 import InputSign from "../../../shared/InputSign/InputSign";
 import {TEXTS} from "../../../constants";
 import {LanguageContext} from "../../../context/LanguageContext";
-import { Form, Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useForm from '../../../hooks/useForm';
-import UserType from '../../../Types/UserType';
-import { useDispatch } from 'react-redux';
 import { signIn } from './Api/SignIn';
+import { useAppDispatch, useAppSelector } from '../../../hooks/useAppRedux';
+import StatusSpan from '../../../shared/StatusSpan/StatusSpan';
+import { dropStatus } from '../../../store/userSlice';
 
 const Login = () => {
 
   const context = useContext(LanguageContext);
 
   const {inputValues, onChange} = useForm();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const {status} = useAppSelector(state => state.user);
+
+  console.log(status);
 
   const submitSignIn = (e: MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
@@ -28,10 +32,15 @@ const Login = () => {
 
   const phs = TEXTS[context].inputph.account as Record<string, string>
 
+  useEffect(() => {
+    dispatch(dropStatus())
+  }, [])
+
   return (
       <form className={"form-s"}>
         <InputSign
-        value={inputValues["userEmailLog"]}
+          req={true}
+        value={inputValues["userEmailLog"] ? inputValues["userEmailLog"] : ''}
         onChange={onChange}
           type="email"
           name="userEmailLog"
@@ -42,7 +51,8 @@ const Login = () => {
         />
 
         <InputSign
-        value={inputValues["userPassLog"]}
+          req={true}
+        value={inputValues["userPassLog"] ? inputValues["userPassLog"] : ''}
         onChange={onChange}
           type="password"
           name="userPassLog"
@@ -51,6 +61,7 @@ const Login = () => {
           errorText=""
           placeholder={phs.pass}
         />
+        <StatusSpan status={!status.error} text={`${status.error !== null ? TEXTS[context].reses[status.msg] : ''}`} />
 
         <div className={"form-s__btns"}>
           <CtrlBtn onClick={(e) =>{e.preventDefault()}} extraClasses="form-s__auth">
