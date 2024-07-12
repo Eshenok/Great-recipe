@@ -21,7 +21,9 @@ const Sign: FC = () => {
           navigate('/sign/in');
         }
       } else {
-        if (location.pathname !== '/sign/profile') {
+        if (location.pathname.includes('/pass')) {
+          navigate('/sign/profile/pass');
+        } else {
           navigate('/sign/profile');
         }
       }

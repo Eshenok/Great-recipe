@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { initUser } from "../../../../store/userSlice";
 import UserType from "../../../../Types/UserType";
+import { CentralErrorHandler } from "../../../../errorHandler/CentralErrorHandler";
 
 export const signIn = createAsyncThunk(
   'user/signIn',
@@ -19,17 +20,12 @@ export const signIn = createAsyncThunk(
         })
       });
 
-      if (!res || res.status === 500) {
-        throw new Error("Server error");
-      };
-      if (res.status === 404) {
-        throw new Error("Not found");
-      };
+      CentralErrorHandler(res);
 
       const user: {user: UserType} = await res.json();
       dispatch(initUser(user));
     } catch (err) {
-      return rejectWithValue(err);
+      return rejectWithValue(err.message);
     }
   }
 )

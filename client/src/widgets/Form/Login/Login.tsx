@@ -1,4 +1,4 @@
-import {useContext, MouseEvent} from 'react';
+import {useContext, MouseEvent, useEffect} from 'react';
 import CtrlBtn from "../../../shared/CtrlBtn/CtrlBtn";
 import InputSign from "../../../shared/InputSign/InputSign";
 import {TEXTS} from "../../../constants";
@@ -6,15 +6,19 @@ import {LanguageContext} from "../../../context/LanguageContext";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useForm from '../../../hooks/useForm';
 import { signIn } from './Api/SignIn';
-import { useAppDispatch } from '../../../hooks/useAppRedux';
+import { useAppDispatch, useAppSelector } from '../../../hooks/useAppRedux';
+import StatusSpan from '../../../shared/StatusSpan/StatusSpan';
+import { dropStatus } from '../../../store/userSlice';
 
 const Login = () => {
 
   const context = useContext(LanguageContext);
 
   const {inputValues, onChange} = useForm();
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const {status} = useAppSelector(state => state.user);
+
+  console.log(status);
 
   const submitSignIn = (e: MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
@@ -24,10 +28,13 @@ const Login = () => {
     };
 
     dispatch(signIn(formData));
-    // navigate('/sign/profile');
   }
 
   const phs = TEXTS[context].inputph.account as Record<string, string>
+
+  useEffect(() => {
+    dispatch(dropStatus())
+  }, [])
 
   return (
       <form className={"form-s"}>
@@ -54,6 +61,7 @@ const Login = () => {
           errorText=""
           placeholder={phs.pass}
         />
+        <StatusSpan status={!status.error} text={`${status.error !== null ? TEXTS[context].reses[status.msg] : ''}`} />
 
         <div className={"form-s__btns"}>
           <CtrlBtn onClick={(e) =>{e.preventDefault()}} extraClasses="form-s__auth">

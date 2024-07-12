@@ -3,6 +3,8 @@ import UserType from "../Types/UserType";
 import { updateUser } from "../pages/Profile/Api/UpdateUser";
 import { error } from "console";
 import { updateUserPass } from "../widgets/Form/EditPass/Api/UpdateUserPass";
+import { signIn } from "../widgets/Form/Login/Api/SignIn";
+import { signUp } from "../widgets/Form/Registration/Api/SignUp";
 
 export const getUser = createAsyncThunk(
   'user/getUser',
@@ -45,6 +47,7 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+    // Обновление Пользователя
     .addCase(updateUser.rejected, (state, action) => {
       console.log('we are here')
       state.status = {error: true, msg: action.payload as string}
@@ -52,12 +55,27 @@ export const userSlice = createSlice({
     .addCase(updateUser.fulfilled, (state) => {
       state.status = {error: false, msg: '200 Update'}
     })
+    // Обновление Пароля
     .addCase(updateUserPass.rejected, (state, action) => {
       console.log('we are here');
       state.status = {error: true, msg: action.payload as string}
     })
     .addCase(updateUserPass.fulfilled, (state) => {
       state.status = {error: false, msg: '200 Update'}
+    })
+    // Вход ЛОГИН.ПАСС
+    .addCase(signIn.rejected, (state, action) => {
+      state.status = {error: true, msg: action.payload as string}
+    })
+    .addCase(signIn.fulfilled, (state) => {
+      state.status = {error: null, msg: ''}
+    })
+    // Регистрация пользователя
+    .addCase(signUp.rejected, (state, action) => {
+      state.status = {error: true, msg: action.payload as string}
+    })
+    .addCase(signUp.fulfilled, (state) => {
+      state.status = {error: null, msg: ''}
     })
   }
 })

@@ -1,5 +1,6 @@
 export const CentralErrorHandler = (res: Response) => {
   if (res.ok) return;
+  console.log(res.status);
   switch (res.status) {
     case 401:
       throw new Error('401');
