@@ -10,10 +10,9 @@ interface ICheckSwitchProps {
 const CheckSwitch: FC<ICheckSwitchProps> = ({name, color}) => {
 
   const {inputValues, onSwitch} = useForm();
-
   return (
     <div className={"check-switch"}>
-      <input type={"checkbox"} name={name} onChange={onSwitch} checked={inputValues?.[name]} id={name} className={"check-switch__input"} />
+      <input type={"checkbox"} name={name} onChange={onSwitch} checked={inputValues[name]} id={name} className={"check-switch__input"} />
       <label className={`check-switch__label check-switch__label_${color}`} htmlFor={name}/>
     </div>
   );

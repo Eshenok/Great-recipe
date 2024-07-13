@@ -1,11 +1,10 @@
-import React, {FC, useContext, useEffect} from 'react';
+import React, {FC, useContext} from 'react';
 import './CardGrid.scss';
 import {TEXTS} from "../../constants";
 import {ClippedServerRecipeType, ServerRecipeType} from "../../Types/ServerRecipeType";
 import RecipeCard from "../../entities/RecipeCard/RecipeCard";
 import Title from "../../shared/Title/Title";
 import {LanguageContext} from "../../context/LanguageContext";
-import { useAppSelector } from '../../hooks/useAppRedux';
 
 interface ICardGridProps {
   recipes: ClippedServerRecipeType[],

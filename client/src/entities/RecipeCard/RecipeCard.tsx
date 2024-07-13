@@ -7,6 +7,8 @@ import {TEXTS} from "../../constants";
 import {LanguageContext} from "../../context/LanguageContext";
 import {ClippedServerRecipeType} from "../../Types/ServerRecipeType";
 import {useNavigate} from 'react-router-dom';
+import { useAppSelector } from '../../hooks/useAppRedux';
+import UserType from '../../Types/UserType';
 
 interface IRecipeCardProps {
   recipeInfo: ClippedServerRecipeType
@@ -16,6 +18,9 @@ const RecipeCard: FC<IRecipeCardProps> = ({recipeInfo}) => {
 
   const context = useContext(LanguageContext);
   const navigate = useNavigate();
+  const {user} = useAppSelector(state => state.user);
+  const checkedUser = Object.keys(user).length === 0 ? false : user as UserType;
+  console.log(checkedUser);
 
   let category = TEXTS[context].categories[recipeInfo.category.toLowerCase()];
 
@@ -51,7 +56,7 @@ const RecipeCard: FC<IRecipeCardProps> = ({recipeInfo}) => {
           {recipeInfo?.rating ? recipeInfo.rating : 0}
         </span>
       </div>
-      <LikeBtn onClick={() => {console.log('click')}} isLiked={true} extraClasses={"recipe-card__like"} />
+      <LikeBtn onClick={() => {console.log('click')}} isLiked={checkedUser ? checkedUser.favorite.includes(recipeInfo._id) : false} extraClasses={"recipe-card__like"} />
     </div>
   );
 };

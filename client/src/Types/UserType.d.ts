@@ -2,7 +2,7 @@ type UserType = {
   "_id": string;
   "email": string;
   "name": string;
-  "favourite": any[];
+  "favorite": any[];
   "fridge": string[];
 }
 

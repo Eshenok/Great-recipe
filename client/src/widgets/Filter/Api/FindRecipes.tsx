@@ -13,6 +13,10 @@ export const findRecipesByKeys = createAsyncThunk(
         },
         body: JSON.stringify({
           ingredients: keys,
+          category: 'Dessert',
+          ingQuantity: 9,
+          liked: true,
+          userRating: 3
         })
       })
       if (!res || res.status === 500) throw new Error('Server error');

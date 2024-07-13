@@ -61,7 +61,7 @@ const Login = () => {
           errorText=""
           placeholder={phs.pass}
         />
-        <StatusSpan status={!status.error} text={`${status.error !== null ? TEXTS[context].reses[status.msg] : ''}`} />
+        <StatusSpan extraClasses='form-s__span' status={!status.error} text={`${status.error !== null ? TEXTS[context].reses[status.msg] : ''}`} />
 
         <div className={"form-s__btns"}>
           <CtrlBtn onClick={(e) =>{e.preventDefault()}} extraClasses="form-s__auth">

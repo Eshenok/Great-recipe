@@ -114,7 +114,7 @@ const EditPass = () => {
         placeholder={phs.passcheck}
       />
       <button className="button profile__close animated-btn" onClick={(e) => {e.preventDefault(); navigate('/sign/profile')}} />
-      <ErrorSpan status={!status.error} text={`${status.error !== null ? TEXTS[context].reses[status.msg] : ''}`} />
+      <ErrorSpan extraClasses='form-s__span' status={!status.error} text={`${status.error !== null ? TEXTS[context].reses[status.msg] : ''}`} />
 
       <div className="form-s__btns">
         <CtrlBtn onClick={(e) => {e.preventDefault(); navigate('/sign/profile')}} extraClasses="form-s__login" text={TEXTS[context].btns.back}/>

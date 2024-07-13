@@ -57,7 +57,7 @@ const Filter: FC<IFilterProps> = ({clipped, extraClasses}) => {
         </div>
         <div className={"filter__isLiked filter__section"}>
           <h3 className={"filter__title"}>{TEXTS[context].filter.favourite}</h3>
-          <CheckSwitch name={'isLiked'} color={'red'} />
+          <CheckSwitch  name={'isLiked'} color={'red'} />
         </div>
       </div>}
     </section>

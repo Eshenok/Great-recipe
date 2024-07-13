@@ -57,6 +57,9 @@ const recipeSchema = new mongoose.Schema({
     },
     rate: Number
   }],
+  averageRate: {
+    type: Number
+  },
   arrIngredients: {
     type: [String],
     default: [],
