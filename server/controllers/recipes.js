@@ -42,6 +42,14 @@ module.exports.putRating = async (req, res, next) => {
 
     if (!updatedRecipe) throw new NotFound('Recipe not found');
 
+     // Вычисление среднего рейтинга
+     const sum = updatedRecipe.rating.reduce((total, item) => total + item.rate, 0);
+     const averageRate = updatedRecipe.rating.length > 0 ? sum / updatedRecipe.rating.length : 0;
+ 
+     // Обновление поля averageRate
+     updatedRecipe.averageRate = averageRate;
+     await updatedRecipe.save();
+
     return res.send(updatedRecipe);
   } catch (err) {
     next(err)
@@ -50,52 +58,108 @@ module.exports.putRating = async (req, res, next) => {
 
 // ПОИСК РЕЦЕПТОВ ПО ИНГРИДИЕНТАМ
 // В body передаем массив
+// module.exports.findRecipesByIngredients = async (req, res, next) => {
+//   try {
+//     const body = req.body;
+//     let recipesArr = [];
+//     const optionsForSearch = {
+//       keysToFind: null,
+//       category: '',
+//     }
+//     if (body.ingredients) {
+//       optionsForSearch.keysToFind = req.body.ingredients.map(ing => ing.toLowerCase());
+//     }
+//     if (body.category) {
+//       optionsForSearch.category = body.category.toLowerCase().charAt(0).toUpperCase() + body.category.slice(1);
+//     }
+
+//     const nameRegexes = optionsForSearch.keysToFind.map(key => new RegExp(key, 'i'));
+//     const recipesFindByNames = await Recipe.find({ strMeal: { $in: nameRegexes }  });
+//     recipesArr.push(...recipesFindByNames);
+//     const ingQuery = recipesFindByNames.map(recipe => recipe._id);
+//     const recipesFindByIngs = await Recipe.find({ arrIngredients: { $in: nameRegexes }, _id: { $nin: ingQuery } });
+//     recipesArr.push(...recipesFindByIngs);
+
+//     // console.log(recipesArr);
+//     const refactorRecipes = recipesArr.map((recipe) => {
+      
+//       const rating = recipe.rating.reduce((accum, cur) => accum + cur.rate, 0);
+//       const ingridientsQuantity = recipe.arrIngredients.filter(item => Boolean(item)).length;
+//       return {
+//         _id: recipe._id,
+//         name: recipe.strMeal,
+//         category: recipe.strCategory,
+//         rating,
+//         ingridientsQuantity,
+//         image: recipe.strMealThumb,
+//       }
+//     })
+
+//     if (!refactorRecipes || refactorRecipes.length === 0) throw new NotFound('Recipes not found');
+
+//     return res.status(200).json( refactorRecipes );
+//   } catch (err) {
+//     next(err);
+//   }
+// };
+
 module.exports.findRecipesByIngredients = async (req, res, next) => {
   try {
     const body = req.body;
+    let filter = {};
     let recipesArr = [];
-    const optionsForSearch = {
-      keysToFind: null,
-      category: '',
-    }
+
+    // Фильтрация по ингредиентам
     if (body.ingredients) {
-      optionsForSearch.keysToFind = req.body.ingredients.map(ing => ing.toLowerCase());
+      const nameRegexes = body.ingredients.map(ing => new RegExp(ing.toLowerCase(), 'i'));
+      filter.$or = [
+        { strMeal: { $in: nameRegexes } },
+        { arrIngredients: { $in: nameRegexes } }
+      ];
     }
+
+    // Фильтрация по категории
     if (body.category) {
-      optionsForSearch.category = body.category.toLowerCase().charAt(0).toUpperCase() + body.category.slice(1);
+      filter.strCategory = body.category.toLowerCase().charAt(0).toUpperCase() + body.category.slice(1);
     }
 
-    const nameRegexes = optionsForSearch.keysToFind.map(key => new RegExp(key, 'i'));
-    const recipesFindByNames = await Recipe.find({ strMeal: { $in: nameRegexes }  });
-    recipesArr.push(...recipesFindByNames);
-    const ingQuery = recipesFindByNames.map(recipe => recipe._id);
-    const recipesFindByIngs = await Recipe.find({ arrIngredients: { $in: nameRegexes }, _id: { $nin: ingQuery } });
-    recipesArr.push(...recipesFindByIngs);
+    // Фильтрация по количеству ингредиентов
+    if (body.ingQuantity) {
+      filter.$expr = { $lte: [{ $size: "$arrIngredients" }, body.ingQuantity] };
+    }
 
-    // console.log(recipesArr);
+    // Фильтрация по рейтингу пользователей
+    if (body.userRating) {
+      filter.averageRate = { $gte: body.userRating };
+    }
+
+    // Фильтрация по лайкам
+    if (body.liked) {
+      filter.quantityLiked = { $exists: true, $not: { $size: 0 } };
+    }
+
+    // Поиск рецептов
+    recipesArr = await Recipe.find(filter);
+
+    // Преобразование рецептов
     const refactorRecipes = recipesArr.map((recipe) => {
-      
-      const rating = recipe.rating.reduce((accum, cur) => accum + cur.rate, 0);
-      const ingridientsQuantity = recipe.arrIngredients.filter(item => Boolean(item)).length;
       return {
         _id: recipe._id,
         name: recipe.strMeal,
         category: recipe.strCategory,
-        rating,
-        ingridientsQuantity,
+        rating: recipe.averageRate,
+        ingridientsQuantity: recipe.arrIngredients.length,
         image: recipe.strMealThumb,
       }
-    })
+    });
 
     if (!refactorRecipes || refactorRecipes.length === 0) throw new NotFound('Recipes not found');
 
-    return res.status(200).json( refactorRecipes );
+    return res.status(200).json(refactorRecipes);
   } catch (err) {
     next(err);
   }
 };
-
-
 
 /*
 * ПОЛУЧЕНИЕ СЛУЧАЙНЫХ РЕЦЕПТОВ
@@ -105,7 +169,7 @@ module.exports.findRecipesByIngredients = async (req, res, next) => {
 module.exports.getRandomRecipes = async (req, res, next) => {
   try {
     const ObjectId = mongoose.Types.ObjectId;
-    const batchSize = 50; // Размер каждой порции рецептов
+    const batchSize = 30; // Размер каждой порции рецептов
     const fetchedRecipeIds = await req.session.fetchedRecipes.map(id => new ObjectId(id));
 
     // Проверяем, есть ли еще рецепты, которые не были включены в предыдущие запросы
@@ -123,8 +187,8 @@ module.exports.getRandomRecipes = async (req, res, next) => {
         _id: recipe._id,
         name: recipe.strMeal,
         category: recipe.strCategory,
-        rating: recipe.rating.reduce((accum, cur) => accum + cur.rate, 0),
-        ingridientsQuantity: recipe.arrIngredients.filter(item => Boolean(item)).length,
+        rating: recipe.averageRate,
+        ingridientsQuantity: recipe.arrIngredients.length,
         image: recipe.strMealThumb,
       }
     })

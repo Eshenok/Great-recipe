@@ -95,7 +95,7 @@ const Profile: FC = () => {
         placeholder={phs.passcheck} 
         />
         <button className="button profile__close animated-btn" onClick={changeEdit} />
-        <ErrorSpan status={!status.error} text={`${status.error !== null ? TEXTS[context].reses[status.msg] : ''}`} />
+        <ErrorSpan extraClasses='form-s__span' status={!status.error} text={`${status.error !== null ? TEXTS[context].reses[status.msg] : ''}`} />
         </>
       }
       

@@ -12,6 +12,7 @@ import CardGrid from "../../widgets/CardGrid/CardGrid";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppRedux";
 import { getRndRecipes } from "../Main/Api/GetRndRecipes";
 import { useLoaderData } from "react-router-dom";
+import UserType from "../../Types/UserType";
 
 export const loader = async ({params}) => {
     const res = await fetch(`http://localhost:2020/recipes/find/${params.recipeId}`, {
@@ -31,9 +32,11 @@ export const RecipePage: FC = () => {
   const {recipe} = useLoaderData();
   const dispatch = useAppDispatch();
   const {recipes, findedRecipes, findedRecipesStatus} = useAppSelector(state => state.recipes);
+  const {user} = useAppSelector(state => state.user);
+  const checkedUser = Object.keys(user).length === 0 ? false : user as UserType;
   const [isOpen, setIsOpen] = useState(true);
 
-  const quantityIngs: number = recipe.arrIngredients.reduce((prev, curr) => {
+  const quantityIngs: number = recipe.arrIngredients.reduce((prev: number, curr: null | string) => {
     if (!curr) return prev;
     return prev += 1;
   }, 0)
@@ -53,7 +56,7 @@ export const RecipePage: FC = () => {
         <aside className="recipe-page__header">
           <div className="recipe-page__img-container">
             <img className="recipe-page__image" src={recipe.strMealThumb} />
-            <LikeBtn onClick={() => {console.log('WOW! 1984')}} extraClasses="recipe-page__like" isLiked={true} />
+            <LikeBtn onClick={() => {console.log('WOW! 1984')}} extraClasses="recipe-page__like" isLiked={checkedUser ? checkedUser.favorite.includes(recipe._id) : false} />
           </div>
           <h2 className="subtitle recipe-page__title">{recipe.strMeal}</h2>
           <div className="recipe-page__tags">

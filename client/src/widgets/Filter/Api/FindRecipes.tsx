@@ -1,9 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {setFindedRecipes} from '../../../store/recipesSlice';
+import FilterFetchDataType from "../../../Types/FilterFetchData";
 
 export const findRecipesByKeys = createAsyncThunk(
   'recipes/findRecipesByKeys',
-  async (keys: string[], {rejectWithValue, dispatch}) => {
+  async (data: FilterFetchDataType, {rejectWithValue, dispatch}) => {
     try {
       const res = await fetch(`http://localhost:2020/recipes/find`, {
         method: 'POST',
@@ -11,9 +12,7 @@ export const findRecipesByKeys = createAsyncThunk(
         headers: {
           "Content-Type": 'application/json'
         },
-        body: JSON.stringify({
-          ingredients: keys,
-        })
+        body: JSON.stringify(data)
       })
       if (!res || res.status === 500) throw new Error('Server error');
       if (res.status === 404) {

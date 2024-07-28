@@ -2,12 +2,14 @@ import { Action, AnyAction, ThunkAction, ThunkDispatch, configureStore } from '@
 import categorySlice from "./categorySlice";
 import userSlice from './userSlice';
 import recipesSlice from './recipesSlice';
+import filterSlice from './FilterSlice';
 
 const store = configureStore ({
   reducer: {
     categories: categorySlice,
     user: userSlice,
     recipes: recipesSlice,
+    filter: filterSlice
   },
 })
 
