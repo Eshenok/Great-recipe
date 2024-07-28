@@ -1,6 +1,8 @@
-import {ChangeEvent, FC} from 'react';
+import {ChangeEvent, FC, useEffect} from 'react';
 import './ManagedTab.scss';
 import useForm from "../../hooks/useForm";
+import { useAppDispatch } from '../../hooks/useAppRedux';
+import { changeFilterQueryValue } from '../../store/FilterSlice';
 
 interface IManagedTabProps {
   text: string;
@@ -15,16 +17,19 @@ interface IManagedTabProps {
 const ManagedTab:FC<IManagedTabProps> = ({isActive, placeholder, type, name, max}) => {
 
   const {inputValues, onChange, dropValue, onPut} = useForm();
+  const dispatch = useAppDispatch();
 
   const validateChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length > String(max).length) {
       return;
     } else if (Number(e.target.value) > max) {
-      onPut(name, max);
+      onPut(name, `${max}`);
     } else {
       onChange(e)
     }
   }
+
+  useEffect(() => {dispatch(changeFilterQueryValue({name: 'quantity', value: inputValues[name] ? inputValues[name]: ''}))}, [inputValues])
 
   return (
     <div className={`tab tab_managed ${isActive ? 'tab_active' : ''}`}>

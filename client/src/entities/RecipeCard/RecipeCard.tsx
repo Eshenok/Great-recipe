@@ -20,7 +20,6 @@ const RecipeCard: FC<IRecipeCardProps> = ({recipeInfo}) => {
   const navigate = useNavigate();
   const {user} = useAppSelector(state => state.user);
   const checkedUser = Object.keys(user).length === 0 ? false : user as UserType;
-  console.log(checkedUser);
 
   let category = TEXTS[context].categories[recipeInfo.category.toLowerCase()];
 

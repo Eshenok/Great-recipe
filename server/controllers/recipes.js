@@ -108,7 +108,6 @@ module.exports.findRecipesByIngredients = async (req, res, next) => {
     const body = req.body;
     let filter = {};
     let recipesArr = [];
-    console.log(body);
 
     // Фильтрация по ингредиентам
     if (body.ingredients) {

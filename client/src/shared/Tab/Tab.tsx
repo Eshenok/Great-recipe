@@ -4,12 +4,14 @@ import './Tab.scss';
 interface ITabProps {
   text: string;
   children: React.ReactNode;
-  isActive: boolean;
+  isActive?: boolean;
+  onClick?: () => void;
 }
 
-const Tab: FC<ITabProps> = ({text, children, isActive}) => {
+const Tab: FC<ITabProps> = ({text, children, isActive, onClick}) => {
+  
   return (
-    <div className={`tab ${isActive ? 'tab_active' : ''}`}>
+    <div className={`tab ${isActive ? 'tab_active' : ''}`} onClick={onClick}>
       <p className={`tab__text ${children ? 'tab__text_icon' : ''}`}>{text}</p>
       {children}
     </div>
