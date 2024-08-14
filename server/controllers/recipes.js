@@ -253,6 +253,7 @@ module.exports.addRecipeToFavorite = async (req, res, next) => {
   try {
     /*Get recipeId*/
     const recipeId = req.params.recipeId;
+    console.log(recipeId);
     if (!recipeId) {
       throw new BadRequest('ID required');
     }
@@ -272,8 +273,10 @@ module.exports.addRecipeToFavorite = async (req, res, next) => {
       await updatedUser.save();
       await recipe.save();
     } else {
-      return res.status(200).json({message: 'Recipe already added to favorite'});
+      return res.status(204).json({message: 'Recipe already added to favorite'});
     }
+
+    console.log('all good')
 
     return res.status(200).json({message: 'Recipe successfully added to favorites'})
   } catch (err) {

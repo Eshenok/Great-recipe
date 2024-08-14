@@ -36,7 +36,7 @@ function App() {
       dispatch(dropFetchedRecipes());
     }
     dispatch(getRndRecipes());
-  }, [user]);
+  }, []);
 
 
   useEffect(() => {

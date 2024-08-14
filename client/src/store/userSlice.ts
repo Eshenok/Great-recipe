@@ -41,6 +41,10 @@ export const userSlice = createSlice({
     clearUser: (state) => {
       state.user = {};
     },
+    updateLiked: (state, action) => {
+      const user: UserType = state.user as UserType;
+      state.user = {...user, favorite:[...user.favorite, action.payload]};
+    },
     dropStatus: (state) => {
       state.status = {error: null, msg: ''}
     }
@@ -80,6 +84,6 @@ export const userSlice = createSlice({
   }
 })
 
-export const {initUser, clearUser, dropStatus} = userSlice.actions;
+export const {initUser, clearUser, dropStatus, updateLiked} = userSlice.actions;
 
 export default userSlice.reducer;
