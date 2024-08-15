@@ -110,6 +110,9 @@ export const RecipePage: FC = () => {
             {
               instructionArr.map(item => <p>{item}</p>)
             }
+            <div className="recipe-page__rate">
+              <h2 className="recipe-page__rate_text">{TEXTS[context].titles.rate}</h2>
+            </div>
           </div>
         </aside>
       </article>

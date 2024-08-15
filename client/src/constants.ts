@@ -77,7 +77,8 @@ export const TEXTS: Record<LanguageType, Texts> = {
       fridge: 'My Fridge',
       profile: 'My Profile',
       login: 'Login',
-      reg: 'Registration'
+      reg: 'Registration',
+      rate: 'Liked? Rate it!'
     },
     filter: {
       rating: 'User rating',
@@ -151,7 +152,8 @@ export const TEXTS: Record<LanguageType, Texts> = {
       fridge: 'Моя кухня',
       profile: 'Мой профиль',
       login: 'Вход',
-      reg: 'Регистрация'
+      reg: 'Регистрация',
+      rate: 'Понравился? Оцени!'
     },
     filter: {
       rating: 'Оценка',
