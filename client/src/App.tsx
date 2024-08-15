@@ -33,9 +33,9 @@ function App() {
 
   useEffect(() => {
     if (!localStorage.getItem('recipes') || localStorage.getItem('recipes')?.length !== 0) {
-      dispatch(dropFetchedRecipes());
-    }
-    dispatch(getRndRecipes());
+      dispatch(dropFetchedRecipes()).then(() =>dispatch(getRndRecipes()));
+    } 
+    // dispatch(getRndRecipes());
   }, []);
 
 

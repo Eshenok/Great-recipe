@@ -34,11 +34,9 @@ const recipeSchema = new mongoose.Schema({
   },
   strSource: {
     type: String,
-    match: patternUrl
   },
   strImageSource: {
     type: String,
-    match: patternUrl
   },
   strCreativeCommonsConfirmed: {
     type: String

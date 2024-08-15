@@ -9,8 +9,8 @@ import {ClippedServerRecipeType} from "../../Types/ServerRecipeType";
 import {useNavigate} from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppRedux';
 import UserType from '../../Types/UserType';
-import { putLikeFetch } from './Api/PutLike';
-import { removeLikeFetch } from './Api/RemoveLike';
+import { putLikeFetch } from '../../Api/PutLike';
+import { removeLikeFetch } from '../../Api/RemoveLike';
 
 interface IRecipeCardProps {
   recipeInfo: ClippedServerRecipeType
@@ -35,11 +35,11 @@ const RecipeCard: FC<IRecipeCardProps> = ({recipeInfo}) => {
   //   return ing.filter(item => !!item).length;
   // }
 
-  const checkIsLikedRecipe = (id: string) => checkedUser ? checkedUser.favorite.includes(id) : false;
-
   const chooseThis = () => {
     navigate(`/${recipeInfo._id}`);
   }
+
+  const checkIsLikedRecipe = (id: string) => checkedUser ? checkedUser.favorite.includes(id) : false;
 
   const handlePutLike = (id: string) => {
     if (checkIsLikedRecipe(id)) {
@@ -68,7 +68,7 @@ const RecipeCard: FC<IRecipeCardProps> = ({recipeInfo}) => {
           {recipeInfo?.rating ? recipeInfo.rating : 0}
         </span>
       </div>
-      <LikeBtn onClick={() => {handlePutLike(recipeInfo._id)}} isLiked={checkedUser ? checkedUser.favorite.includes(recipeInfo._id) : false} extraClasses={"recipe-card__like"} />
+      <LikeBtn onClick={() => {handlePutLike(recipeInfo._id)}} isLiked={checkIsLikedRecipe(recipeInfo._id)} extraClasses={"recipe-card__like"} />
     </div>
   );
 };

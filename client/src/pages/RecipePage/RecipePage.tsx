@@ -13,6 +13,9 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useAppRedux";
 import { getRndRecipes } from "../Main/Api/GetRndRecipes";
 import { useLoaderData } from "react-router-dom";
 import UserType from "../../Types/UserType";
+import { ServerRecipeType } from "../../Types/ServerRecipeType";
+import { removeLikeFetch } from "../../Api/RemoveLike";
+import { putLikeFetch } from "../../Api/PutLike";
 
 export const loader = async ({params}) => {
     const res = await fetch(`http://localhost:2020/recipes/find/${params.recipeId}`, {
@@ -22,7 +25,7 @@ export const loader = async ({params}) => {
         "Content-type": 'application/json'
       }
     })
-    const recipe = await res.json();
+    const recipe: ServerRecipeType = await res.json();
     return {recipe}
 }
 
@@ -45,6 +48,16 @@ export const RecipePage: FC = () => {
     dispatch(getRndRecipes());
   }
 
+  const checkIsLikedRecipe = (id: string) => checkedUser ? checkedUser.favorite.includes(id) : false;
+
+  const handlePutLike = (id: string) => {
+    if (checkIsLikedRecipe(id)) {
+      dispatch(removeLikeFetch(id))
+    } else {
+      dispatch(putLikeFetch(id));
+    }
+  }
+
   const instructionArr: string[] = recipe.strInstructions.split('\r\n');
 
   return (
@@ -56,7 +69,7 @@ export const RecipePage: FC = () => {
         <aside className="recipe-page__header">
           <div className="recipe-page__img-container">
             <img className="recipe-page__image" src={recipe.strMealThumb} />
-            <LikeBtn onClick={() => {console.log('WOW! 1984')}} extraClasses="recipe-page__like" isLiked={checkedUser ? checkedUser.favorite.includes(recipe._id) : false} />
+            <LikeBtn onClick={() => {handlePutLike(recipe._id)}} extraClasses="recipe-page__like" isLiked={checkIsLikedRecipe(recipe._id)} />
           </div>
           <h2 className="subtitle recipe-page__title">{recipe.strMeal}</h2>
           <div className="recipe-page__tags">

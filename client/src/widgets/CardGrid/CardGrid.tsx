@@ -14,6 +14,7 @@ interface ICardGridProps {
 }
 
 const CardGrid: FC<ICardGridProps> = ({recipes, getMoreFn, clearFilter, extraClasses}) => {
+  console.log(recipes);
 
   const context = useContext(LanguageContext);
 

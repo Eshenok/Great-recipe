@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { BASE_URL } from "../../../constants";
-import { CentralErrorHandler } from "../../../errorHandler/CentralErrorHandler";
-import { removeLiked, updateLiked } from "../../../store/userSlice";
+import { BASE_URL } from "../constants";
+import { CentralErrorHandler } from "../errorHandler/CentralErrorHandler";
+import { removeLiked, updateLiked } from "../store/userSlice";
 export const removeLikeFetch = createAsyncThunk(
   'user/removeLike',
   async (recipeId: string, {dispatch, rejectWithValue}) => {
