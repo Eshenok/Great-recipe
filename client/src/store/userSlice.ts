@@ -45,6 +45,11 @@ export const userSlice = createSlice({
       const user: UserType = state.user as UserType;
       state.user = {...user, favorite:[...user.favorite, action.payload]};
     },
+    removeLiked: (state, action) => {
+      const user: UserType = state.user as UserType;
+      const updatedliked = user.favorite.filter(item => item !== action.payload);
+      state.user = {...user, favorite:updatedliked}
+    },
     dropStatus: (state) => {
       state.status = {error: null, msg: ''}
     }
@@ -84,6 +89,6 @@ export const userSlice = createSlice({
   }
 })
 
-export const {initUser, clearUser, dropStatus, updateLiked} = userSlice.actions;
+export const {initUser, clearUser, dropStatus, updateLiked, removeLiked} = userSlice.actions;
 
 export default userSlice.reducer;
