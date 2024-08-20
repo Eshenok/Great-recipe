@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from "react";
+import { FC, useCallback, useContext, useState } from "react";
 import { TEST_RECIPE, TEXTS } from "../../constants";
 import LikeBtn from "../../shared/LikeBtn/LikeBtn";
 import './RecipePage.scss';
@@ -16,6 +16,8 @@ import UserType from "../../Types/UserType";
 import { ServerRecipeType } from "../../Types/ServerRecipeType";
 import { removeLikeFetch } from "../../Api/RemoveLike";
 import { putLikeFetch } from "../../Api/PutLike";
+import RateStar from "../../shared/RateStar/RateStar";
+import useForm from "../../hooks/useForm";
 
 export const loader = async ({params}) => {
     const res = await fetch(`http://localhost:2020/recipes/find/${params.recipeId}`, {
@@ -38,15 +40,16 @@ export const RecipePage: FC = () => {
   const {user} = useAppSelector(state => state.user);
   const checkedUser = Object.keys(user).length === 0 ? false : user as UserType;
   const [isOpen, setIsOpen] = useState(true);
+  const {inputValues, onChange} = useForm();
 
   const quantityIngs: number = recipe.arrIngredients.reduce((prev: number, curr: null | string) => {
     if (!curr) return prev;
     return prev += 1;
   }, 0)
 
-  const getMoreRecipes = () => {
+  const getMoreRecipes = useCallback(() => {
     dispatch(getRndRecipes());
-  }
+  }, [])
 
   const checkIsLikedRecipe = (id: string) => checkedUser ? checkedUser.favorite.includes(id) : false;
 
@@ -92,7 +95,7 @@ export const RecipePage: FC = () => {
             <p onClick={() => {setIsOpen(!isOpen)}} className={`recipe-page__dd ${isOpen ? 'recipe-page__dd_open' : ''}`}>{`${TEXTS[context].btns.ings} ${quantityIngs}`}
               </p>
             <ul className="recipe-page__list">
-              {recipe.arrIngredients.map((ing, i) => {
+              {recipe.arrIngredients.map((ing: string | undefined | null, i: number) => {
                 return ing ? <li className="recipe-page__list_item">
                   <span>{ing}</span>
                   <span>{' - ' + recipe.arrMeasure[i]}</span>
@@ -112,6 +115,9 @@ export const RecipePage: FC = () => {
             }
             <div className="recipe-page__rate">
               <h2 className="recipe-page__rate_text">{TEXTS[context].titles.rate}</h2>
+              <div className="recipe-page__rate_stars">
+                {[...Array(5)].map((_, i) => <RateStar id={String(i+1)} name={'recipe-rate'} isChecked={inputValues['recipe-rate'] === i+1} value={i+1} onChange={onChange} />)}
+              </div>
             </div>
           </div>
         </aside>

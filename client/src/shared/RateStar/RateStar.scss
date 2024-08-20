@@ -1,0 +1,30 @@
+@import '../../commonStyles/variables.scss';
+
+.ratestar {
+  width: 30px;
+  height: 28px;
+
+  &__input {
+    visibility: hidden;
+    opacity: 0;
+    height: 0;
+    width: 0;
+    z-index: -1;
+  }
+
+  &__input:checked + .ratestar__label svg {
+    fill: $yellow-star;
+
+    & path {
+      stroke: $yellow-star;
+    }
+  }
+
+  &__label {
+    cursor: pointer;
+  }
+
+  &__label:hover svg {
+    fill: #33333330;
+  }
+}

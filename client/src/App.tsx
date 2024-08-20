@@ -32,7 +32,6 @@ function App() {
     if (!localStorage.getItem('recipes') || localStorage.getItem('recipes')?.length !== 0) {
       dispatch(dropFetchedRecipes()).then(() =>dispatch(getRndRecipes()));
     } 
-    // dispatch(getRndRecipes());
   }, []);
 
 

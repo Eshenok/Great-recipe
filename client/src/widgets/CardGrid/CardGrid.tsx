@@ -1,4 +1,4 @@
-import React, {FC, useContext} from 'react';
+import React, {FC, memo, useContext} from 'react';
 import './CardGrid.scss';
 import {TEXTS} from "../../constants";
 import {ClippedServerRecipeType, ServerRecipeType} from "../../Types/ServerRecipeType";
@@ -13,7 +13,7 @@ interface ICardGridProps {
   extraClasses?: string;
 }
 
-const CardGrid: FC<ICardGridProps> = ({recipes, getMoreFn, clearFilter, extraClasses}) => {
+const CardGrid: FC<ICardGridProps> = memo(function CardGrid({recipes, getMoreFn, clearFilter, extraClasses}) {
   console.log(recipes);
 
   const context = useContext(LanguageContext);
@@ -47,6 +47,6 @@ const CardGrid: FC<ICardGridProps> = ({recipes, getMoreFn, clearFilter, extraCla
       </div>
     </section>
   );
-};
+});
 
 export default CardGrid;
