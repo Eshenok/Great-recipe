@@ -14,11 +14,9 @@ interface ICardGridProps {
 }
 
 const CardGrid: FC<ICardGridProps> = memo(function CardGrid({recipes, getMoreFn, clearFilter, extraClasses}) {
-  console.log(recipes);
-
   const context = useContext(LanguageContext);
 
-  // Функция проверяет положение скролла и если выше половины то делает запрос на получение еще 50 рецептов
+  // Функция проверяет положение скролла и если выше половины то делает запрос на получение еще рецептов
   function checkPosition(e: React.UIEvent<HTMLDivElement>): void {
     const target = e.target as HTMLDivElement;
     const height = target.scrollHeight;

@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { ChangeEvent, FC } from "react"
 import './RateStar.scss';
 
 interface IRateStarProps {
@@ -6,7 +6,7 @@ interface IRateStarProps {
   id: string;
   name: string;
   isChecked: boolean;
-  onChange: (e) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   value: any
 }
 

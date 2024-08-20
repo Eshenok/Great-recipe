@@ -12,7 +12,7 @@
     z-index: -1;
   }
 
-  &__input:checked + .ratestar__label svg {
+  &_active .ratestar__label svg {
     fill: $yellow-star;
 
     & path {

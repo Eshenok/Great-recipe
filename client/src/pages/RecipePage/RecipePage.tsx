@@ -34,7 +34,7 @@ export const loader = async ({params}) => {
 export const RecipePage: FC = () => {
 
   const context = useContext(LanguageContext);
-  const {recipe} = useLoaderData();
+  const {recipe} = useLoaderData() as {recipe: ServerRecipeType};
   const dispatch = useAppDispatch();
   const {recipes, findedRecipes, findedRecipesStatus} = useAppSelector(state => state.recipes);
   const {user} = useAppSelector(state => state.user);
@@ -87,7 +87,7 @@ export const RecipePage: FC = () => {
             </span>
             <span className="recipe-page__tag" >
               <img className="recipe-page__tag_img" src={star} />
-              <p className="recipe-page__tag_text">3.7</p>
+              <p className="recipe-page__tag_text">{recipe.averageRate}</p>
             </span>
           </div>
 
@@ -96,7 +96,7 @@ export const RecipePage: FC = () => {
               </p>
             <ul className="recipe-page__list">
               {recipe.arrIngredients.map((ing: string | undefined | null, i: number) => {
-                return ing ? <li className="recipe-page__list_item">
+                return ing ? <li key={i} className="recipe-page__list_item">
                   <span>{ing}</span>
                   <span>{' - ' + recipe.arrMeasure[i]}</span>
                   </li> : <></>
@@ -116,7 +116,7 @@ export const RecipePage: FC = () => {
             <div className="recipe-page__rate">
               <h2 className="recipe-page__rate_text">{TEXTS[context].titles.rate}</h2>
               <div className="recipe-page__rate_stars">
-                {[...Array(5)].map((_, i) => <RateStar id={String(i+1)} name={'recipe-rate'} isChecked={inputValues['recipe-rate'] === i+1} value={i+1} onChange={onChange} />)}
+                {[...Array(5)].map((_, i) => <RateStar id={String(i+1)} name={'recipe-rate'} isActive={inputValues['recipe-rate'] >= String(i+1)} isChecked={inputValues['recipe-rate'] === String(i+1)} value={i+1} onChange={onChange} />)}
               </div>
             </div>
           </div>
