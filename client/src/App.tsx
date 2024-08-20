@@ -3,17 +3,14 @@ import './commonStyles/Animations.scss';
 import './vendor/fonts/fonts.css';
 import './widgets/Form/Form.scss';
 import {useEffect, useState} from "react";
-import {Outlet, useLoaderData} from 'react-router-dom';
+import {Outlet} from 'react-router-dom';
 import {LanguageContext} from "./context/LanguageContext";
-import {useDispatch, useSelector} from "react-redux";
 import {initCategories} from "./store/categorySlice";
 import Header from './widgets/Header/Header';
-import UserType from './Types/UserType';
 import { getUser } from './store/userSlice';
 import { dropFetchedRecipes } from './pages/Main/Api/DropFetchedRecipes';
 import { getRndRecipes } from './pages/Main/Api/GetRndRecipes';
 import { useAppDispatch, useAppSelector } from './hooks/useAppRedux';
-import { dropRecipes } from './store/recipesSlice';
 
 function App() {
 
