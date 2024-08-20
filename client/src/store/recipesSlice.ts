@@ -18,6 +18,15 @@ export const recipesSlice = createSlice({
   name: 'recipes',
   initialState,
   reducers: {
+    updateRecipe: (state, action) => {
+      state.recipes = state.recipes.map(recipe => {
+        if (recipe._id === action.payload._id) {
+          return action.payload
+        } else {
+          return recipe
+        }
+      })
+    },
     pushRecipesMain: (state, action) => {
       state.recipes = [...state.recipes, ...action.payload];
     },
@@ -52,6 +61,6 @@ export const recipesSlice = createSlice({
 
 export const selectRecipes = (state: RootState) => state.recipes.recipes;
 
-export const {dropfindedRecipesStatus, pushRecipesFridge, pushRecipesMain, changeFetchRecipesFstatus, changeFetchRecipesStatus, setFindedRecipes, dropRecipes} = recipesSlice.actions;
+export const {dropfindedRecipesStatus, pushRecipesFridge, pushRecipesMain, changeFetchRecipesFstatus, changeFetchRecipesStatus, setFindedRecipes, dropRecipes, updateRecipe} = recipesSlice.actions;
 
 export default recipesSlice.reducer;

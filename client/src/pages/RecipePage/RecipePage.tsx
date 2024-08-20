@@ -1,4 +1,4 @@
-import { FC, useCallback, useContext, useState } from "react";
+import { ChangeEvent, FC, useCallback, useContext, useEffect, useState } from "react";
 import { TEST_RECIPE, TEXTS } from "../../constants";
 import LikeBtn from "../../shared/LikeBtn/LikeBtn";
 import './RecipePage.scss';
@@ -18,6 +18,7 @@ import { removeLikeFetch } from "../../Api/RemoveLike";
 import { putLikeFetch } from "../../Api/PutLike";
 import RateStar from "../../shared/RateStar/RateStar";
 import useForm from "../../hooks/useForm";
+import { putRate } from "./Api/PutRate";
 
 export const loader = async ({params}) => {
     const res = await fetch(`http://localhost:2020/recipes/find/${params.recipeId}`, {
@@ -42,14 +43,13 @@ export const RecipePage: FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const {inputValues, onChange} = useForm();
 
-  const quantityIngs: number = recipe.arrIngredients.reduce((prev: number, curr: null | string) => {
-    if (!curr) return prev;
-    return prev += 1;
-  }, 0)
+  useEffect(() => {
+    
+  }, [recipe])
 
-  const getMoreRecipes = useCallback(() => {
-    dispatch(getRndRecipes());
-  }, [])
+  const quantityIngs: number = recipe.arrIngredients.reduce((prev: number, curr: null | string) => !curr ? prev : prev += 1, 0);
+
+  const getMoreRecipes = useCallback(() => {dispatch(getRndRecipes());}, []);
 
   const checkIsLikedRecipe = (id: string) => checkedUser ? checkedUser.favorite.includes(id) : false;
 
@@ -59,6 +59,11 @@ export const RecipePage: FC = () => {
     } else {
       dispatch(putLikeFetch(id));
     }
+  }
+
+  const handlePutRate = (event: ChangeEvent<HTMLInputElement>, id: string) => { 
+    onChange(event);
+    dispatch(putRate({recipeId: id, rating: Number(event.target.value)}));
   }
 
   const instructionArr: string[] = recipe.strInstructions.split('\r\n');
@@ -116,7 +121,7 @@ export const RecipePage: FC = () => {
             <div className="recipe-page__rate">
               <h2 className="recipe-page__rate_text">{TEXTS[context].titles.rate}</h2>
               <div className="recipe-page__rate_stars">
-                {[...Array(5)].map((_, i) => <RateStar id={String(i+1)} name={'recipe-rate'} isActive={inputValues['recipe-rate'] >= String(i+1)} isChecked={inputValues['recipe-rate'] === String(i+1)} value={i+1} onChange={onChange} />)}
+                {[...Array(5)].map((_, i) => <RateStar id={String(i+1)} name={'recipe-rate'} isActive={inputValues['recipe-rate'] >= String(i+1)} isChecked={inputValues['recipe-rate'] === String(i+1)} value={i+1} onChange={(e) => {handlePutRate(e, recipe._id)}} />)}
               </div>
             </div>
           </div>
