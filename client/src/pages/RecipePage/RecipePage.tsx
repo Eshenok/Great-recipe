@@ -11,7 +11,7 @@ import Category from "../../entities/Category/Category";
 import CardGrid from "../../widgets/CardGrid/CardGrid";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppRedux";
 import { getRndRecipes } from "../Main/Api/GetRndRecipes";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import UserType from "../../Types/UserType";
 import { ServerRecipeType } from "../../Types/ServerRecipeType";
 import { removeLikeFetch } from "../../Api/RemoveLike";
@@ -42,10 +42,7 @@ export const RecipePage: FC = () => {
   const checkedUser = Object.keys(user).length === 0 ? false : user as UserType;
   const [isOpen, setIsOpen] = useState(true);
   const {inputValues, onChange} = useForm();
-
-  useEffect(() => {
-    
-  }, [recipe])
+  const navigate = useNavigate();
 
   const quantityIngs: number = recipe.arrIngredients.reduce((prev: number, curr: null | string) => !curr ? prev : prev += 1, 0);
 
@@ -64,6 +61,7 @@ export const RecipePage: FC = () => {
   const handlePutRate = (event: ChangeEvent<HTMLInputElement>, id: string) => { 
     onChange(event);
     dispatch(putRate({recipeId: id, rating: Number(event.target.value)}));
+    setTimeout(() => {navigate(`/${recipe._id}`)}, 1000);
   }
 
   const instructionArr: string[] = recipe.strInstructions.split('\r\n');
