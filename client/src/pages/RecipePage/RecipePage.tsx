@@ -110,8 +110,6 @@ export const RecipePage: FC = () => {
         </aside>
 
         <aside className="recipe-page__main">
-          
-          
           <div className="recipe-page__recipe">
             {
               instructionArr.map(item => <p>{item}</p>)
