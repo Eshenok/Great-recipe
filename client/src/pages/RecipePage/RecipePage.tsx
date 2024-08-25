@@ -20,7 +20,7 @@ import RateStar from "../../shared/RateStar/RateStar";
 import useForm from "../../hooks/useForm";
 import { putRate } from "./Api/PutRate";
 
-export const loader = async ({params}) => {
+export const loader = async ({params}: {params:{recipeId: string}}) => {
     const res = await fetch(`http://localhost:2020/recipes/find/${params.recipeId}`, {
       method: 'POST',
       credentials: 'include',
