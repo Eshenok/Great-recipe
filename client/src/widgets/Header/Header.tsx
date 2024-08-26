@@ -19,23 +19,26 @@ const Header: FC<IHeaderProps> = ({onSwapLanguage}) => {
   const [isShowedBackLink, setIsShowedBackLink] = useState(false);
   const navigate = useNavigate();
   const openHeader = () => setIsOpenHeader(!isOpenHeader);
+  const cardSection = document.querySelector('.cards');
 
   useEffect(() => {
-    const cardSection = document.querySelector('.cards');
     if (!cardSection) return;
 
     const checkScroll = () => {
-      setIsShowedBackLink(!!cardSection.scrollTop);
+      setIsShowedBackLink(!!cardSection.scrollTop && cardSection.scrollTop > 200);
       console.log(cardSection.scrollTop);
     }
+    setIsShowedBackLink(!!cardSection.scrollTop && cardSection.scrollTop > 200);
 
-    cardSection.addEventListener('click', checkScroll);
+    cardSection.addEventListener('scroll', checkScroll);
 
-    return (
-      cardSection.removeEventListener('scroll', checkScroll)
-    )
+    return function cleanup() {
+      cardSection.removeEventListener('scroll', checkScroll)}
+  }, [cardSection, location.pathname]);
 
-  }, []);
+  useEffect(() => {
+    setIsOpenHeader(false);
+  }, [location.pathname])
 
   return (
     <>
@@ -43,7 +46,7 @@ const Header: FC<IHeaderProps> = ({onSwapLanguage}) => {
         className={`header ${isOpenHeader ? 'header_open' : ''} ${location.pathname.includes('/fridge') ? 'header_blue' : location.pathname.includes('/profile') || location.pathname.includes('sign')  ? 'header_green' : 'header_orange'}`}
       >
         <Burger onClick={openHeader} extraClasses='header__burger'/>
-        <SubBurger onClick={() => navigate(-1)} isShowed={true} extraClasses={`header__subburger`} />
+        <SubBurger onClick={() => navigate(-1)} isShowed={isShowedBackLink} extraClasses={`header__subburger sub-burger__top`} />
         <LanguageSwap extraClasses={"header__lng"} onSwap={onSwapLanguage} />
         <div className={"header__menu"}>
           <Logo />
