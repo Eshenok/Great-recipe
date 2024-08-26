@@ -1,7 +1,7 @@
 import React, {FC, memo, useContext} from 'react';
 import './CardGrid.scss';
 import {TEXTS} from "../../constants";
-import {ClippedServerRecipeType, ServerRecipeType} from "../../Types/ServerRecipeType";
+import {ClippedServerRecipeType} from "../../Types/ServerRecipeType";
 import RecipeCard from "../../entities/RecipeCard/RecipeCard";
 import Title from "../../shared/Title/Title";
 import {LanguageContext} from "../../context/LanguageContext";
