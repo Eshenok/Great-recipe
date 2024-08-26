@@ -38,7 +38,20 @@ const Header: FC<IHeaderProps> = ({onSwapLanguage}) => {
 
   useEffect(() => {
     setIsOpenHeader(false);
-  }, [location.pathname])
+    if (location.pathname.includes('/profile') || location.pathname.includes('sign')) {
+      setIsShowedBackLink(true);
+    }
+  }, [location.pathname]);
+
+  const handleSubburgerClick = () => {
+    if (location.pathname.includes('/profile') || location.pathname.includes('sign')) {
+      navigate(-1);
+    } else {
+      if (cardSection) {
+        cardSection.scrollTop = 0;
+      }
+    }
+  }
 
   return (
     <>
@@ -46,7 +59,7 @@ const Header: FC<IHeaderProps> = ({onSwapLanguage}) => {
         className={`header ${isOpenHeader ? 'header_open' : ''} ${location.pathname.includes('/fridge') ? 'header_blue' : location.pathname.includes('/profile') || location.pathname.includes('sign')  ? 'header_green' : 'header_orange'}`}
       >
         <Burger onClick={openHeader} extraClasses='header__burger'/>
-        <SubBurger onClick={() => navigate(-1)} isShowed={isShowedBackLink} extraClasses={`header__subburger sub-burger__top`} />
+        <SubBurger onClick={handleSubburgerClick} isShowed={isShowedBackLink} extraClasses={`header__subburger ${location.pathname.includes('/profile') || location.pathname.includes('sign') ? '':'sub-burger__top'}`} />
         <LanguageSwap extraClasses={"header__lng"} onSwap={onSwapLanguage} />
         <div className={"header__menu"}>
           <Logo />
