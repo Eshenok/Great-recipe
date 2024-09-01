@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, useCallback, useContext, useEffect, useState } from "react";
-import { TEST_RECIPE, TEXTS } from "../../constants";
+import { TEXTS } from "../../constants";
 import LikeBtn from "../../shared/LikeBtn/LikeBtn";
 import './RecipePage.scss';
 import { LanguageContext } from "../../context/LanguageContext";
@@ -72,6 +72,8 @@ export const RecipePage: FC = () => {
       <Filter extraClasses="recipe-page__filter" clipped={true} />
       <Category extraClasses="recipe-page__cat" />
       <article className="recipe-page__card">
+        <div className="recipe-page__card_under"/>
+
         <aside className="recipe-page__header">
           <div className="recipe-page__img-container">
             <img className="recipe-page__image" src={recipe.strMealThumb} />
@@ -123,7 +125,7 @@ export const RecipePage: FC = () => {
           </div>
         </aside>
       </article>
-      <CardGrid getMoreFn={getMoreRecipes} extraClasses="recipe-page__grid" recipes={findedRecipesStatus ? findedRecipes.length > 0 ? findedRecipes : recipes : []} />
+        <CardGrid getMoreFn={getMoreRecipes} extraClasses="recipe-page__grid" recipes={findedRecipesStatus ? findedRecipes.length > 0 ? findedRecipes : recipes : []} />
     </section>
   )
 }
