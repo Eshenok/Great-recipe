@@ -17,9 +17,8 @@ interface ICardGridProps {
 const CardGrid: FC<ICardGridProps> = memo(function CardGrid({recipes, getMoreFn, clearFilter, extraClasses}) {
   const context = useContext(LanguageContext);
   const cardGridRef = useRef<HTMLDivElement>(null);
-  const location = useLocation(); // Для отслеживания текущего пути
+  const location = useLocation(); 
 
-  // Ключ для хранения позиции скролла в sessionStorage
   const scrollPositionKey = `scrollPosition-${location.pathname}`;
 
   // Функция проверяет положение скролла и если выше половины, то делает запрос на получение еще рецептов
@@ -31,24 +30,16 @@ const CardGrid: FC<ICardGridProps> = memo(function CardGrid({recipes, getMoreFn,
     if (height - scrolled === clHe && getMoreFn) {
       getMoreFn();
     }
-    // Сохраняем текущую позицию скролла в sessionStorage
+
     sessionStorage.setItem(scrollPositionKey, scrolled.toString());
   }
 
-  // Восстанавливаем позицию скролла при монтировании компонента
   useLayoutEffect(() => {
     const savedScrollPosition = sessionStorage.getItem(scrollPositionKey);
     if (savedScrollPosition && cardGridRef.current) {
       cardGridRef.current.scrollTop = parseFloat(savedScrollPosition);
     }
   }, [scrollPositionKey]);
-
-  // Очищаем позицию скролла из sessionStorage, если компонент размонтируется (необязательно)
-  // useEffect(() => {
-  //   return () => {
-  //     sessionStorage.removeItem(scrollPositionKey);
-  //   };
-  // }, [scrollPositionKey]);
 
   return (
     <section className={`cards ${extraClasses ? extraClasses : ''}`}>
