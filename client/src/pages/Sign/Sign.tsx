@@ -18,13 +18,13 @@ const Sign: FC = () => {
     if (location.pathname.startsWith('/sign')) {
       if (Object.keys(user).length === 0) {
         if (location.pathname !== '/sign/in' && location.pathname !== '/sign/up') {
-          navigate('/sign/in');
+          navigate('/sign/in', {replace: true});
         }
       } else {
         if (location.pathname.includes('/pass')) {
-          navigate('/sign/profile/pass');
+          navigate('/sign/profile/pass', {replace: true});
         } else {
-          navigate('/sign/profile');
+          navigate('/sign/profile', {replace: true});
         }
       }
     }

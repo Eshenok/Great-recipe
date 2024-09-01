@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react';
+import {FC, useCallback, useEffect, useState} from 'react';
 import './Header.scss';
 import Menu from "../../entities/Menu/Menu";
 import LanguageSwap from "../../shared/LanguageSwap/LanguageSwap";
@@ -19,11 +19,13 @@ const Header: FC<IHeaderProps> = ({onSwapLanguage}) => {
   const [isShowedBackLink, setIsShowedBackLink] = useState(false);
   const navigate = useNavigate();
   const openHeader = () => setIsOpenHeader(!isOpenHeader);
-  const cardSection = document.querySelector('.cards');
+  const cardSection: Element | null = document.querySelector('.cards');
 
   useEffect(() => {
-    if (!cardSection) return;
+    // после навигации назад ломается...
+    const cardSection: Element | null = document.querySelector('.cards');
 
+    if (!cardSection) return;
     const checkScroll = () => {
       setIsShowedBackLink(!!cardSection.scrollTop && cardSection.scrollTop > 200);
       console.log(cardSection.scrollTop);
@@ -38,20 +40,21 @@ const Header: FC<IHeaderProps> = ({onSwapLanguage}) => {
 
   useEffect(() => {
     setIsOpenHeader(false);
-    if (location.pathname.includes('/profile') || location.pathname.includes('sign')) {
-      setIsShowedBackLink(true);
+    setIsShowedBackLink(true);
+    if (location.pathname === '/' || location.pathname === '/fridge') {
+      setIsShowedBackLink(false);
     }
-  }, [location.pathname]);
+  }, [cardSection, location.pathname]);
 
-  const handleSubburgerClick = () => {
-    if (location.pathname.includes('/profile') || location.pathname.includes('sign')) {
-      navigate(-1);
-    } else {
+  const handleSubburgerClick = useCallback(() => {
+    if (location.pathname.includes('/fridge') || location.pathname === '/') {
       if (cardSection) {
         cardSection.scrollTop = 0;
       }
+    } else {
+      navigate(-1);
     }
-  }
+  }, [cardSection, location.pathname]);
 
   return (
     <>
@@ -59,7 +62,7 @@ const Header: FC<IHeaderProps> = ({onSwapLanguage}) => {
         className={`header ${isOpenHeader ? 'header_open' : ''} ${location.pathname.includes('/fridge') ? 'header_blue' : location.pathname.includes('/profile') || location.pathname.includes('sign')  ? 'header_green' : 'header_orange'}`}
       >
         <Burger onClick={openHeader} extraClasses='header__burger'/>
-        <SubBurger onClick={handleSubburgerClick} isShowed={isShowedBackLink} extraClasses={`header__subburger ${location.pathname.includes('/profile') || location.pathname.includes('sign') ? '':'sub-burger__top'}`} />
+        <SubBurger onClick={handleSubburgerClick} isShowed={isShowedBackLink} extraClasses={`header__subburger ${location.pathname.includes('/profile') || location.pathname.includes('sign') || (location.pathname !== '/' && location.pathname !== '/fridge') ? '':'sub-burger__top'}`} />
         <LanguageSwap extraClasses={"header__lng"} onSwap={onSwapLanguage} />
         <div className={"header__menu"}>
           <Logo />
