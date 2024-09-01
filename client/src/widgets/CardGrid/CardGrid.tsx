@@ -1,10 +1,11 @@
-import React, {FC, memo, useContext} from 'react';
+import React, {FC, memo, useContext, useEffect, useLayoutEffect, useRef} from 'react';
 import './CardGrid.scss';
 import {TEXTS} from "../../constants";
 import {ClippedServerRecipeType} from "../../Types/ServerRecipeType";
 import RecipeCard from "../../entities/RecipeCard/RecipeCard";
 import Title from "../../shared/Title/Title";
 import {LanguageContext} from "../../context/LanguageContext";
+import { useLocation } from 'react-router-dom';
 
 interface ICardGridProps {
   recipes: ClippedServerRecipeType[],
@@ -15,20 +16,44 @@ interface ICardGridProps {
 
 const CardGrid: FC<ICardGridProps> = memo(function CardGrid({recipes, getMoreFn, clearFilter, extraClasses}) {
   const context = useContext(LanguageContext);
+  const cardGridRef = useRef<HTMLDivElement>(null);
+  const location = useLocation(); // Для отслеживания текущего пути
 
-  // Функция проверяет положение скролла и если выше половины то делает запрос на получение еще рецептов
+  // Ключ для хранения позиции скролла в sessionStorage
+  const scrollPositionKey = `scrollPosition-${location.pathname}`;
+
+  // Функция проверяет положение скролла и если выше половины, то делает запрос на получение еще рецептов
   function checkPosition(e: React.UIEvent<HTMLDivElement>): void {
     const target = e.target as HTMLDivElement;
     const height = target.scrollHeight;
     const scrolled = target.scrollTop;
     const clHe = target.clientHeight;
-    if (height - scrolled == clHe && getMoreFn) {getMoreFn()};
-  };
+    if (height - scrolled === clHe && getMoreFn) {
+      getMoreFn();
+    }
+    // Сохраняем текущую позицию скролла в sessionStorage
+    sessionStorage.setItem(scrollPositionKey, scrolled.toString());
+  }
+
+  // Восстанавливаем позицию скролла при монтировании компонента
+  useLayoutEffect(() => {
+    const savedScrollPosition = sessionStorage.getItem(scrollPositionKey);
+    if (savedScrollPosition && cardGridRef.current) {
+      cardGridRef.current.scrollTop = parseFloat(savedScrollPosition);
+    }
+  }, [scrollPositionKey]);
+
+  // Очищаем позицию скролла из sessionStorage, если компонент размонтируется (необязательно)
+  // useEffect(() => {
+  //   return () => {
+  //     sessionStorage.removeItem(scrollPositionKey);
+  //   };
+  // }, [scrollPositionKey]);
 
   return (
     <section className={`cards ${extraClasses ? extraClasses : ''}`}>
       <Title text={TEXTS[context].titles.recipes} />
-      <div className={"cards__grid"} onScroll={checkPosition}>
+      <div ref={cardGridRef} className={"cards__grid"} onScroll={checkPosition}>
         {
           recipes.length > 0 && recipes.map((item) =>
             <RecipeCard key={item._id} recipeInfo={item} />

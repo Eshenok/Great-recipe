@@ -15,7 +15,7 @@ const Menu: FC<IMenuProps> = ({extraClasses}) => {
   return (
     <menu className={`menu ${extraClasses ? extraClasses : ''}`}>
       <nav className={"menu__navigation"}>
-        <NavLink to={'/'} end className={({ isActive, isPending }) =>
+        <NavLink preventScrollReset={true} to={'/'} end className={({ isActive, isPending }) =>
           isPending ? "menu__link menu__link_pending" : isActive ? "menu__link menu__link_colored_orange" : "menu__link"
         }>
           <svg width="31" height="26" viewBox="0 0 31 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -24,7 +24,7 @@ const Menu: FC<IMenuProps> = ({extraClasses}) => {
           </svg>
           {TEXTS[context].menu.menu}
         </NavLink>
-        <NavLink to={'/sign'} className={({ isActive, isPending }) =>
+        <NavLink preventScrollReset={true} to={'/sign'} className={({ isActive, isPending }) =>
           isPending ? "menu__link menu__link_pending" : isActive ? "menu__link menu__link_colored_green" : "menu__link"
         }>
           <svg xmlns="http://www.w3.org/2000/svg" width="26" height="32" viewBox="0 0 26 32" fill="none">
@@ -32,7 +32,7 @@ const Menu: FC<IMenuProps> = ({extraClasses}) => {
           </svg>
           {TEXTS[context].menu.profile}
         </NavLink>
-        <NavLink to={'/fridge'} className={({ isActive, isPending }) =>
+        <NavLink preventScrollReset={true} to={'/fridge'} className={({ isActive, isPending }) =>
           isPending ? "menu__link menu__link_pending" : isActive ? "menu__link menu__link_colored_blue" : "menu__link"
         }>
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="41" viewBox="0 0 20 41" fill="none">

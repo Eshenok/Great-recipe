@@ -4,7 +4,7 @@ import Menu from "../../entities/Menu/Menu";
 import LanguageSwap from "../../shared/LanguageSwap/LanguageSwap";
 import Footer from "../../shared/Footer/Footer";
 import Logo from "../../shared/Logo/Logo";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { ScrollRestoration, useLocation, useNavigate } from 'react-router-dom';
 import Burger from '../../shared/Burger/Burger';
 import SubBurger from '../../shared/SubBurger/SubBurger';
 
@@ -70,7 +70,6 @@ const Header: FC<IHeaderProps> = ({onSwapLanguage}) => {
         </div>
         <Footer />
       </header>
-
       <div className={`header__overlay ${isOpenHeader ? 'header__overlay_open' : ''}`} onClick={openHeader} />
     </>
 
