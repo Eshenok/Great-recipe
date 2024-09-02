@@ -18,6 +18,7 @@ export type ServerRecipeType = {
   quantityLiked: string[];
   rating: ratingType[];
   __v: number;
+  averageRate: number;
   arrIngredients: (string | null)[];
   arrMeasure: (string | null)[];
 }

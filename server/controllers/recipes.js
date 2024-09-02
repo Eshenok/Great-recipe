@@ -50,6 +50,15 @@ module.exports.putRating = async (req, res, next) => {
      updatedRecipe.averageRate = averageRate;
      await updatedRecipe.save();
 
+    //  const refactorRecipes = {
+    //     _id: updatedRecipe._id,
+    //     name: updatedRecipe.strMeal,
+    //     category: updatedRecipe.strCategory,
+    //     rating: updatedRecipe.averageRate,
+    //     ingridientsQuantity: updatedRecipe.arrIngredients.length,
+    //     image: updatedRecipe.strMealThumb,
+    //   };
+
     return res.send(updatedRecipe);
   } catch (err) {
     next(err)
@@ -272,7 +281,7 @@ module.exports.addRecipeToFavorite = async (req, res, next) => {
       await updatedUser.save();
       await recipe.save();
     } else {
-      return res.status(200).json({message: 'Recipe already added to favorite'});
+      return res.status(204).json({message: 'Recipe already added to favorite'});
     }
 
     return res.status(200).json({message: 'Recipe successfully added to favorites'})

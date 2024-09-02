@@ -1,0 +1,44 @@
+@import '../../commonStyles/variables.scss';
+
+.sub-burger {
+  position: fixed;
+  top: 0;
+  right: 0;
+  right: -78px;
+  width: 78px;
+  height: 42px;
+  border-bottom-left-radius: 25px;
+  z-index: 4;
+  background-color: $orange-dark;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+
+  &:hover {
+    filter: drop-shadow(0 0 2px $dark-grey);
+  }
+
+  &:active {
+    box-shadow: inset 0 -1px 2px 0 $dark-grey;
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    width: 20px;
+    height: 20px;
+    background: $orange-dark url('../../assets/arrow_full.svg') center center no-repeat;
+  }
+
+  &__top {
+    &::after {
+      transform: rotate(90deg);
+    }
+  }
+
+  &__showed {
+    right: 0;
+  }
+}

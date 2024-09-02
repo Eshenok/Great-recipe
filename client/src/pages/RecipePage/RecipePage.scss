@@ -5,7 +5,7 @@
   overflow-y: hidden;
   font-family: $montserrat-font;
 
-  &__cat, &__grid, &__filter {
+  &__cat, &__grid, &__filter, &__back {
     display: none;
   }
 
@@ -13,7 +13,28 @@
     position: relative;
   }
 
+  &__rate {
+    width: max-content;
+    margin: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+
+    &_text {
+      font-family: $meirienda-font;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: normal;
+      text-align: center;
+    }
+
+    &_stars {
+      display: flex;
+      gap: 8px;
+    }
+  }
+
   &__card {
+    position: relative;
     margin: 8px;
     padding: 16px;
     border-radius: 25px;
@@ -21,6 +42,18 @@
     display: block;
     overflow-y: scroll;
     height: calc(100% - 64px);
+
+    &_under {
+      z-index: 0;
+    background-color: $light-grey;
+    border-radius: 25px;
+    position: absolute;
+    display: none;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    }
   }
 
   &__logo {
@@ -190,6 +223,7 @@
 
 @media screen and (min-width: 720px) {
   .recipe-page {
+    margin-right: 16px;
     display: grid;
     grid-template-columns: 115px 1fr 320px 225px;
     grid-template-rows: min-content 1fr;
@@ -229,12 +263,17 @@
     }
 
     &__card {
+      position: relative;
       margin-top: 0;
       margin-right: 0;
       height: calc(100%);
       overflow-y: hidden;
       display: flex;
       flex-direction: column;
+
+      &_under {
+      display: block;
+      }
     }
 
     &__ings {
@@ -245,6 +284,18 @@
       grid-area: img;
       margin-right: 8px;
       max-width: 300px;
+    }
+
+    &__back {
+      display: block;
+      position: absolute;
+      top: 8px;
+      right: -15px;
+      z-index: 3;
+
+      width: 74px;
+      height: 40px;
+      border-radius: 25px;
     }
 
     &__tags {
@@ -266,6 +317,7 @@
       margin-top: 10px;
       height: 100%;
       overflow-y: auto;
+      z-index: 2;
     }
 
     &__dd {

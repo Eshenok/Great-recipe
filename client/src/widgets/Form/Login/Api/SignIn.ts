@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { initUser } from "../../../../store/userSlice";
 import UserType from "../../../../Types/UserType";
 import { CentralErrorHandler } from "../../../../errorHandler/CentralErrorHandler";
+import { getRndRecipes } from "../../../../pages/Main/Api/GetRndRecipes";
 
 export const signIn = createAsyncThunk(
   'user/signIn',
@@ -24,6 +25,7 @@ export const signIn = createAsyncThunk(
 
       const user: {user: UserType} = await res.json();
       dispatch(initUser(user));
+      dispatch(getRndRecipes());
     } catch (err) {
       return rejectWithValue(err.message);
     }
