@@ -28,7 +28,6 @@ const Header: FC<IHeaderProps> = ({onSwapLanguage}) => {
     if (!cardSection) return;
     const checkScroll = () => {
       setIsShowedBackLink(!!cardSection.scrollTop && cardSection.scrollTop > 200);
-      console.log(cardSection.scrollTop);
     }
     setIsShowedBackLink(!!cardSection.scrollTop && cardSection.scrollTop > 200);
 

@@ -16,7 +16,8 @@ interface ICardGridProps {
 
 const CardGrid: FC<ICardGridProps> = memo(function CardGrid({recipes, getMoreFn, clearFilter, extraClasses}) {
   const context = useContext(LanguageContext);
-  const cardGridRef = useRef<HTMLDivElement>(null);
+  const cardGridRef = useRef<HTMLDivElement | null>(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
   const location = useLocation(); 
 
   const scrollPositionKey = `scrollPosition-${location.pathname}`;
@@ -27,6 +28,9 @@ const CardGrid: FC<ICardGridProps> = memo(function CardGrid({recipes, getMoreFn,
     const height = target.scrollHeight;
     const scrolled = target.scrollTop;
     const clHe = target.clientHeight;
+
+    console.log(scrolled);
+
     if (height - scrolled === clHe && getMoreFn) {
       getMoreFn();
     }
@@ -36,15 +40,24 @@ const CardGrid: FC<ICardGridProps> = memo(function CardGrid({recipes, getMoreFn,
 
   useLayoutEffect(() => {
     const savedScrollPosition = sessionStorage.getItem(scrollPositionKey);
-    if (savedScrollPosition && cardGridRef.current) {
-      cardGridRef.current.scrollTop = parseFloat(savedScrollPosition);
+    if (savedScrollPosition && (cardGridRef.current && cardRef.current)) {
+
+      console.log(document.body.clientWidth);
+
+      if (document.body.clientWidth < 725) {
+        cardRef.current.scrollTop = parseFloat(savedScrollPosition);
+      } else {
+        cardGridRef.current.scrollTop = parseFloat(savedScrollPosition);
+      }
+
+    
     }
-  }, [scrollPositionKey]);
+  }, [scrollPositionKey, cardGridRef, cardRef]);
 
   return (
-    <section className={`cards ${extraClasses ? extraClasses : ''}`}>
+    <section ref={cardRef} onScroll={checkPosition} className={`cards ${extraClasses ? extraClasses : ''}`}>
       <Title text={TEXTS[context].titles.recipes} />
-      <div ref={cardGridRef} className={"cards__grid"} onScroll={checkPosition}>
+      <div ref={cardGridRef} onScroll={checkPosition} className={"cards__grid"}>
         {
           recipes.length > 0 && recipes.map((item) =>
             <RecipeCard key={item._id} recipeInfo={item} />
