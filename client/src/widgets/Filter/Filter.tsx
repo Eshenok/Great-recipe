@@ -55,12 +55,12 @@ const Filter: FC<IFilterProps> = ({clipped, extraClasses}) => {
       {!clipped && <div className={`filter__bottom ${isOpen ? 'filter__bottom_open' : ''}`}>
         <div className={"filter__rating filter__section"}>
           <h3 className={"filter__title"}>{TEXTS[context].filter.rating}</h3>
-          {...Array(5).map((_, i) => <Tab text={String(i+1)} isActive={filter.userRate === i+1} onClick={() => {handleChooseUserRate(i+1)}}>&#128528;</Tab>)}
-          {/* <Tab text={'1'} isActive={filter.userRate === 1} onClick={() => {handleChooseUserRate(1)}}>&#128528;</Tab>
-          <Tab text={'2'} isActive={filter.userRate === 2} onClick={() => {handleChooseUserRate(2)}}>&#128521;</Tab>
-          <Tab text={'3'} isActive={filter.userRate === 3} onClick={() => {handleChooseUserRate(3)}}>&#129323;</Tab>
-          <Tab text={'4'} isActive={filter.userRate === 4} onClick={() => {handleChooseUserRate(4)}}>&#128523;</Tab>
-          <Tab text={'5'} isActive={filter.userRate === 5} onClick={() => {handleChooseUserRate(5)}}>&#129321;</Tab> */}
+          {
+            [...Array(5)].map((_, i) => 
+              <Tab text={String(i+1)} isActive={filter.userRate === i+1} onClick={() => {handleChooseUserRate(i+1)}}>
+                {String.fromCodePoint(TEXTS[context].smiles[i+1])}
+              </Tab>)
+          }
         </div>
         <div className={"filter__quantity filter__section"}>
           <h3 className={"filter__title"}>{TEXTS[context].filter.ingr}</h3>
