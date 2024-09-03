@@ -20,6 +20,7 @@ const Search: FC<ISearchProps> = ({isOpen, onOpen, clipped, onSubmit}) => {
   const {inputValues, onChange} = useForm();
   const dispatch = useAppDispatch();
   const context = useContext(LanguageContext);
+  
   const phs = TEXTS[context].inputph.search as string[];
 
   // useEffect(() => {

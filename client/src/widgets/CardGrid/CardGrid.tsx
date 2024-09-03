@@ -1,4 +1,4 @@
-import React, {FC, memo, useContext, useEffect, useLayoutEffect, useRef} from 'react';
+import React, {FC, memo, useContext, useLayoutEffect, useRef} from 'react';
 import './CardGrid.scss';
 import {TEXTS} from "../../constants";
 import {ClippedServerRecipeType} from "../../Types/ServerRecipeType";
@@ -22,47 +22,38 @@ const CardGrid: FC<ICardGridProps> = memo(function CardGrid({recipes, getMoreFn,
 
   const scrollPositionKey = `scrollPosition-${location.pathname}`;
 
-  // Функция проверяет положение скролла и если выше половины, то делает запрос на получение еще рецептов
-  function checkPosition(e: React.UIEvent<HTMLDivElement>): void {
-    const target = e.target as HTMLDivElement;
-    const height = target.scrollHeight;
-    const scrolled = target.scrollTop;
-    const clHe = target.clientHeight;
-
-    console.log(scrolled);
-
-    if (height - scrolled === clHe && getMoreFn) {
-      getMoreFn();
-    }
-
-    sessionStorage.setItem(scrollPositionKey, scrolled.toString());
-  }
-
   useLayoutEffect(() => {
     const savedScrollPosition = sessionStorage.getItem(scrollPositionKey);
     if (savedScrollPosition && (cardGridRef.current && cardRef.current)) {
-
-      console.log(document.body.clientWidth);
-
-      if (document.body.clientWidth < 725) {
-        cardRef.current.scrollTop = parseFloat(savedScrollPosition);
-      } else {
-        cardGridRef.current.scrollTop = parseFloat(savedScrollPosition);
+      const clWi = document.body.clientWidth; 
+      switch (true){
+        case clWi < 725:
+          cardRef.current.scrollTop = parseFloat(savedScrollPosition);
+          break;
+        default:
+          cardGridRef.current.scrollTop = parseFloat(savedScrollPosition);
       }
-
-    
     }
   }, [scrollPositionKey, cardGridRef, cardRef]);
+
+    // Функция проверяет положение скролла и если выше половины, то делает запрос на получение еще рецептов
+    function checkPosition(e: React.UIEvent<HTMLDivElement>): void {
+      const target = e.target as HTMLDivElement;
+      const height = target.scrollHeight;
+      const scrolled = target.scrollTop;
+      const clHe = target.clientHeight;
+  
+      if (height - scrolled === clHe && getMoreFn) {
+        getMoreFn();
+      }
+      sessionStorage.setItem(scrollPositionKey, scrolled.toString());
+    }
 
   return (
     <section ref={cardRef} onScroll={checkPosition} className={`cards ${extraClasses ? extraClasses : ''}`}>
       <Title text={TEXTS[context].titles.recipes} />
       <div ref={cardGridRef} onScroll={checkPosition} className={"cards__grid"}>
-        {
-          recipes.length > 0 && recipes.map((item) =>
-            <RecipeCard key={item._id} recipeInfo={item} />
-          )
-        }
+        {recipes.length > 0 && recipes.map((item) => <RecipeCard key={item._id} recipeInfo={item} />)}
         {
           recipes.length === 0 && 
           <div className='cards__nf'>

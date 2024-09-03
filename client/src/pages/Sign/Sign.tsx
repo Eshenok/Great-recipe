@@ -11,33 +11,27 @@ const Sign: FC = () => {
   const context = useContext(LanguageContext);
   const location = useLocation();
   const navigate = useNavigate();
-  const {user} = useAppSelector(state => state.user)
+  const {user} = useAppSelector(state => state.user);
+
+  const titlePath = location.pathname === '/sign/in' ? 'login' : location.pathname === '/sign/up' ? 'reg' : 'profile';
 
   useEffect(() => {
     // Проверяем, если пользователь не аутентифицирован и находится на пути /sign
-    if (location.pathname.startsWith('/sign')) {
-      if (Object.keys(user).length === 0) {
-        if (location.pathname !== '/sign/in' && location.pathname !== '/sign/up') {
-          navigate('/sign/in', {replace: true});
-        }
+    if (Object.keys(user).length === 0) {
+      navigate('/sign/in', {replace: true});
+    } else {
+      if (location.pathname.includes('/pass')) {
+        navigate('/sign/profile/pass', {replace: true});
       } else {
-        if (location.pathname.includes('/pass')) {
-          navigate('/sign/profile/pass', {replace: true});
-        } else {
-          navigate('/sign/profile', {replace: true});
-        }
+        navigate('/sign/profile', {replace: true});
       }
     }
   }, [user, navigate]);
 
-  const getTitle = (path: string): string => {
-    return TEXTS[context].titles[path === '/sign/in' ? 'login' : path === '/sign/up' ? 'reg' : 'profile'];
-  }
-
   return (
     <section className={"auth"}>
       <div className={"auth__white"}>
-        <Title text={getTitle(location.pathname)} />
+        <Title text={TEXTS[context].titles[titlePath]} />
         <div className={"auth__form"}>
           <Outlet />
         </div>

@@ -21,9 +21,7 @@ const Category: FC<ICategoryProps> = ({extraClasses}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [startX, setStartX] = useState(0);
 
-  const handleTouchStart = (e: TouchEvent<HTMLDivElement>) => {
-    setStartX(e.touches[0].clientX)
-  }
+  const handleTouchStart = (e: TouchEvent<HTMLDivElement>) => setStartX(e.touches[0].clientX);
 
   const handleTouchMove = (e: TouchEvent<HTMLDivElement>) => {
     const deltaX = e.touches[0].clientX - startX;
@@ -40,7 +38,7 @@ const Category: FC<ICategoryProps> = ({extraClasses}) => {
 
   return (
     <div
-      className={`category ${extraClasses ? extraClasses : ''}`}
+      className={`category ${extraClasses ?? ''}`}
       ref={containerRef}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
@@ -50,7 +48,13 @@ const Category: FC<ICategoryProps> = ({extraClasses}) => {
       <h3 className={"category__title"}>{TEXTS[context].titles.category}</h3>
       {
         categories.map((elem: CategoryItemFullType) =>
-          <CategoryItem checked={elem.checked} onChoose={() => {handleChooseCategory(elem.name, elem.checked)}} text={elem.name} icon={elem.image} key={elem.key} />
+          <CategoryItem 
+          checked={elem.checked} 
+          onChoose={() => {handleChooseCategory(elem.name, elem.checked)}} 
+          text={elem.name} 
+          icon={elem.image} 
+          key={elem.key} 
+          />
         )
       }
     </div>

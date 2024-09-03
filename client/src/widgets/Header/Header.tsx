@@ -1,10 +1,10 @@
-import {FC, useCallback, useEffect, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import './Header.scss';
 import Menu from "../../entities/Menu/Menu";
 import LanguageSwap from "../../shared/LanguageSwap/LanguageSwap";
 import Footer from "../../shared/Footer/Footer";
 import Logo from "../../shared/Logo/Logo";
-import { ScrollRestoration, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Burger from '../../shared/Burger/Burger';
 import SubBurger from '../../shared/SubBurger/SubBurger';
 
@@ -15,26 +15,24 @@ interface IHeaderProps {
 const Header: FC<IHeaderProps> = ({onSwapLanguage}) => {
 
   const location = useLocation();
+  const navigate = useNavigate();
   const [isOpenHeader, setIsOpenHeader] = useState(false);
   const [isShowedBackLink, setIsShowedBackLink] = useState(false);
-  const navigate = useNavigate();
-  const openHeader = () => setIsOpenHeader(!isOpenHeader);
+
   const cardSection: Element | null = document.querySelector('.cards');
 
   useEffect(() => {
-    // после навигации назад ломается...
     const cardSection: Element | null = document.querySelector('.cards');
-
     if (!cardSection) return;
-    const checkScroll = () => {
-      setIsShowedBackLink(!!cardSection.scrollTop && cardSection.scrollTop > 200);
-    }
     setIsShowedBackLink(!!cardSection.scrollTop && cardSection.scrollTop > 200);
+
+    const checkScroll = () => setIsShowedBackLink(!!cardSection.scrollTop && cardSection.scrollTop > 200);
 
     cardSection.addEventListener('scroll', checkScroll);
 
     return function cleanup() {
-      cardSection.removeEventListener('scroll', checkScroll)}
+      cardSection.removeEventListener('scroll', checkScroll)
+    }
   }, [cardSection, location.pathname]);
 
   useEffect(() => {
@@ -45,23 +43,31 @@ const Header: FC<IHeaderProps> = ({onSwapLanguage}) => {
     }
   }, [cardSection, location.pathname]);
 
-  const handleSubburgerClick = useCallback(() => {
-    if (location.pathname.includes('/fridge') || location.pathname === '/') {
-      if (cardSection) {
+  const openHeader = () => setIsOpenHeader(!isOpenHeader);
+
+  function handleSubburgerClick (variant: 'back' | 'top') {
+    switch (variant){
+      case 'top': 
+        if (!cardSection) break;
         cardSection.scrollTop = 0;
-      }
-    } else {
-      navigate(-1);
+        break
+      case 'back':
+        navigate(-1);
+        break
     }
-  }, [cardSection, location.pathname]);
+  };
 
   return (
     <>
       <header
-        className={`header ${isOpenHeader ? 'header_open' : ''} ${location.pathname.includes('/fridge') ? 'header_blue' : location.pathname.includes('/profile') || location.pathname.includes('sign')  ? 'header_green' : 'header_orange'}`}
+        className={`header ${isOpenHeader ? 'header_open' : ''} ${location.pathname.includes('/fridge') ? 'header_blue' : location.pathname.includes('sign')  ? 'header_green' : 'header_orange'}`}
       >
         <Burger onClick={openHeader} extraClasses='header__burger'/>
-        <SubBurger onClick={handleSubburgerClick} isShowed={isShowedBackLink} extraClasses={`header__subburger ${location.pathname.includes('/profile') || location.pathname.includes('sign') || (location.pathname !== '/' && location.pathname !== '/fridge') ? '':'sub-burger__top'}`} />
+        <SubBurger 
+        onClick={handleSubburgerClick} 
+        isShowed={isShowedBackLink} 
+        extraClasses={`header__subburger ${location.pathname==='/'||location.pathname==='/fridge' ? 'sub-burger__top' : ''}`}
+        />
         <LanguageSwap extraClasses={"header__lng"} onSwap={onSwapLanguage} />
         <div className={"header__menu"}>
           <Logo />

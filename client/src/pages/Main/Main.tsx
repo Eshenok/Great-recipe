@@ -2,24 +2,21 @@ import './Main.scss';
 import Filter from "../../widgets/Filter/Filter";
 import CardGrid from "../../widgets/CardGrid/CardGrid";
 import Category from "../../entities/Category/Category";
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { getRndRecipes } from './Api/GetRndRecipes';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppRedux';
 
-interface IMainProps {
-  isFridge?: boolean;
-  ings?: string[];
-}
+// interface IMainProps {
+//   isFridge?: boolean;
+//   ings?: string[];
+// }
 
-const Main: FC<IMainProps> = (isFridge, ings) => {
+const Main: FC = () => {
 
   const dispatch = useAppDispatch();
 
   const {recipes, findedRecipes, findedRecipesStatus} = useAppSelector(state => state.recipes);
-
-  const getMoreRecipes = () => {
-    dispatch(getRndRecipes());
-  }
+  const getMoreRecipes = () => dispatch(getRndRecipes())
 
   return (
     <main className={`main`}>

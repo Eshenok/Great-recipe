@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useCallback, useContext, useEffect, useState } from "react";
+import { ChangeEvent, FC, useCallback, useContext, useState } from "react";
 import { TEXTS } from "../../constants";
 import LikeBtn from "../../shared/LikeBtn/LikeBtn";
 import './RecipePage.scss';
@@ -46,21 +46,14 @@ export const RecipePage: FC = () => {
 
   const quantityIngs: number = recipe.arrIngredients.reduce((prev: number, curr: null | string) => !curr ? prev : prev += 1, 0);
 
-  const getMoreRecipes = useCallback(() => {dispatch(getRndRecipes());}, []);
-
+  const getMoreRecipes = useCallback(() => {dispatch(getRndRecipes())}, []);
   const checkIsLikedRecipe = (id: string) => checkedUser ? checkedUser.favorite.includes(id) : false;
-
-  const handlePutLike = (id: string) => {
-    if (checkIsLikedRecipe(id)) {
-      dispatch(removeLikeFetch(id))
-    } else {
-      dispatch(putLikeFetch(id));
-    }
-  }
+  const handlePutLike = (id: string) => checkIsLikedRecipe(id) ? dispatch(removeLikeFetch(id)) : dispatch(putLikeFetch(id));
 
   const handlePutRate = (event: ChangeEvent<HTMLInputElement>, id: string) => { 
     onChange(event);
     dispatch(putRate({recipeId: id, rating: Number(event.target.value)}));
+    // Вариант 2 - Закидывать рецепт в Redux и там его обновлять ?
     setTimeout(() => {navigate(`/${recipe._id}`)}, 1000);
   }
 
