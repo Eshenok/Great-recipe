@@ -5,7 +5,7 @@ import { clearUser } from "../../../store/userSlice";
 
 export const signOut = createAsyncThunk(
   'users/signOut',
-  async (_, {dispatch, rejectWithValue, getState}) => {
+  async (_, {dispatch, rejectWithValue}) => {
     try {
       const res = await fetch(`${BASE_URL}/users/signout`, {
         method: 'GET',

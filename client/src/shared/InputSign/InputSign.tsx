@@ -1,6 +1,5 @@
 import {ChangeEvent, FC} from 'react';
 import './InputSign.scss';
-import useForm from "../../hooks/useForm";
 
 interface IInputSignProps {
     type: string;

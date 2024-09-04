@@ -2,11 +2,13 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Error500 } from "../../../errorHandler/Error500";
 import { ServerRecipeType } from "../../../Types/ServerRecipeType";
 import { changeFetchRecipesStatus, pushRecipesMain } from "../../../store/recipesSlice";
+import { RootState } from "../../../store";
 
 export const getRndRecipes = createAsyncThunk(
   'recipes/getRnd',
   async (_, {dispatch, rejectWithValue, getState}) => {
-    const status = getState().recipes.recipesStatus;
+    const state = getState() as RootState;
+    const status = state.recipes.recipesStatus;
     if (!status) {
       return;
     }

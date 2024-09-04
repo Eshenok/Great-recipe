@@ -11,7 +11,7 @@ import Category from "../../entities/Category/Category";
 import CardGrid from "../../widgets/CardGrid/CardGrid";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppRedux";
 import { getRndRecipes } from "../Main/Api/GetRndRecipes";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { LoaderFunctionArgs, useLoaderData, useNavigate } from "react-router-dom";
 import UserType from "../../Types/UserType";
 import { ServerRecipeType } from "../../Types/ServerRecipeType";
 import { removeLikeFetch } from "../../Api/RemoveLike";
@@ -20,7 +20,7 @@ import RateStar from "../../shared/RateStar/RateStar";
 import useForm from "../../hooks/useForm";
 import { putRate } from "./Api/PutRate";
 
-export const loader = async ({params}: {params:{recipeId: string}}) => {
+export const loader = async ({params}: LoaderFunctionArgs) => {
     const res = await fetch(`http://localhost:2020/recipes/find/${params.recipeId}`, {
       method: 'POST',
       credentials: 'include',

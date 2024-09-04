@@ -3,7 +3,7 @@ import CtrlBtn from "../../../shared/CtrlBtn/CtrlBtn";
 import InputSign from "../../../shared/InputSign/InputSign";
 import {TEXTS} from "../../../constants";
 import {LanguageContext} from "../../../context/LanguageContext";
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useForm from '../../../hooks/useForm';
 import { signIn } from './Api/SignIn';
 import { useAppDispatch, useAppSelector } from '../../../hooks/useAppRedux';
@@ -17,8 +17,6 @@ const Login = () => {
   const {inputValues, onChange} = useForm();
   const dispatch = useAppDispatch();
   const {status} = useAppSelector(state => state.user);
-
-  console.log(status);
 
   const submitSignIn = (e: MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();

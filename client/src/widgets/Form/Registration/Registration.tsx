@@ -1,11 +1,10 @@
-import { FormEvent, FormEventHandler, useContext, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import { TEXTS } from "../../../constants";
 import { LanguageContext } from "../../../context/LanguageContext";
 import InputSign from "../../../shared/InputSign/InputSign";
 import CtrlBtn from "../../../shared/CtrlBtn/CtrlBtn";
 import {Link} from 'react-router-dom';
 import useForm from "../../../hooks/useForm";
-import { useDispatch } from "react-redux";
 import { signUp } from "./Api/SignUp";
 import StatusSpan from "../../../shared/StatusSpan/StatusSpan";
 import { useAppDispatch, useAppSelector } from "../../../hooks/useAppRedux";

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CentralErrorHandler } from "../../../../errorHandler/CentralErrorHandler";
+import { catchHandler } from "../../../../errorHandler/CatchHandler";
 
 export const signUp = createAsyncThunk(
   'user/signUp',
@@ -20,7 +21,7 @@ export const signUp = createAsyncThunk(
 
       CentralErrorHandler(res);
     } catch (err) {
-      return rejectWithValue(err.message);
+      return catchHandler(err, rejectWithValue);
     }
   }
 )

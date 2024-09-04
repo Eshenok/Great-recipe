@@ -11,9 +11,9 @@ interface IInputOutlinedProps {
 }
 
 interface Timers {
-  inputPhEmit: number | undefined;
-  remover: number | undefined;
-  timeout: number | undefined;
+  inputPhEmit: NodeJS.Timeout | undefined;
+  remover: NodeJS.Timeout | undefined;
+  timeout: NodeJS.Timeout | undefined;
 }
 
 const InputOutlined: FC<IInputOutlinedProps> = ({name, values, onChange, placeholders, isAnim}) => {
