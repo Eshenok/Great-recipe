@@ -49,14 +49,15 @@ export const recipesSlice = createSlice({
       state.findedRecipesStatus = true;
     }
   },
-  extraReducers: {
-    [findRecipesByKeys.rejected]: (state) => {
-      state.findedRecipesStatus = false;
-    },
-    [findRecipesByKeys.pending]: (state) => {
-      state.findedRecipesStatus = true;
-    }
-  }
+  extraReducers: (builder) => {
+    builder
+      .addCase(findRecipesByKeys.pending, (state) => {
+        state.findedRecipesStatus = true;
+      })
+      .addCase(findRecipesByKeys.rejected, (state) => {
+        state.findedRecipesStatus = false;
+      });
+  },
 })
 
 export const selectRecipes = (state: RootState) => state.recipes.recipes;

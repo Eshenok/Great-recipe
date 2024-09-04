@@ -22,32 +22,17 @@ const RecipeCard: FC<IRecipeCardProps> = ({recipeInfo}) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const {user} = useAppSelector(state => state.user);
-  const checkedUser = Object.keys(user).length === 0 ? false : user as UserType;
 
+  const checkedUser = Object.keys(user).length === 0 ? false : user as UserType;
   let category = TEXTS[context].categories[recipeInfo.category.toLowerCase()];
 
   if (!category) {
     category = TEXTS[context].categories.starter
   }
 
-  // const covertRating = (rating: ratingType[]): number => rating.reduce((accum, cur) => accum + cur.rate, 0);
-  // const checkQuantityIngs = (ing: (string | null)[]): number => {
-  //   return ing.filter(item => !!item).length;
-  // }
-
-  const chooseThis = () => {
-    navigate(`/${recipeInfo._id}`);
-  }
-
+  const chooseThis = () => navigate(`/${recipeInfo._id}`);
   const checkIsLikedRecipe = (id: string) => checkedUser ? checkedUser.favorite.includes(id) : false;
-
-  const handlePutLike = (id: string) => {
-    if (checkIsLikedRecipe(id)) {
-      dispatch(removeLikeFetch(id))
-    } else {
-      dispatch(putLikeFetch(id));
-    }
-  }
+  const handlePutLike = (id: string) => dispatch(checkIsLikedRecipe(id) ? removeLikeFetch(id) : putLikeFetch(id));
 
   return (
     <div className={"recipe-card"}>

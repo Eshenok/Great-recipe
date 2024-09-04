@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useCallback, useContext, useEffect, useState } from "react";
+import { ChangeEvent, FC, useCallback, useContext, useState } from "react";
 import { TEXTS } from "../../constants";
 import LikeBtn from "../../shared/LikeBtn/LikeBtn";
 import './RecipePage.scss';
@@ -11,7 +11,7 @@ import Category from "../../entities/Category/Category";
 import CardGrid from "../../widgets/CardGrid/CardGrid";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppRedux";
 import { getRndRecipes } from "../Main/Api/GetRndRecipes";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { LoaderFunctionArgs, useLoaderData, useNavigate } from "react-router-dom";
 import UserType from "../../Types/UserType";
 import { ServerRecipeType } from "../../Types/ServerRecipeType";
 import { removeLikeFetch } from "../../Api/RemoveLike";
@@ -20,7 +20,7 @@ import RateStar from "../../shared/RateStar/RateStar";
 import useForm from "../../hooks/useForm";
 import { putRate } from "./Api/PutRate";
 
-export const loader = async ({params}: {params:{recipeId: string}}) => {
+export const loader = async ({params}: LoaderFunctionArgs) => {
     const res = await fetch(`http://localhost:2020/recipes/find/${params.recipeId}`, {
       method: 'POST',
       credentials: 'include',
@@ -46,21 +46,14 @@ export const RecipePage: FC = () => {
 
   const quantityIngs: number = recipe.arrIngredients.reduce((prev: number, curr: null | string) => !curr ? prev : prev += 1, 0);
 
-  const getMoreRecipes = useCallback(() => {dispatch(getRndRecipes());}, []);
-
+  const getMoreRecipes = useCallback(() => {dispatch(getRndRecipes())}, []);
   const checkIsLikedRecipe = (id: string) => checkedUser ? checkedUser.favorite.includes(id) : false;
-
-  const handlePutLike = (id: string) => {
-    if (checkIsLikedRecipe(id)) {
-      dispatch(removeLikeFetch(id))
-    } else {
-      dispatch(putLikeFetch(id));
-    }
-  }
+  const handlePutLike = (id: string) => checkIsLikedRecipe(id) ? dispatch(removeLikeFetch(id)) : dispatch(putLikeFetch(id));
 
   const handlePutRate = (event: ChangeEvent<HTMLInputElement>, id: string) => { 
     onChange(event);
     dispatch(putRate({recipeId: id, rating: Number(event.target.value)}));
+    // Вариант 2 - Закидывать рецепт в Redux и там его обновлять ?
     setTimeout(() => {navigate(`/${recipe._id}`)}, 1000);
   }
 

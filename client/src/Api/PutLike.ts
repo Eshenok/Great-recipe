@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { BASE_URL } from "../constants";
 import { CentralErrorHandler } from "../errorHandler/CentralErrorHandler";
 import { updateLiked } from "../store/userSlice";
+import { catchHandler } from "../errorHandler/CatchHandler";
 export const putLikeFetch = createAsyncThunk(
   'user/putLike',
   async (recipeId: string, {dispatch, rejectWithValue}) => {
@@ -20,7 +21,7 @@ export const putLikeFetch = createAsyncThunk(
       }
       dispatch(updateLiked(recipeId));
     } catch (err) {
-      return rejectWithValue(err.message);
+      return catchHandler(err, rejectWithValue);
     }
   }
 )

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import FilterQueriesType from "../Types/FilterQueriesType";
 import { RootState } from ".";
 
@@ -8,10 +8,11 @@ export const filterSlice = createSlice({
   name: 'filter',
   initialState,
   reducers: {
-    changeFilterQueryValue: (state, action) => {
+    changeFilterQueryValue: <K extends keyof FilterQueriesType>(state: FilterQueriesType, action: PayloadAction<{ name: K; value: FilterQueriesType[K] }>) => {
       state[action.payload.name] = action.payload.value;
     },
     syncWithLS: (state, action) => {
+      console.log(state);
       state = action.payload;
     }
   }

@@ -3,6 +3,7 @@ import { initUser } from "../../../../store/userSlice";
 import UserType from "../../../../Types/UserType";
 import { CentralErrorHandler } from "../../../../errorHandler/CentralErrorHandler";
 import { getRndRecipes } from "../../../../pages/Main/Api/GetRndRecipes";
+import { catchHandler } from "../../../../errorHandler/CatchHandler";
 
 export const signIn = createAsyncThunk(
   'user/signIn',
@@ -27,7 +28,7 @@ export const signIn = createAsyncThunk(
       dispatch(initUser(user));
       dispatch(getRndRecipes());
     } catch (err) {
-      return rejectWithValue(err.message);
+      return catchHandler(err, rejectWithValue)
     }
   }
 )

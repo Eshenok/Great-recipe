@@ -1,14 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Error500 } from "../../../errorHandler/Error500";
 import { BASE_URL } from "../../../constants";
-import { clearUser, initUser } from "../../../store/userSlice";
+import { initUser } from "../../../store/userSlice";
 import { CentralErrorHandler } from "../../../errorHandler/CentralErrorHandler";
+import { catchHandler } from "../../../errorHandler/CatchHandler";
+import { RootState } from "../../../store";
+import UserType from "../../../Types/UserType";
 
 export const updateUser = createAsyncThunk(
   'users/updateUser',
   async (data: Record<string, string>, {dispatch, rejectWithValue, getState}) => {
     try {
-      const {user} = getState().user;
+      const state = getState() as RootState;
+      const user = state.user.user as UserType;
       const res = await fetch(`${BASE_URL}/users/me`, {
         method: 'PATCH',
         credentials: 'include',
@@ -26,8 +29,7 @@ export const updateUser = createAsyncThunk(
       const updUser = await res.json();
       dispatch(initUser(updUser));
     } catch (err) {
-      console.log('catch find')
-      return rejectWithValue(err.message);
+      return catchHandler(err, rejectWithValue);
     }
   }
 )

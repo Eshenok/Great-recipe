@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { BASE_URL } from "../../../../constants";
 import { CentralErrorHandler } from "../../../../errorHandler/CentralErrorHandler";
 import { initUser } from "../../../../store/userSlice";
+import { catchHandler } from "../../../../errorHandler/CatchHandler";
 
 export const updateUserPass = createAsyncThunk(
   'user/updatePass',
@@ -20,8 +21,7 @@ export const updateUserPass = createAsyncThunk(
       const updatedUser = await res.json();
       dispatch(initUser(updatedUser))
     } catch (err) {
-      console.log('catch find')
-      return rejectWithValue(err.message);
+      return catchHandler(err, rejectWithValue)
     }
   }
 )
