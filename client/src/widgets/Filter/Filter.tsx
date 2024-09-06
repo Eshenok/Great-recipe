@@ -1,4 +1,4 @@
-import {FC, useContext, useState} from 'react';
+import {FC, useContext, useEffect, useState} from 'react';
 import './Filter.scss';
 import Search from "../../entities/Search/Search";
 import Tab from "../../shared/Tab/Tab";
@@ -27,7 +27,6 @@ const Filter: FC<IFilterProps> = ({clipped, extraClasses}) => {
   const ph = TEXTS[context].inputph.ings as string;
 
   function findRecipe () {
-    console.log(filter);
     const checkFilter = () => Object.values(filter).reduce((prev, curr) => {return Boolean(curr) || prev}, false);
 
     if (!checkFilter()) {
@@ -44,6 +43,10 @@ const Filter: FC<IFilterProps> = ({clipped, extraClasses}) => {
   const handleChooseUserRate = (value: number) => {
     dispatch(changeFilterQueryValue({name: 'userRate', value: value ? value !== filter.userRate ? value : '' : ''}));
   }
+
+  useEffect(() => {
+    findRecipe();
+  }, [filter])
 
   return (
     <section className={`filter ${extraClasses ? extraClasses : ''}`}>
