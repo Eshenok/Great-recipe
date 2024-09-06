@@ -45,7 +45,12 @@ const Filter: FC<IFilterProps> = ({clipped, extraClasses}) => {
   }
 
   useEffect(() => {
-    findRecipe();
+    const timer = setTimeout(() => {
+      findRecipe()
+    }, 500)
+    return function clear() {
+      clearTimeout(timer);
+    }
   }, [filter])
 
   return (
@@ -60,7 +65,7 @@ const Filter: FC<IFilterProps> = ({clipped, extraClasses}) => {
           <h3 className={"filter__title"}>{TEXTS[context].filter.rating}</h3>
           {
             [...Array(5)].map((_, i) => 
-              <Tab text={String(i+1)} isActive={filter.userRate === i+1} onClick={() => {handleChooseUserRate(i+1)}}>
+              <Tab text={String(i+1)} key={i} isActive={filter.userRate === i+1} onClick={() => {handleChooseUserRate(i+1)}}>
                 {String.fromCodePoint(TEXTS[context].smiles[i+1])}
               </Tab>)
           }
