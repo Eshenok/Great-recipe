@@ -50,15 +50,6 @@ module.exports.putRating = async (req, res, next) => {
      updatedRecipe.averageRate = averageRate;
      await updatedRecipe.save();
 
-    //  const refactorRecipes = {
-    //     _id: updatedRecipe._id,
-    //     name: updatedRecipe.strMeal,
-    //     category: updatedRecipe.strCategory,
-    //     rating: updatedRecipe.averageRate,
-    //     ingridientsQuantity: updatedRecipe.arrIngredients.length,
-    //     image: updatedRecipe.strMealThumb,
-    //   };
-
     return res.send(updatedRecipe);
   } catch (err) {
     next(err)

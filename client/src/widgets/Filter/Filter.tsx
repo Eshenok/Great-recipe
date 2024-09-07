@@ -23,30 +23,53 @@ const Filter: FC<IFilterProps> = ({clipped, extraClasses}) => {
   const dispatch = useAppDispatch();
   const filter = useAppSelector(selectFilter);
   const [isOpen, setIsOpen] = useState(true);
-  
+  const [prevSearchesValue, setPrevSearchesValue] = useState<string[] | null>(JSON.parse(localStorage.getItem('search-query') as string));
   const ph = TEXTS[context].inputph.ings as string;
-
-  function findRecipe () {
-    const checkFilter = () => Object.values(filter).reduce((prev, curr) => {return Boolean(curr) || prev}, false);
-
-    if (!checkFilter()) {
-      dispatch(setFindedRecipes([]));
-      dispatch(dropfindedRecipesStatus());
-      return;
-    }
-
-    const keysForFind: string[] | null = !filter.search ? null : filter.search.replace(/[^a-zа-яё\s]/gi, ' ').replace(/\s+/g, ' ').split(' '); 
-    const dataToFetch: FilterFetchDataType = {ingredients: keysForFind, category: filter.category, liked: filter.isLiked, ingQuantity: Number(filter.quantity), userRating: filter.userRate};
-    dispatch(findRecipesByKeys(dataToFetch));
-  }
 
   const handleChooseUserRate = (value: number) => {
     dispatch(changeFilterQueryValue({name: 'userRate', value: value ? value !== filter.userRate ? value : '' : ''}));
   }
 
+  const getPrevSearchesFromLS = (): string[] => {
+    const prevSearches = localStorage.getItem('search-query');
+    return prevSearches ? JSON.parse(prevSearches) : [];
+  }
+
+  function findRecipe () {
+    const checkFilter = () => Object.values(filter).reduce((prev, curr) => {return Boolean(curr) || prev}, false);
+    if (!checkFilter()) {
+      dispatch(setFindedRecipes([]));
+      dispatch(dropfindedRecipesStatus());
+      return;
+    }
+    const keysForFind: string[] | null = !filter.search ? null : filter.search.replace(/[^a-zа-яё\s]/gi, ' ').replace(/\s+/g, ' ').split(' ');
+    const dataToFetch: FilterFetchDataType = {ingredients: keysForFind, category: filter.category, liked: filter.isLiked, ingQuantity: Number(filter.quantity), userRating: filter.userRate};
+    dispatch(findRecipesByKeys(dataToFetch));
+  }
+
+  function handleSaveSearchInLS (value: string): void {
+    if (!value || value.length <=2) {return};
+    const prevSearches = getPrevSearchesFromLS();
+    const isEquals = prevSearches.find((elem: string) => elem === value);
+    if(isEquals) return;
+    prevSearches.unshift(value);
+    if (prevSearches.length > 20) {
+      prevSearches.pop();
+    }
+    setPrevSearchesValue(prevSearches);
+    localStorage.setItem('search-query', JSON.stringify(prevSearches));
+  }
+
+  function removeSavedSearchFromLS (name: string): void {
+    const prevSearches = getPrevSearchesFromLS().filter((item: string) => {return item !== name});
+    setPrevSearchesValue(prevSearches);
+    localStorage.setItem('search-query', JSON.stringify(prevSearches));
+  }
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      findRecipe()
+      handleSaveSearchInLS(filter.search);
+      findRecipe();
     }, 500)
     return function clear() {
       clearTimeout(timer);
@@ -58,6 +81,9 @@ const Filter: FC<IFilterProps> = ({clipped, extraClasses}) => {
       <div className={"filter__header"}>
         <Search onSubmit={findRecipe} clipped={clipped} isOpen={isOpen} onOpen={() => {setIsOpen(!isOpen)}} />
         <div className={"filter__prev"}>
+          {
+            prevSearchesValue && prevSearchesValue.map((item, i) => <Tab key={i} text={item}><button className={"tab__close-btn animated-btn"} onClick={() => {removeSavedSearchFromLS(item)}} /></Tab>)
+          }
         </div>
       </div>
       {!clipped && <div className={`filter__bottom ${isOpen ? 'filter__bottom_open' : ''}`}>
