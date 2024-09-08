@@ -7,17 +7,20 @@ import { changeFilterQueryValue } from '../../store/FilterSlice';
 interface ICheckSwitchProps {
   name: string;
   color: 'red' | 'blue';
+  checked: boolean;
 }
 
-const CheckSwitch: FC<ICheckSwitchProps> = ({name, color}) => {
+const CheckSwitch: FC<ICheckSwitchProps> = ({name, color, checked}) => {
 
   const {inputValues, onSwitch} = useForm();
   const dispatch = useAppDispatch();
 
-  useEffect(() => {dispatch(changeFilterQueryValue({name: 'isLiked', value:inputValues[name] ? inputValues[name]:false}))},[inputValues]);
+  useEffect(() => {
+    dispatch(changeFilterQueryValue({name: 'isLiked', value:inputValues[name] ? inputValues[name]:false}));
+  },[inputValues]);
   return (
     <div className={"check-switch"}>
-      <input type={"checkbox"} name={name} onChange={onSwitch} checked={inputValues[name]} id={name} className={"check-switch__input"} />
+      <input type={"checkbox"} name={name} onChange={onSwitch} checked={checked} id={name} className={"check-switch__input"} />
       <label className={`check-switch__label check-switch__label_${color}`} htmlFor={name}/>
     </div>
   );

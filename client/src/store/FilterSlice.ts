@@ -12,8 +12,10 @@ export const filterSlice = createSlice({
       state[action.payload.name] = action.payload.value;
     },
     syncWithLS: (state, action) => {
-      console.log(state);
-      state = action.payload;
+      console.log(action.payload);
+      for (let key in action.payload) {
+        state[key] = action.payload[key]
+      }
     }
   }
 })

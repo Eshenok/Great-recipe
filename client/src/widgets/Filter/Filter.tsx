@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/useAppRedux';
 import { findRecipesByKeys } from './Api/FindRecipes';
 import { dropfindedRecipesStatus, setFindedRecipes } from '../../store/recipesSlice';
 import FilterFetchDataType from '../../Types/FilterFetchData';
-import { changeFilterQueryValue, selectFilter } from '../../store/FilterSlice';
+import { changeFilterQueryValue, selectFilter, syncWithLS } from '../../store/FilterSlice';
 
 interface IFilterProps {
   clipped?: boolean;
@@ -67,14 +67,24 @@ const Filter: FC<IFilterProps> = ({clipped, extraClasses}) => {
   }
 
   useEffect(() => {
+    const filter = localStorage.getItem('filter');
+    if (filter) {
+      dispatch(syncWithLS(JSON.parse(filter)))
+    }
+  }, []);
+
+  useEffect(() => {
     const timer = setTimeout(() => {
       handleSaveSearchInLS(filter.search);
+      localStorage.setItem('filter', JSON.stringify(filter));
       findRecipe();
     }, 500)
     return function clear() {
       clearTimeout(timer);
     }
-  }, [filter])
+  }, [filter]);
+
+  console.log(filter);
 
   return (
     <section className={`filter ${extraClasses ? extraClasses : ''}`}>
@@ -102,7 +112,7 @@ const Filter: FC<IFilterProps> = ({clipped, extraClasses}) => {
         </div>
         <div className={"filter__isLiked filter__section"}>
           <h3 className={"filter__title"}>{TEXTS[context].filter.favourite}</h3>
-          <CheckSwitch  name={'isLiked'} color={'red'} />
+          <CheckSwitch checked={filter.isLiked}  name={'isLiked'} color={'red'} />
         </div>
       </div>}
     </section>
