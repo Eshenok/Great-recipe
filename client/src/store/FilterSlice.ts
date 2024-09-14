@@ -13,9 +13,12 @@ export const filterSlice = createSlice({
     },
     syncWithLS: (state, action) => {
       for (let key in action.payload) {
-        console.log(key);
-        console.log(action.payload[key]);
         state[key] = action.payload[key]
+      }
+    },
+    clearFilter: (state) => {
+      for (let key in initialState) {
+        state[key] = initialState[key]
       }
     }
   }
@@ -23,6 +26,6 @@ export const filterSlice = createSlice({
 
 export const selectFilter = (state: RootState) => state.filter;
 
-export const {changeFilterQueryValue, syncWithLS} = filterSlice.actions;
+export const {changeFilterQueryValue, syncWithLS, clearFilter} = filterSlice.actions;
 
 export default filterSlice.reducer;

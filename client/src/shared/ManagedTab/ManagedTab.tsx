@@ -35,7 +35,6 @@ const ManagedTab:FC<IManagedTabProps> = ({isActive, placeholder, type, name, max
   }, [inputValues])
 
   useEffect(() => {
-    if (inputValues[name] && !quantity) return;
     onPut(name, quantity);
   }, [quantity]);
 

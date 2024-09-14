@@ -6,21 +6,25 @@ import RecipeCard from "../../entities/RecipeCard/RecipeCard";
 import Title from "../../shared/Title/Title";
 import {LanguageContext} from "../../context/LanguageContext";
 import { useLocation } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks/useAppRedux';
+import { clearFilter } from '../../store/FilterSlice';
 
 interface ICardGridProps {
   recipes: ClippedServerRecipeType[],
   getMoreFn?: () => void;
-  clearFilter?: () => void;
   extraClasses?: string;
 }
 
-const CardGrid: FC<ICardGridProps> = memo(function CardGrid({recipes, getMoreFn, clearFilter, extraClasses}) {
+const CardGrid: FC<ICardGridProps> = memo(function CardGrid({recipes, getMoreFn, extraClasses}) {
   const context = useContext(LanguageContext);
   const cardGridRef = useRef<HTMLDivElement | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
+  const dispatch = useAppDispatch();
   const location = useLocation(); 
 
   const scrollPositionKey = `scrollPosition-${location.pathname}`;
+
+  const dropFilter = () => dispatch(clearFilter());
 
   useLayoutEffect(() => {
     const savedScrollPosition = sessionStorage.getItem(scrollPositionKey);
@@ -59,7 +63,7 @@ const CardGrid: FC<ICardGridProps> = memo(function CardGrid({recipes, getMoreFn,
           <div className='cards__nf'>
             <h3 className='cards__subtitle'>{TEXTS[context].info.recipesNf}</h3>
             <div className='cards__nf-image'/>
-            <p className='cards__drop-filter' onClick={clearFilter}>{TEXTS[context].btns.clearFilter}</p>
+            <p className='cards__drop-filter' onClick={dropFilter}>{TEXTS[context].btns.clearFilter}</p>
           </div>
         }
       </div>

@@ -24,7 +24,6 @@ const Search: FC<ISearchProps> = ({isOpen, onOpen, clipped, onSubmit}) => {
   const phs = TEXTS[context].inputph.search as string[];
 
   useEffect(() => {
-    if (inputValues['input-search'] && !search) return;
     onPut("input-search",search);
   }, [search])
 
