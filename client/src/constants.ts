@@ -191,3 +191,5 @@ export const TEXTS: Record<LanguageType, Texts> = {
     }
   }
 }
+
+export const MAX_PREV_QUERYIES = 20;

@@ -5,7 +5,7 @@ import Tab from "../../shared/Tab/Tab";
 import CheckSwitch from "../../shared/CheckSwitch/CheckSwitch";
 import ManagedTab from "../../shared/ManagedTab/ManagedTab";
 import {LanguageContext} from "../../context/LanguageContext";
-import {TEXTS} from "../../constants";
+import {MAX_PREV_QUERYIES, TEXTS} from "../../constants";
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppRedux';
 import { findRecipesByKeys } from './Api/FindRecipes';
 import { dropfindedRecipesStatus, setFindedRecipes } from '../../store/recipesSlice';
@@ -55,7 +55,7 @@ const Filter: FC<IFilterProps> = ({clipped, extraClasses}) => {
     const isEquals = prevSearches.find((elem: string) => elem === value);
     if(isEquals) return;
     prevSearches.unshift(value);
-    if (prevSearches.length > 20) {
+    if (prevSearches.length > MAX_PREV_QUERYIES) {
       prevSearches.pop();
     }
     setPrevSearchesValue(prevSearches);
