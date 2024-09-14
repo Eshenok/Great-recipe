@@ -6,11 +6,6 @@ import { FC } from 'react';
 import { getRndRecipes } from './Api/GetRndRecipes';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppRedux';
 
-// interface IMainProps {
-//   isFridge?: boolean;
-//   ings?: string[];
-// }
-
 const Main: FC = () => {
 
   const dispatch = useAppDispatch();
