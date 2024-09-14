@@ -47,6 +47,8 @@ const Filter: FC<IFilterProps> = ({clipped, extraClasses}) => {
     dispatch(findRecipesByKeys(dataToFetch));
   }
 
+  const putPrevSearchQuery = (value: string) => {dispatch(changeFilterQueryValue({name: 'search', value}))}
+
   function handleSaveSearchInLS (value: string): void {
     if (!value || value.length <=2) return;
     const prevSearches = getPrevSearchesFromLS();
@@ -84,15 +86,13 @@ const Filter: FC<IFilterProps> = ({clipped, extraClasses}) => {
     }
   }, [filter]);
 
-  console.log(filter);
-
   return (
     <section className={`filter ${extraClasses ? extraClasses : ''}`}>
       <div className={"filter__header"}>
         <Search onSubmit={findRecipe} clipped={clipped} isOpen={isOpen} onOpen={() => {setIsOpen(!isOpen)}} />
         <div className={"filter__prev"}>
           {
-            prevSearchesValue && prevSearchesValue.map((item, i) => <Tab key={i} text={item}><button className={"tab__close-btn animated-btn"} onClick={() => {removeSavedSearchFromLS(item)}} /></Tab>)
+            prevSearchesValue && prevSearchesValue.map((item, i) => <Tab onClick={() => {putPrevSearchQuery(item)}} key={i} text={item}><button className={"tab__close-btn animated-btn"} onClick={() => {removeSavedSearchFromLS(item)}} /></Tab>)
           }
         </div>
       </div>
