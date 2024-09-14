@@ -15,9 +15,11 @@ const CheckSwitch: FC<ICheckSwitchProps> = ({name, color, checked}) => {
   const {inputValues, onSwitch} = useForm();
   const dispatch = useAppDispatch();
 
+
   useEffect(() => {
-    dispatch(changeFilterQueryValue({name: 'isLiked', value:inputValues[name] ? inputValues[name]:false}));
+    dispatch(changeFilterQueryValue({name: 'isLiked', value: inputValues[name] ? inputValues[name] : false}));
   },[inputValues]);
+
   return (
     <div className={"check-switch"}>
       <input type={"checkbox"} name={name} onChange={onSwitch} checked={checked} id={name} className={"check-switch__input"} />

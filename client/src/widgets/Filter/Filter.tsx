@@ -48,7 +48,7 @@ const Filter: FC<IFilterProps> = ({clipped, extraClasses}) => {
   }
 
   function handleSaveSearchInLS (value: string): void {
-    if (!value || value.length <=2) {return};
+    if (!value || value.length <=2) return;
     const prevSearches = getPrevSearchesFromLS();
     const isEquals = prevSearches.find((elem: string) => elem === value);
     if(isEquals) return;

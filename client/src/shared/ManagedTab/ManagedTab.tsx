@@ -1,8 +1,8 @@
 import {ChangeEvent, FC, useEffect} from 'react';
 import './ManagedTab.scss';
 import useForm from "../../hooks/useForm";
-import { useAppDispatch } from '../../hooks/useAppRedux';
-import { changeFilterQueryValue } from '../../store/FilterSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/useAppRedux';
+import { changeFilterQueryValue, selectFilter } from '../../store/FilterSlice';
 
 interface IManagedTabProps {
   text: string;
@@ -18,6 +18,7 @@ const ManagedTab:FC<IManagedTabProps> = ({isActive, placeholder, type, name, max
 
   const {inputValues, onChange, dropValue, onPut} = useForm();
   const dispatch = useAppDispatch();
+  const {quantity} = useAppSelector(selectFilter);
 
   const validateChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length > String(max).length) {
@@ -29,7 +30,14 @@ const ManagedTab:FC<IManagedTabProps> = ({isActive, placeholder, type, name, max
     }
   }
 
-  useEffect(() => {dispatch(changeFilterQueryValue({name: 'quantity', value: inputValues[name] ? inputValues[name]: ''}))}, [inputValues])
+  useEffect(() => {
+    dispatch(changeFilterQueryValue({name: 'quantity', value: inputValues[name] ? inputValues[name]: ''}))
+  }, [inputValues])
+
+  useEffect(() => {
+    if (inputValues[name] && !quantity) return;
+    onPut(name, quantity);
+  }, [quantity]);
 
   return (
     <div className={`tab tab_managed ${isActive ? 'tab_active' : ''}`}>
