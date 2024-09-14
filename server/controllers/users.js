@@ -5,7 +5,6 @@ const User = require('../models/user');
 const NotFound = require('../errors/NotFound');
 const BadRequest = require('../errors/BadRequest');
 const Conflict = require('../errors/Conflict');
-const Forbidden = require('../errors/Forbidden');
 const Unauthorized = require('../errors/Unauthorized');
 const { NODE_ENV } = process.env; // Забираем из .env
 

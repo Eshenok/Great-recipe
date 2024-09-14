@@ -4,6 +4,7 @@ import { updateUser } from "../pages/Profile/Api/UpdateUser";
 import { updateUserPass } from "../widgets/Form/EditPass/Api/UpdateUserPass";
 import { signIn } from "../widgets/Form/Login/Api/SignIn";
 import { signUp } from "../widgets/Form/Registration/Api/SignUp";
+import { RootState } from ".";
 
 export const getUser = createAsyncThunk(
   'user/getUser',
@@ -85,6 +86,8 @@ export const userSlice = createSlice({
     })
   }
 })
+
+export const selectUser = (state: RootState) => state.user.user;
 
 export const {initUser, clearUser, dropStatus, updateLiked, removeLiked} = userSlice.actions;
 

@@ -32,7 +32,24 @@
     justify-content: center;
     gap: 8px;
   }
+
+  &__form {
+    width: 100%;
+    position: relative;
+
+    &_btns {
+      position: absolute;
+      right: 8px;
+      top: 4px;
+    }
+  }
+
+  &__add-btn {
+    background: $blue-dark url('../../assets/shoping_cart_plus.svg') center center no-repeat;
+  }
 }
+
+
 
 @media screen and (min-width: 720px) {
   .fridge {
