@@ -97,6 +97,13 @@
     align-items: center;
     gap: 0;
 
+    &__icon {
+      width: 124px;
+      height: 124px;
+      object-fit: cover;
+      margin-top: 32px;
+    }
+
     &__main {
       margin: 0;
     }
