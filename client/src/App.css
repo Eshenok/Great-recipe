@@ -1,3 +1,5 @@
+@import './commonStyles/variables.scss';
+
 * {
   margin: 0;
   padding: 0;
@@ -29,7 +31,7 @@ body {
   }
 }
 
-@media screen and (min-width: 720px) {
+@media screen and (min-width: 825px) {
   *::-webkit-scrollbar {
     width: 3px;
     height: 3px;
@@ -57,7 +59,7 @@ body {
   border: none;
 }
 
-@media screen and (min-width: 720px) {
+@media screen and (min-width: 825px) {
   .content {
     display: grid;
     grid-template-columns: 240px 1fr;
