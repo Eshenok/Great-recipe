@@ -19,11 +19,15 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <NotFound />,
     children: [
       {
+        errorElement: <NotFound />,
         children: [
           {index: true, element: <Main />},
+          {
+            path: '*',
+            element: <NotFound />
+          },
           {
             path: '/sign',
             element: <Sign />,
@@ -62,7 +66,7 @@ const router = createBrowserRouter([
             path: ':recipeId',
             loader: RecipePageLoader,
             element: <RecipePage />
-          }
+          },
         ]
       }
     ]

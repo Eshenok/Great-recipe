@@ -85,7 +85,8 @@ export const TEXTS: Record<LanguageType, Texts> = {
       profile: 'My Profile',
       login: 'Login',
       reg: 'Registration',
-      rate: 'Liked? Rate it!'
+      rate: 'Liked? Rate it!',
+      nf: "mh... it's empty here",
     },
     filter: {
       rating: 'User rating',
@@ -105,7 +106,17 @@ export const TEXTS: Record<LanguageType, Texts> = {
     },
     info: {
       recipesNf: 'No one receipt find',
-      checkPassErr: 'Password mismatch'
+      checkPassErr: 'Password mismatch',
+      nfWhatHappens: 'What happened?',
+      nfWhatToDo: 'What to do?',
+      nfGood: 'Everything is good, it happens',
+      nfWhatHappensTxt: 'The link you followed may be out of date or contain a typo.',
+      nfWhatToDoTxtFH: 'Go to the page ',
+      nfWhatToDoTxtLH: 'which definetely exists.',
+      nfWhatToDoTxtLFH: 'Or ',
+      nfWhatToDoTxtLLH: 'and we will fix everything.',
+      nfWhatToDoLinkF: 'from the menu, ',
+      nfWhatToDoLinkL: 'write to us ',
     },
   },
   ru: {
@@ -167,7 +178,8 @@ export const TEXTS: Record<LanguageType, Texts> = {
       profile: 'Мой профиль',
       login: 'Вход',
       reg: 'Регистрация',
-      rate: 'Понравился? Оцени!'
+      rate: 'Понравился? Оцени!',
+      nf: "упс... тут пусто"
     },
     filter: {
       rating: 'Оценка',
@@ -187,7 +199,17 @@ export const TEXTS: Record<LanguageType, Texts> = {
     },
     info: {
       recipesNf: 'Ни одного рецепта не найдено',
-      checkPassErr: 'Пароли не совпадают'
+      checkPassErr: 'Пароли не совпадают',
+      nfWhatHappens: 'Что произошло?',
+      nfWhatToDo: 'Что делать дальше?',
+      nfGood: 'Все хорошо, так бывает',
+      nfWhatHappensTxt: 'Возможно ссылка, по которой вы перешли, устарела или содержит опечатку.',
+      nfWhatToDoTxtFH: 'Перейдите на нашу ',
+      nfWhatToDoTxtLH: 'которая точно существует.',
+      nfWhatToDoTxtLFH: 'Или ',
+      nfWhatToDoTxtLLH: 'и мы все исправим.',
+      nfWhatToDoLinkF: 'главную страницу, ',
+      nfWhatToDoLinkL: 'напишите нам ',
     }
   }
 }
