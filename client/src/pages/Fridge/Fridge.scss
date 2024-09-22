@@ -52,7 +52,7 @@
 
 
 
-@media screen and (min-width: 720px) {
+@media screen and (min-width: $break-point) {
   .fridge {
     padding-left: 0;
     display: grid;

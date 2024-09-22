@@ -10,7 +10,7 @@
   }
 }
 
-@media screen and (min-width: 720px){
+@media screen and (min-width: $break-point){
   .btn-input {
     width: 58px;
     height: 34px;

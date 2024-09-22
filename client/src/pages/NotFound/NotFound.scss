@@ -87,7 +87,7 @@
   }
 }
 
-@media screen and (min-width: 728px) {
+@media screen and (min-width: $break-point) {
   .not-found {
     padding: 16px;
     padding-left: 24px;
