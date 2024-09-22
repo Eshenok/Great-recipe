@@ -58,10 +58,10 @@ const router = createBrowserRouter([
               }
             ]
           },
-          {
-            path: 'fridge',
-            element: <Fridge />,
-          },
+          // {
+          //   path: 'fridge',
+          //   element: <Fridge />,
+          // },
           {
             path: ':recipeId',
             loader: RecipePageLoader,
