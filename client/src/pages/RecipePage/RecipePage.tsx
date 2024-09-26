@@ -62,7 +62,7 @@ export const RecipePage: FC = () => {
   return (
     <section className="recipe-page">
       <img src={logo} className="recipe-page__logo" />
-      <Filter extraClasses="recipe-page__filter" clipped={true} />
+      <Filter extraClasses="recipe-page__filter" />
       <Category extraClasses="recipe-page__cat" />
       <article className="recipe-page__card">
         <div className="recipe-page__card_under"/>

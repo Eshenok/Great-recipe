@@ -39,7 +39,7 @@
     user-select: text;
 
     &_icon {
-      width: calc(100% - 15px);
+      width: 100%;
       overflow: hidden; /* Скрываем избытык контента */
   white-space: nowrap; /* Запрещаем перенос слов */
   text-overflow: ellipsis;
@@ -80,7 +80,12 @@
     &__remove-prd-btn {
       width: 18px;
       height: 18px;
+    }
 
+    &__text {
+      &_icon {
+        width: calc(100% - 15px);
+      }
     }
   }
 }

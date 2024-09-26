@@ -3,6 +3,7 @@
 .tab {
 
   &__input {
+    -moz-appearance: textfield;
     box-sizing: content-box;
     min-width: 20px;
 

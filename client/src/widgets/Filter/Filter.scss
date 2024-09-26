@@ -153,10 +153,18 @@
       grid-template-columns: 88fr 100fr;
       align-items: center;
       gap: 8px;
+
+      &:has(.filter__prev_none) {
+        grid-template-columns: 1fr;
+      }
     }
 
     &__prev {
       padding: 0;
+
+      &_none {
+        display: none;
+      }
     }
 
     &__title {
