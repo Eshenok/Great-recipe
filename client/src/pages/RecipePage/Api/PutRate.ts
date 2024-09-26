@@ -17,6 +17,7 @@ export const putRate = createAsyncThunk(
 
       CentralErrorHandler(res);
       const updatedRecipe = await res.json();
+      console.log(updatedRecipe);
       dispatch(updateRecipe(updatedRecipe));
     } catch(err) {
       return rejectWithValue(err)

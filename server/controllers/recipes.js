@@ -48,9 +48,19 @@ module.exports.putRating = async (req, res, next) => {
  
      // Обновление поля averageRate
      updatedRecipe.averageRate = averageRate;
+     
      await updatedRecipe.save();
 
-    return res.send(updatedRecipe);
+     const refactorRecipes ={
+      ...updatedRecipe,
+        name: updatedRecipe.strMeal,
+        category: updatedRecipe.strCategory,
+        rating: updatedRecipe.averageRate,
+        ingridientsQuantity: updatedRecipe.arrIngredients.length,
+        image: updatedRecipe.strMealThumb,
+    };
+
+    return res.send(refactorRecipes);
   } catch (err) {
     next(err)
   }

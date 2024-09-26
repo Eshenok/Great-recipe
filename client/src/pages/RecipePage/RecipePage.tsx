@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useCallback, useContext, useState } from "react";
+import { ChangeEvent, FC, useCallback, useContext, useEffect, useState } from "react";
 import { TEXTS } from "../../constants";
 import LikeBtn from "../../shared/LikeBtn/LikeBtn";
 import './RecipePage.scss';
@@ -41,7 +41,7 @@ export const RecipePage: FC = () => {
   const {user} = useAppSelector(state => state.user);
   const checkedUser = Object.keys(user).length === 0 ? false : user as UserType;
   const [isOpen, setIsOpen] = useState(true);
-  const {inputValues, onChange} = useForm();
+  const {inputValues, onChange, onPut} = useForm();
   const navigate = useNavigate();
 
   const quantityIngs: number = recipe.arrIngredients.reduce((prev: number, curr: null | string) => !curr ? prev : prev += 1, 0);
@@ -58,6 +58,10 @@ export const RecipePage: FC = () => {
   }
 
   const instructionArr: string[] = recipe.strInstructions.split('\r\n');
+
+  useEffect(() => {
+    onPut('recipe-rate', recipe.averageRate);
+  }, [recipe])
 
   return (
     <section className="recipe-page">
