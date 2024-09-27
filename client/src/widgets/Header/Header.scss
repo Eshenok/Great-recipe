@@ -57,7 +57,7 @@
   }
 }
 
-@media screen and (min-width: 720px) {
+@media screen and (min-width: $break-point) {
   .header {
     left: 0;
     margin: 8px 0 8px 8px;

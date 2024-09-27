@@ -11,6 +11,12 @@
 
   &__img-container {
     position: relative;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  &__header {
+    position: relative;
   }
 
   &__rate {
@@ -61,10 +67,6 @@
     display: flex;
     height: 48px;
     align-items: center;
-  }
-
-  &__header {
-    position: relative;
   }
 
   &__image {
@@ -221,11 +223,33 @@
   }
 };
 
-@media screen and (min-width: 720px) {
+@media screen and (min-width: $break-point) {
   .recipe-page {
+    margin-left: 20px;
+    &__logo {
+      display: none;
+    }
+
+    &__list {
+      overflow-x: hidden;
+      overflow-y: auto;
+      &_item {
+        font-size: .6rem;
+      }
+    }
+
+    &__dd {
+      font-size: .85rem;
+    }
+  }
+}
+
+@media screen and (min-width: 1150px) {
+  .recipe-page {
+    margin-left: 0;
     margin-right: 16px;
     display: grid;
-    grid-template-columns: 115px 1fr 320px 225px;
+    grid-template-columns: 145px 1fr 320px 225px;
     grid-template-rows: min-content 1fr;
     grid-template-areas: 
     "fil fil fil fil"
@@ -240,6 +264,7 @@
       display: flex;
       justify-content: start;
       grid-area: cat;
+      padding-left: 16px;
     }
 
     &__grid {
@@ -256,10 +281,6 @@
       grid-area: crd;
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
-    }
-    
-    &__logo {
-      display: none;
     }
 
     &__card {
@@ -306,9 +327,9 @@
       grid-area: ttl;
 
       /*font*/
-      font-size: 32px;
+      font-size: 24px;
       font-weight: 400;
-      line-height: 48px;
+      line-height: 28px;
       text-align: center;
 
     }
@@ -320,26 +341,24 @@
       z-index: 2;
     }
 
-    &__dd {
-      font-size: .85rem;
-    }
-
-    &__list {
-      &_item {
-        font-size: .6rem;
-      }
-      
-    }
-
     &__header {
+      max-height: 300px;
       display: grid;
       align-items: start;
       grid-template-rows: min-content min-content 1fr;
-      grid-template-columns: minmax(1px, 300px) 1fr;
+      grid-template-columns: 300px 1fr;
       grid-template-areas: 
       'img ttl'
       'img tag'
       'img ing';
+    }
+  }
+}
+
+@media screen and (min-width: 1150px) {
+  .recipe-page {
+    &__title {
+      font-size: 32px;
     }
   }
 }

@@ -90,7 +90,7 @@ const Filter: FC<IFilterProps> = ({clipped, extraClasses}) => {
     <section className={`filter ${extraClasses ? extraClasses : ''}`}>
       <div className={"filter__header"}>
         <Search onSubmit={findRecipe} clipped={clipped} isOpen={isOpen} onOpen={() => {setIsOpen(!isOpen)}} />
-        <div className={"filter__prev"}>
+        <div className={`filter__prev ${prevSearchesValue?.length ? '':'filter__prev_none'}`}>
           {
             prevSearchesValue && prevSearchesValue.map((item, i) => <Tab onClick={() => {putPrevSearchQuery(item)}} key={i} text={item}><button className={"tab__close-btn animated-btn"} onClick={() => {removeSavedSearchFromLS(item)}} /></Tab>)
           }
