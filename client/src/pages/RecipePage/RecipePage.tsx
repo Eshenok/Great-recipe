@@ -113,12 +113,12 @@ export const RecipePage: FC = () => {
             {
               instructionArr.map(item => <p>{item}</p>)
             }
-            <div className="recipe-page__rate">
+            {user._id && <div className="recipe-page__rate">
               <h2 className="recipe-page__rate_text">{TEXTS[context].titles.rate}</h2>
               <div className="recipe-page__rate_stars">
                 {[...Array(5)].map((_, i) => <RateStar id={String(i+1)} name={'recipe-rate'} isActive={inputValues['recipe-rate'] >= String(i+1)} isChecked={inputValues['recipe-rate'] === String(i+1)} value={i+1} onChange={(e) => {handlePutRate(e, recipe._id)}} />)}
               </div>
-            </div>
+            </div>}
           </div>
         </aside>
       </article>
