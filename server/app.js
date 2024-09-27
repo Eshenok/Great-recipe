@@ -41,7 +41,7 @@ app.use(
   session({
     secret: NODE_ENV==='production' ? SESSION_SECRET : 'secret key', // secret key
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     store: MongoStore.create({ mongoUrl: 'mongodb://localhost:27017/recipedb' }), //session storage in MongoDB
     cookie: {
       maxAge: 5 * 60 * 60 * 1000, // (5 hours)

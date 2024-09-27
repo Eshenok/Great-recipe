@@ -178,6 +178,9 @@ module.exports.findRecipesByIngredients = async (req, res, next) => {
 */
 module.exports.getRandomRecipes = async (req, res, next) => {
   try {
+    if (!req.session.fetchedRecipes) {
+      req.session.fetchedRecipes = [];
+    }
     const ObjectId = mongoose.Types.ObjectId;
     const batchSize = 30; // Размер каждой порции рецептов
     const fetchedRecipeIds = await req.session.fetchedRecipes.map(id => new ObjectId(id));
