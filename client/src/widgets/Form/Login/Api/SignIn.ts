@@ -4,6 +4,7 @@ import UserType from "../../../../Types/UserType";
 import { CentralErrorHandler } from "../../../../errorHandler/CentralErrorHandler";
 import { getRndRecipes } from "../../../../pages/Main/Api/GetRndRecipes";
 import { catchHandler } from "../../../../errorHandler/CatchHandler";
+import { dropRecipes } from "../../../../store/recipesSlice";
 
 export const signIn = createAsyncThunk(
   'user/signIn',
@@ -25,6 +26,7 @@ export const signIn = createAsyncThunk(
       CentralErrorHandler(res);
 
       const user: {user: UserType} = await res.json();
+      dispatch(dropRecipes());
       dispatch(initUser(user));
       dispatch(getRndRecipes());
     } catch (err) {

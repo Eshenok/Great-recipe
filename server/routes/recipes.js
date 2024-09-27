@@ -5,8 +5,8 @@ const { getRandomRecipes, findRecipesByIngredients, putRating } = require("../co
 recipesRouter.post('/find/:recipeId', getRecipeForId);
 recipesRouter.post('/add/:recipeId', addRecipeToFavorite);
 recipesRouter.post('/remove/:recipeId', removeRecipeFromFavorite);
-recipesRouter.post('/find', findRecipesByIngredients);
-recipesRouter.post('/rnd', getRandomRecipes);
+// recipesRouter.post('/find', findRecipesByIngredients);
+// recipesRouter.post('/rnd', getRandomRecipes);
 recipesRouter.get('/refresh', refreshFetchedRecipes);
 recipesRouter.put('/rate', putRating);
 
