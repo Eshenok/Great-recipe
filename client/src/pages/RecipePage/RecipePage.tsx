@@ -74,7 +74,7 @@ export const RecipePage: FC = () => {
         <aside className="recipe-page__header">
           <div className="recipe-page__img-container">
             <img className="recipe-page__image" src={recipe.strMealThumb} />
-            <LikeBtn onClick={() => {handlePutLike(recipe._id)}} extraClasses="recipe-page__like" isLiked={checkIsLikedRecipe(recipe._id)} />
+            {user._id && <LikeBtn onClick={() => {handlePutLike(recipe._id)}} extraClasses="recipe-page__like" isLiked={checkIsLikedRecipe(recipe._id)} />}
           </div>
           <h2 className="subtitle recipe-page__title">{recipe.strMeal}</h2>
           <div className="recipe-page__tags">
