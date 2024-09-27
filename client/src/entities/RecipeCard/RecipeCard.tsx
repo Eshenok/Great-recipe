@@ -53,7 +53,7 @@ const RecipeCard: FC<IRecipeCardProps> = ({recipeInfo}) => {
           {recipeInfo?.rating ? recipeInfo.rating : 0}
         </span>
       </div>
-      <LikeBtn onClick={() => {handlePutLike(recipeInfo._id)}} isLiked={checkIsLikedRecipe(recipeInfo._id)} extraClasses={"recipe-card__like"} />
+      {user._id && <LikeBtn onClick={() => {handlePutLike(recipeInfo._id)}} isLiked={checkIsLikedRecipe(recipeInfo._id)} extraClasses={"recipe-card__like"} />}
     </div>
   );
 };
