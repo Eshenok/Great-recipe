@@ -1,8 +1,11 @@
+import { useContext } from 'react';
 import './Footer.scss';
+import { LanguageContext } from '../../context/LanguageContext';
 
 const Footer = () => {
 
   const currentData = new Date();
+  const context = useContext(LanguageContext);
 
   return (
     <footer className={"footer"}>
@@ -12,7 +15,7 @@ const Footer = () => {
       </div>
       <div className={"footer__copy"}>
         <p className={"footer__text"}>{currentData.getFullYear()}</p>
-        <p className={"footer__text"}>&copy;BydLovesk Team</p>
+        <p className={"footer__text"}>&copy;Eshenok</p>
       </div>
     </footer>
   );
