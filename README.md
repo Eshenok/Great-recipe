@@ -28,5 +28,5 @@ Figma https://www.figma.com/design/qRLtGY44e1clxySt9uABm5/recipe_pet_project?nod
 
 ## Отдельная благодарность
 
->**[OpenAI](https://chatgpt.com)** за помощь с MongoDB и редактированием рецептов/<br>
+>**[OpenAI](https://chatgpt.com)** за помощь с MongoDB и редактированием рецептов<br>
 >**[McNadodls](https://github.com/McNadodls)** за помощь с дизайном 
