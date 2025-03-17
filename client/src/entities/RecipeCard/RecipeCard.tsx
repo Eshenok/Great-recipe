@@ -8,7 +8,6 @@ import {LanguageContext} from "../../context/LanguageContext";
 import {ClippedServerRecipeType} from "../../Types/ServerRecipeType";
 import {useNavigate} from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppRedux';
-import UserType from '../../Types/UserType';
 import { putLikeFetch } from '../../Api/PutLike';
 import { removeLikeFetch } from '../../Api/RemoveLike';
 
@@ -23,7 +22,7 @@ const RecipeCard: FC<IRecipeCardProps> = ({recipeInfo}) => {
   const dispatch = useAppDispatch();
   const {user} = useAppSelector(state => state.user);
 
-  const checkedUser = Object.keys(user).length === 0 ? false : user as UserType;
+  const checkedUser = user;
   let category = TEXTS[context].categories[recipeInfo.category.toLowerCase()];
 
   if (!category) {
@@ -53,7 +52,7 @@ const RecipeCard: FC<IRecipeCardProps> = ({recipeInfo}) => {
           {recipeInfo?.rating ? recipeInfo.rating : 0}
         </span>
       </div>
-      {user._id && <LikeBtn onClick={() => {handlePutLike(recipeInfo._id)}} isLiked={checkIsLikedRecipe(recipeInfo._id)} extraClasses={"recipe-card__like"} />}
+      {user && <LikeBtn onClick={() => {handlePutLike(recipeInfo._id)}} isLiked={checkIsLikedRecipe(recipeInfo._id)} extraClasses={"recipe-card__like"} />}
     </div>
   );
 };

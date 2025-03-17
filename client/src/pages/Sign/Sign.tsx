@@ -17,7 +17,7 @@ const Sign: FC = () => {
 
   useEffect(() => {
     // Проверяем, если пользователь не аутентифицирован и находится на пути /sign
-    if (Object.keys(user).length === 0) {
+    if (!user) {
       navigate('/sign/in', {replace: true});
     } else {
       if (location.pathname.includes('/pass')) {

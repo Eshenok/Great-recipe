@@ -1,4 +1,4 @@
-import {ChangeEvent, FC, FormEvent, FormEventHandler, useContext, useEffect, useState} from 'react';
+import {FC, FormEvent, useContext, useEffect, useState} from 'react';
 import './Fridge.scss';
 import Main from "../Main/Main";
 import Title from "../../shared/Title/Title";
@@ -10,7 +10,6 @@ import Tab from "../../shared/Tab/Tab";
 import InputBtn from '../../shared/InputBtn/InputBtn';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppRedux';
 import { selectUser } from '../../store/userSlice';
-import UserType from '../../Types/UserType';
 import { updateFridge } from './Api/UpdateFridge';
 
 const Fridge: FC = () => {
@@ -23,9 +22,8 @@ const Fridge: FC = () => {
 
   const phs = TEXTS[context].inputph.fridge as string[];
   useEffect(() => {
-    if (Object.keys(user).length !== 0) {
-      const checkedUser = user as UserType
-      setFridge(checkedUser.fridge);
+    if (user) {
+      setFridge(user.fridge);
     }
   }, [user]);
 
@@ -42,7 +40,7 @@ const Fridge: FC = () => {
   }
 
   const productsRender = () => {
-    if (Object.keys(user).length === 0) return;
+    if (!user) return;
     const prods: Array<React.ReactNode> = [];
 
     fridge.forEach((elem, i) => {

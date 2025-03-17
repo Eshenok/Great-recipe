@@ -11,16 +11,20 @@ export const filterSlice = createSlice({
     changeFilterQueryValue: <K extends keyof FilterQueriesType>(state: FilterQueriesType, action: PayloadAction<{ name: K; value: FilterQueriesType[K] }>) => {
       state[action.payload.name] = action.payload.value;
     },
-    syncWithLS: (state, action) => {
-      for (let key in action.payload) {
-        state[key] = action.payload[key]
-      }
+    syncWithLS: (state, action: PayloadAction<FilterQueriesType>) => {
+      Object.keys(action.payload).forEach((key) => {
+        const typedKey = key as keyof FilterQueriesType;
+        //@ts-ignore
+        state[typedKey] = action.payload[typedKey];
+      });
     },
     clearFilter: (state) => {
-      for (let key in initialState) {
-        state[key] = initialState[key]
-      }
-    }
+      Object.keys(initialState).forEach((key) => {
+        const typedKey = key as keyof FilterQueriesType;
+        //@ts-ignore
+        state[typedKey] = initialState[typedKey];
+      });
+    },
   }
 })
 

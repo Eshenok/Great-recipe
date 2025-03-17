@@ -1,11 +1,8 @@
-import { useContext } from 'react';
 import './Footer.scss';
-import { LanguageContext } from '../../context/LanguageContext';
 
 const Footer = () => {
 
   const currentData = new Date();
-  const context = useContext(LanguageContext);
 
   return (
     <footer className={"footer"}>
