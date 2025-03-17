@@ -12,7 +12,7 @@ const Footer = () => {
       </div>
       <div className={"footer__copy"}>
         <p className={"footer__text"}>{currentData.getFullYear()}</p>
-        <p className={"footer__text"}>&copy;BydLovesk Team</p>
+        <p className={"footer__text"}>&copy;Eshenok</p>
       </div>
     </footer>
   );

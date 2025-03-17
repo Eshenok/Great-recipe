@@ -12,7 +12,6 @@ import CardGrid from "../../widgets/CardGrid/CardGrid";
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppRedux";
 import { getRndRecipes } from "../Main/Api/GetRndRecipes";
 import { LoaderFunctionArgs, useLoaderData, useNavigate } from "react-router-dom";
-import UserType from "../../Types/UserType";
 import { ServerRecipeType } from "../../Types/ServerRecipeType";
 import { removeLikeFetch } from "../../Api/RemoveLike";
 import { putLikeFetch } from "../../Api/PutLike";
@@ -39,7 +38,7 @@ export const RecipePage: FC = () => {
   const dispatch = useAppDispatch();
   const {recipes, findedRecipes, findedRecipesStatus} = useAppSelector(state => state.recipes);
   const {user} = useAppSelector(state => state.user);
-  const checkedUser = Object.keys(user).length === 0 ? false : user as UserType;
+  const checkedUser = user;
   const [isOpen, setIsOpen] = useState(true);
   const {inputValues, onChange, onPut} = useForm();
   const navigate = useNavigate();
@@ -74,7 +73,7 @@ export const RecipePage: FC = () => {
         <aside className="recipe-page__header">
           <div className="recipe-page__img-container">
             <img className="recipe-page__image" src={recipe.strMealThumb} />
-            <LikeBtn onClick={() => {handlePutLike(recipe._id)}} extraClasses="recipe-page__like" isLiked={checkIsLikedRecipe(recipe._id)} />
+            {user && <LikeBtn onClick={() => {handlePutLike(recipe._id)}} extraClasses="recipe-page__like" isLiked={checkIsLikedRecipe(recipe._id)} />}
           </div>
           <h2 className="subtitle recipe-page__title">{recipe.strMeal}</h2>
           <div className="recipe-page__tags">
@@ -113,12 +112,12 @@ export const RecipePage: FC = () => {
             {
               instructionArr.map(item => <p>{item}</p>)
             }
-            <div className="recipe-page__rate">
+            {user && <div className="recipe-page__rate">
               <h2 className="recipe-page__rate_text">{TEXTS[context].titles.rate}</h2>
               <div className="recipe-page__rate_stars">
                 {[...Array(5)].map((_, i) => <RateStar id={String(i+1)} name={'recipe-rate'} isActive={inputValues['recipe-rate'] >= String(i+1)} isChecked={inputValues['recipe-rate'] === String(i+1)} value={i+1} onChange={(e) => {handlePutRate(e, recipe._id)}} />)}
               </div>
-            </div>
+            </div>}
           </div>
         </aside>
       </article>

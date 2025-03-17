@@ -25,11 +25,11 @@ export const getUser = createAsyncThunk(
 )
 
 interface IInitialState {
-  user: UserType | {},
+  user: UserType | undefined,
   status: {error: null | boolean, msg: string}, 
   }
 
-const initialState: IInitialState = {user: {}, status: {error: null, msg: ''}};
+const initialState: IInitialState = {user: undefined, status: {error: null, msg: ''}};
 
 export const userSlice = createSlice({
   name: 'user',
@@ -39,7 +39,7 @@ export const userSlice = createSlice({
       state.user = action.payload;
     },
     clearUser: (state) => {
-      state.user = {};
+      state.user = undefined;
     },
     updateLiked: (state, action) => {
       const user: UserType = state.user as UserType;
