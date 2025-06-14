@@ -102,8 +102,6 @@ module.exports.updatePassCurrentUser = async (req, res, next) => {
 // Пароль сразу хэшируется, пользователю это поле вообще не приходит
 module.exports.createUser = (req, res, next) => {
   const { name, email, password } = req.body;
-
-  throw new Error('err');
   
   bcrypt.hash(password, 10) // password hash
     .then((hash) => User.create({ // if "ok" - create user

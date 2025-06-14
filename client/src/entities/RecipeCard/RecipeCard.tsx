@@ -10,12 +10,13 @@ import {useNavigate} from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppRedux';
 import { putLikeFetch } from '../../Api/PutLike';
 import { removeLikeFetch } from '../../Api/RemoveLike';
+import React from 'react';
 
 interface IRecipeCardProps {
   recipeInfo: ClippedServerRecipeType
 }
 
-const RecipeCard: FC<IRecipeCardProps> = ({recipeInfo}) => {
+const RecipeCard: FC<IRecipeCardProps> = React.memo(({recipeInfo}) => {
 
   const context = useContext(LanguageContext);
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const RecipeCard: FC<IRecipeCardProps> = ({recipeInfo}) => {
   const handlePutLike = (id: string) => dispatch(checkIsLikedRecipe(id) ? removeLikeFetch(id) : putLikeFetch(id));
 
   return (
-    <div className={"recipe-card"}>
+    <div id={`${recipeInfo._id}`} className={"recipe-card"}>
       <div onClick={chooseThis} className={"recipe-card__overlay"} />
       <img src={recipeInfo.image} className={"recipe-card__image"}/>
       <h3 className={"recipe-card__title"}>{recipeInfo.name}</h3>
@@ -55,6 +56,6 @@ const RecipeCard: FC<IRecipeCardProps> = ({recipeInfo}) => {
       {user && <LikeBtn onClick={() => {handlePutLike(recipeInfo._id)}} isLiked={checkIsLikedRecipe(recipeInfo._id)} extraClasses={"recipe-card__like"} />}
     </div>
   );
-};
+});
 
 export default RecipeCard;

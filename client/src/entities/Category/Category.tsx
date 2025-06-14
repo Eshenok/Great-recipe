@@ -31,9 +31,9 @@ const Category: FC<ICategoryProps> = ({extraClasses}) => {
     }
   };
 
-  const handleChooseCategory = (name: string, checked: boolean) => {
-    dispatch(changeCurrCategories({name: name}));
-    dispatch(changeFilterQueryValue({name: 'category', value: !checked ? name : ''}));
+  const handleChooseCategory = (key: string, checked: boolean) => {
+    dispatch(changeCurrCategories({name: key}));
+    dispatch(changeFilterQueryValue({name: 'category', value: !checked ? key : ''}));
   }
 
   return (
@@ -43,14 +43,12 @@ const Category: FC<ICategoryProps> = ({extraClasses}) => {
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
     >
-      {/* <h3 className={"category__title"}>{TEXTS[context].titles.infridge}</h3> */}
-      {/* <CheckSwitch name={'infridge'} color={'blue'} /> */}
       <h3 className={"category__title"}>{TEXTS[context].titles.category}</h3>
       {
         categories.map((elem: CategoryItemFullType) =>
           <CategoryItem 
-          checked={elem.name === category} 
-          onChoose={() => {handleChooseCategory(elem.name, elem.checked)}} 
+          checked={elem.key === category} 
+          onChoose={() => {handleChooseCategory(elem.key, elem.checked)}} 
           text={elem.name} 
           icon={elem.image} 
           key={elem.key} 

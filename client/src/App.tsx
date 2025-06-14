@@ -29,7 +29,7 @@ function App() {
 
   useEffect(() => {
     dispatch(initCategories({language: language}));
-  }, [language])
+  }, [language]);
 
   return (
     <LanguageContext.Provider value={language}>

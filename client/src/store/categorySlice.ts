@@ -23,7 +23,7 @@ export const categorySlice = createSlice({
       });
     },
     changeCurrCategories(state, action) {
-      const currCategory = state.categories.find((category) => action.payload.name === category.name);
+      const currCategory = state.categories.find((category) => action.payload.name === category.key);
       if (!currCategory) return;
       if (currCategory.checked) {
         currCategory.checked = false;

@@ -5,13 +5,19 @@ import Category from "../../entities/Category/Category";
 import { FC } from 'react';
 import { getRndRecipes } from './Api/GetRndRecipes';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppRedux';
+import { selectFilter } from '../../store/FilterSlice';
 
 const Main: FC = () => {
 
   const dispatch = useAppDispatch();
 
   const {recipes, findedRecipes, findedRecipesStatus} = useAppSelector(state => state.recipes);
-  const getMoreRecipes = () => dispatch(getRndRecipes())
+  const state = useAppSelector(selectFilter);
+  const getMoreRecipes = () => {
+    const isFiltred = Object.keys(state).find((key) => !!state[key])
+    if (isFiltred) return;
+    dispatch(getRndRecipes())
+  }
 
   return (
     <main className={`main`}>

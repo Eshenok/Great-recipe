@@ -13,9 +13,10 @@ interface ICardGridProps {
   recipes: ClippedServerRecipeType[],
   getMoreFn?: () => void;
   extraClasses?: string;
+  anchor?: string
 }
 
-const CardGrid: FC<ICardGridProps> = memo(function CardGrid({recipes, getMoreFn, extraClasses}) {
+const CardGrid: FC<ICardGridProps> = memo(function CardGrid({recipes, getMoreFn, extraClasses, anchor}) {
   const context = useContext(LanguageContext);
   const cardGridRef = useRef<HTMLDivElement | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
@@ -25,6 +26,15 @@ const CardGrid: FC<ICardGridProps> = memo(function CardGrid({recipes, getMoreFn,
   const scrollPositionKey = `scrollPosition-${location.pathname}`;
 
   const dropFilter = () => dispatch(clearFilter());
+
+  useLayoutEffect(() => {
+    if (anchor) {
+      const element = document.getElementById(location.pathname);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [anchor]);
 
   useLayoutEffect(() => {
     const savedScrollPosition = sessionStorage.getItem(scrollPositionKey);
